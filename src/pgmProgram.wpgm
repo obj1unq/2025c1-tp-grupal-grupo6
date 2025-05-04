@@ -1,0 +1,17 @@
+import wollok.game.*
+import objetos.*
+import posiciones.*
+
+program demo{
+    
+    game.width(5)
+    game.height(5)
+    game.cellSize(64)
+    game.addVisual(alumno)
+    keyboard.a().onPressDo({alumno.mover(izquierda)})
+    keyboard.s().onPressDo({alumno.mover(abajo)})
+    keyboard.d().onPressDo({alumno.mover(derecha)})
+    keyboard.w().onPressDo({alumno.mover(arriba)})
+    game.start()
+   
+}
