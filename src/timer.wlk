@@ -12,5 +12,13 @@ object reloj {
     method tieneAunTiempo() {
         return segundos > 0
     }
+
+    method aumentarTiempo(tiempo){
+        self.segundos(segundos+tiempo)
+    }
+
+    method disminuirTiempo(tiempo){
+        self.segundos(segundos-tiempo)
+    }
 }
 
