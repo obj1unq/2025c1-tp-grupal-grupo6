@@ -1,5 +1,6 @@
 import wollok.game.*
 import posiciones.*
+import timer.*
 
 object alumno {
   var property position = game.at(3, 1)
@@ -36,13 +37,17 @@ object debi{
 }
 
 object isaias{
+  var property position = game.at(game.height(), 5)
+
   method image() = "isaias.png"
 
   method hacerPregunta(){
     game.onCollideDo(alumno, {self.aplicarEfecto()})
   }
 
-  method aplicarEfecto(){}
+  method aplicarEfecto(){
+    reloj.aumentarTiempo(30)
+  }
 }
 
 object leo{
