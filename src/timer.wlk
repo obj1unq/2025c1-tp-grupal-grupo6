@@ -3,9 +3,18 @@ import posiciones.*
 import objetos.*
 
 object reloj {
-    var property segundos = 150 
+    var property segundos = 150
+    var property position = game.at(3,3)
 
-    method text() = if (self.tieneAunTiempo()) segundos.toSting() else ""
+    method text(){
+        if (self.tieneAunTiempo()){
+            segundos.printString()
+        }else {""}
+    }
+
+    method reducirTiempo(){
+        self.segundos(segundos-1)
+    }
 
     method textColor() ="FF87CEEB"
 
