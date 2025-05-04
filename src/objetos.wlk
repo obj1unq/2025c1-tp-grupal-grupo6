@@ -3,7 +3,7 @@ import posiciones.*
 import timer.*
 
 object alumno {
-  var property position = game.at(3, 1)
+  var property position = game.at(3, 3)
   
   method image() = "alumno-Defrente.png"
   
@@ -17,6 +17,8 @@ object alumno {
 }
 
 object chancho{
+  var property position = game.at(3, 0)
+
   method image() = "chancho.png"
 
   method cobroMulta(){
@@ -27,6 +29,8 @@ object chancho{
 }
 
 object debi{
+  var property position = game.at(3, 1)
+
   method image() = "debi.png"
 
   method hacerPregunta(){
@@ -37,12 +41,12 @@ object debi{
 }
 
 object isaias{
-  var property position = game.at(game.height(), 5)
+  var property position = game.at(3,2)
 
   method image() = "isaias.png"
 
   method hacerPregunta(){
-    game.onCollideDo(alumno, {self.aplicarEfecto()})
+    game.whenCollideDo(alumno, {self.aplicarEfecto()})
   }
 
   method aplicarEfecto(){
@@ -51,6 +55,8 @@ object isaias{
 }
 
 object leo{
+  var property position = game.at(3, 4)
+
   method image() = "leo.png"
 
   method hacerPregunta(){

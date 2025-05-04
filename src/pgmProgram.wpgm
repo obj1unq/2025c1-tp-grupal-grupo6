@@ -1,13 +1,15 @@
 import wollok.game.*
 import objetos.*
 import posiciones.*
+import timer.*
 
 program demo{
     
-    game.width(5)
-    game.height(5)
+    game.width(15)
+    game.height(15)
     game.cellSize(64)
     game.addVisual(alumno)
+    game.addVisual(reloj)
     game.addVisual(chancho)
     game.addVisual(debi)
     game.addVisual(isaias)
@@ -15,6 +17,9 @@ program demo{
     keyboard.s().onPressDo({alumno.mover(abajo)})
     keyboard.d().onPressDo({alumno.mover(derecha)})
     keyboard.w().onPressDo({alumno.mover(arriba)})
+
+    game.onTick(1000, "cuenta regresiva", {reloj.reducirTiempo()})
+    game.onTick(500, "mostrar tiempo", {reloj.text()})
     game.start()
    
 }
