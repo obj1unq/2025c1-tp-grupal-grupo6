@@ -1,3 +1,4 @@
+// src/objetos.wlk
 import wollok.game.*
 import posiciones.*
 import timer.*
@@ -18,14 +19,19 @@ object alumno {
 
 object chancho{
   var property position = game.at(3, 0)
+  var property multa = 20
 
   method image() = "chancho.png"
 
-  method cobroMulta(){
-    game.onCollideDo(alumno, {self.aplicarEfecto()})
+  method cobroMulta(personaje){
+    personaje.reducirTiempo(multa)
+    game.say(self, "Te cobre " + multa + " segundos de multa")
   }
 
-  method aplicarEfecto(){}
+  method aplicarEfecto(personaje){
+    position = position.left(1)
+    self.cobroMulta(personaje)
+  }
 }
 
 object debi{
@@ -33,11 +39,13 @@ object debi{
 
   method image() = "debi.png"
 
-  method hacerPregunta(){
-    game.onCollideDo(alumno, {self.aplicarEfecto()})
+  method hacerPregunta(personaje){
+    game.say(self, "Que es el polimorfismo?")
   }
 
-  method aplicarEfecto(){}
+  method aplicarEfecto(personaje){
+    self.hacerPregunta(personaje)
+  }
 }
 
 object isaias{
@@ -45,12 +53,8 @@ object isaias{
 
   method image() = "isaias.png"
 
-  method hacerPregunta(){
-    game.whenCollideDo(alumno, {self.aplicarEfecto()})
-  }
-
-  method aplicarEfecto(){
-    reloj.aumentarTiempo(30)
+  method aplicarEfecto(personaje){
+//    reloj.aumentarTiempo(30)
   }
 }
 
@@ -59,9 +63,6 @@ object leo{
 
   method image() = "leo.png"
 
-  method hacerPregunta(){
-    game.onCollideDo(alumno, {self.aplicarEfecto()})
-  }
 
-  method aplicarEfecto(){}
+  method aplicarEfecto(personaje){}
 }

@@ -8,18 +8,25 @@ program demo{
     game.width(15)
     game.height(15)
     game.cellSize(64)
+    game.addVisual(leo)
     game.addVisual(alumno)
     game.addVisual(reloj)
     game.addVisual(chancho)
     game.addVisual(debi)
     game.addVisual(isaias)
+
+    keyboard.enter().onPressDo({game.say(alumno, "hola")})
+
     keyboard.a().onPressDo({alumno.mover(izquierda)})
     keyboard.s().onPressDo({alumno.mover(abajo)})
     keyboard.d().onPressDo({alumno.mover(derecha)})
     keyboard.w().onPressDo({alumno.mover(arriba)})
 
     game.onTick(1000, "cuenta regresiva", {reloj.reducirTiempo()})
-    game.onTick(500, "mostrar tiempo", {reloj.text()})
+
+    game.onCollideDo(alumno,  {algo => algo.aplicarEfecto(alumno)})
+  
+
     game.start()
    
 }
