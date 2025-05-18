@@ -7,6 +7,7 @@ object reloj {
     var property position = game.at(7,3)
 
     method text(){
+        
         return if (self.tieneAunTiempo()){
             segundos.printString()
         }else {""}

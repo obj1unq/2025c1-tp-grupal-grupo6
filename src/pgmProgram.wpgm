@@ -11,7 +11,7 @@ program demo{
     game.addVisual(leo)
     game.addVisual(alumno)
     game.addVisual(reloj)
-    game.addVisual(chancho)
+    //game.addVisual(chancho)
     game.addVisual(debi)
     game.addVisual(isaias)
 
