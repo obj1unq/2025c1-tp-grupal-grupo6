@@ -5,11 +5,15 @@ import timer.*
 
 object alumno {
   var property position = game.at(3, 3)
+  var direccion1 = abajo
   
-  method image() = "alumno-Defrente.png"
+ /*  method image() = "alumno-frente.png" */
+  method image() = "alumno-" + direccion1.nombre() + ".png"
   
   method mover(direccion) {
+  //  direccion1 = nuevaDireccion
     position = direccion.siguiente(self.position())
+
   }
 
   method reducirTiempo(tiempo){
