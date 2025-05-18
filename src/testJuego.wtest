@@ -1,0 +1,58 @@
+/* import wollok.game.*
+import objetos.*
+import posiciones.*
+import timer.*
+
+//escenario 1
+
+describe "movilidad alumno" {
+
+    method inicialize() {
+
+    }
+    test "puede moverse hacia arriba" {
+    
+    }
+
+    test "no puede moverse hacia arriba" {
+    
+    }
+
+    test "puede moverse hacia abajo" {
+    
+    }
+
+    test "no puede moverse hacia abajo" {
+    
+    }
+
+    test "puede moverse hacia izquierda" {
+    
+    }
+
+    test "no puede moverse hacia izquierda" {
+    
+    }
+
+    test "puede moverse hacia derecha" {
+    
+    }
+
+    test "no puede moverse hacia derecha" {
+    
+    }
+
+    test "no puede avanzar si hay un arbusto"{
+
+    }
+}
+
+
+describe "interaccion con auto" {
+  test "el auto choca con el alumno" {
+    
+  }
+} */
+
+
+
