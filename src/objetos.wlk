@@ -1,3 +1,4 @@
+// src/objetos.wlk
 import wollok.game.*
 import posiciones.*
 import timer.*
@@ -20,11 +21,16 @@ class Profesor {
 
 object alumno { //marcos
   var property position = game.at(3, 3)
+  var direccion = abajo
   
-  method image() = "alumno-Defrente.png"
+ /*  method image() = "alumno-frente.png" */
+ 
+  method image() = "alumno-" + direccion.nombre() + ".png"
   
-  method mover(direccion) {
+  method mover(nuevaDireccion) {
+    direccion = nuevaDireccion
     position = direccion.siguiente(self.position())
+
   }
 
   method reducirTiempo(tiempo){
@@ -33,6 +39,21 @@ object alumno { //marcos
 }
 
 
+object chancho{
+  var property position = game.at(3, 0)
+  var property multa = 20
+
+  method cobroMulta(personaje){
+    personaje.reducirTiempo(multa)
+    game.say(self, "Te cobre " + multa + " segundos de multa")
+  }
+
+  method aplicarEfecto(personaje){
+    position = position.left(1)
+    self.cobroMulta(personaje)
+  }
+}
+
 const debi = new Profesor (position = game.at(3,1), image = "debi.png")
 
 const isaias = new Profesor (position = game.at(3,2 ), image = "isaias.png" )
@@ -40,29 +61,30 @@ const isaias = new Profesor (position = game.at(3,2 ), image = "isaias.png" )
 const leo = new Profesor (position = game.at(3, 3), image = "leo.png" )
 
 
+  
+
+
+
 /* object debi{
   var property position = game.at(3, 1)
 
   method image() = "debi.png"
 
-  method hacerPregunta(){
-    game.onCollideDo(alumno, {self.aplicarEfecto()})
+  method hacerPregunta(personaje){
+    game.say(self, "Que es el polimorfismo?")
   }
 
-  method aplicarEfecto(){}
-} */
-/* 
+  method aplicarEfecto(personaje){
+    self.hacerPregunta(personaje)
+  }
+}
 object isaias{
   var property position = game.at(3,2)
 
   method image() = "isaias.png"
 
-  method hacerPregunta(){
-    game.whenCollideDo(alumno, {self.aplicarEfecto()})
-  }
-
-  method aplicarEfecto(){
-    reloj.aumentarTiempo(30)
+  method aplicarEfecto(personaje){
+//    reloj.aumentarTiempo(30)
   }
 }
  */
@@ -71,22 +93,11 @@ object isaias{
 
   method image() = "leo.png"
 
-  method hacerPregunta(){
-    game.onCollideDo(alumno, {self.aplicarEfecto()})
-  }
+
 
   method aplicarEfecto(){}
 }
  */
 
-/* object chancho{
-  var property position = game.at(3, 0)
 
-  method image() = "chancho.png"
 
-  method cobroMulta(){
-    game.onCollideDo(alumno, {self.aplicarEfecto()})
-  }
-
-  method aplicarEfecto(){}
-} */
