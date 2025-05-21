@@ -6,17 +6,43 @@ import timer.*
 class Profesor {
   var property position 
   var property image
+  const preguntasYRespuestasCorrectas = [self.nuevaPreguntaYSuRespuestaCorrecta("¿Qué es el polimorfismo?", "blablabla"),
+                                         self.nuevaPreguntaYSuRespuestaCorrecta("otraPregunta2", "otraRespuesta2"),
+                                         self.nuevaPreguntaYSuRespuestaCorrecta("otraPregunta3", "otraRespuesta3")]
 
-  method hacerPregunta(personaje){
-        game.say(self, "Que es el polimorfismo?")
-
-  /* method efecto() {
-    game.onCollideDo(alumno, {self.aplicarEfecto()})
+  var preguntaAleatoria = "" //preguntasYRespuestasCorrectas.anyOne().pregunta()
+      
+  method nuevaPreguntaYSuRespuestaCorrecta(pregunta, respuesta){
+    return new PreguntaYRespuesta(pregunta = pregunta, respuesta = respuesta)
   }
 
-  method aplicarEfecto() {} */
+
+
+  method text(){
+    return preguntaAleatoria
+  }
+
+   method efecto(alumno) {
+    game.onCollideDo(alumno, {self.aplicarEfecto(alumno)})
+  }
+
+  method aplicarEfecto(alumno){
+    preguntaAleatoria = preguntasYRespuestasCorrectas.anyOne().pregunta()
+  }
+
 
 }
+class PreguntaYRespuesta{
+  const pregunta
+  const respuesta
+  
+  method pregunta(){
+    return pregunta
+  }
+
+  method respuesta(){
+    return respuesta
+  }
 }
 
 object alumno { //marcos
