@@ -3,46 +3,68 @@ import wollok.game.*
 import posiciones.*
 import timer.*
 
+object seleccion {
+
+  var property pregunta = null
+  method seleccionar(_pregunta) {
+    pregunta = _pregunta
+    pregunta.preguntar()
+  }
+
+  method respuesta(indice) {
+    pregunta.responder(indice)
+  }
+}
 class Profesor {
   var property position 
   var property image
-  const preguntasYRespuestasCorrectas = [self.nuevaPreguntaYSuRespuestaCorrecta("¿Qué es el polimorfismo?", "blablabla"),
-                                         self.nuevaPreguntaYSuRespuestaCorrecta("otraPregunta2", "otraRespuesta2"),
-                                         self.nuevaPreguntaYSuRespuestaCorrecta("otraPregunta3", "otraRespuesta3")]
-
-  var preguntaAleatoria = "" //preguntasYRespuestasCorrectas.anyOne().pregunta()
-      
-  method nuevaPreguntaYSuRespuestaCorrecta(pregunta, respuesta){
-    return new PreguntaYRespuesta(pregunta = pregunta, respuesta = respuesta)
+  var property text = ""
+  const preguntasYRespuestasCorrectas = [self.nuevaPreguntaYSuRespuestaCorrecta("¿Qué es el polimorfismo?", ["blablabla", "blablabla", "correcta"], 2 ),
+                                         self.nuevaPreguntaYSuRespuestaCorrecta("otraPregunta2", ["correcta", "otraRespuesta2", "otraRespuesta2"], 0),
+                                         self.nuevaPreguntaYSuRespuestaCorrecta("otraPregunta3", ["otraRespuesta2", "correcta", "otraRespuesta2"], 1)]
+    
+  method nuevaPreguntaYSuRespuestaCorrecta(pregunta, respuestas, correcta){
+    return new PreguntaYRespuesta(pregunta = pregunta, respuestas = respuestas, correcta=correcta, profesor=self)
   }
 
 
-
-  method text(){
-    return preguntaAleatoria
-  }
-
-   method efecto(alumno) {
+  //Esto parece viejo, revisar
+  method efecto(alumno) {
     game.onCollideDo(alumno, {self.aplicarEfecto(alumno)})
   }
 
   method aplicarEfecto(alumno){
-    preguntaAleatoria = preguntasYRespuestasCorrectas.anyOne().pregunta()
+    seleccion.seleccionar(preguntasYRespuestasCorrectas.anyOne())
   }
 
 
 }
 class PreguntaYRespuesta{
-  const pregunta
-  const respuesta
-  
-  method pregunta(){
-    return pregunta
+  const property pregunta
+  const property respuestas 
+  const property correcta
+  const property profesor
+
+  method preguntar() {
+      var texto = " 1: " + respuestas.get(0)
+      texto = texto + " 2: " + respuestas.get(1)
+      texto = texto + " 3: " + respuestas.get(2)
+
+
+      texto = pregunta + texto
+      game.say(profesor, texto )
+      profesor.text(texto)
   }
 
-  method respuesta(){
-    return respuesta
-  }
+  method responder(opcion) {
+    if (correcta == opcion) {
+      game.say(profesor, "Muy bien!")
+    }
+    else {
+      game.say(profesor, "reprobado!")
+    }
+  }  
+
 }
 
 object alumno { //marcos
@@ -96,7 +118,8 @@ const leo = new Profesor (position = game.at(3, 3), image = "leo.png" )
   method image() = "debi.png"
 
   method hacerPregunta(personaje){
-    game.say(self, "Que es el polimorfismo?")
+    pregunqta = new Pregunta(texto="Que es el polimorfismo?", opciones = [Respusta(texto = "repsuesta correcta)", "no se", "esto es filosofia?"], 0)
+    seleccion.seleccionar(pregunta)
   }
 
   method aplicarEfecto(personaje){
