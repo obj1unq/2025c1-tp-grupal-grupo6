@@ -2,20 +2,23 @@ import wollok.game.*
 import objetos.*
 import posiciones.*
 import timer.*
+import tablero.*
 
 
 
 program demo{
+
+    tablero.configurar()
     
     game.width(15)
-    game.height(15)
-    game.cellSize(64)
-    game.addVisual(leo)
+    game.height(18)
+    game.cellSize(96)
+    /* game.addVisual(leo)
     game.addVisual(alumno)
     game.addVisual(reloj)
     //game.addVisual(chancho)
     game.addVisual(debi)
-    game.addVisual(isaias)
+    game.addVisual(isaias) */
 
     keyboard.enter().onPressDo({game.say(alumno, "hola")})
 

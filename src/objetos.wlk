@@ -67,9 +67,8 @@ class PreguntaYRespuesta{
 
 }
 
-
-object alumno {
-  var property position = game.at(3, 3)
+object alumno { //marcos
+  var property position = game.at(8, 4)  // Para que no quede encima de la imagen estacion
   var direccion = abajo
   
  /*  method image() = "alumno-frente.png" */
@@ -79,7 +78,6 @@ object alumno {
   method mover(nuevaDireccion) {
     direccion = nuevaDireccion
     position = direccion.siguiente(self.position())
-
   }
 
   method reducirTiempo(tiempo){
