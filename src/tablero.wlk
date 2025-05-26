@@ -2,6 +2,7 @@ import objetos.*
 import pgmProgram.*
 import posiciones.*
 import timer.*
+import autos.*
 
 class Visual {
     method atravesable() {

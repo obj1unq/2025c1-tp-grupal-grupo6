@@ -3,10 +3,12 @@ import objetos.*
 import posiciones.*
 import timer.*
 import tablero.*
-
+import autos.*
 
 
 program demo{
+
+    const factoryAutos = new AutoFactory()
 
     tablero.configurar()
     
@@ -37,6 +39,8 @@ program demo{
     keyboard.num2().onPressDo({seleccion.respuesta(1)})
     keyboard.num3().onPressDo({seleccion.respuesta(2)})
 
+    game.onTick(2000, "generacionAutosDerecha", factoryAutos.crearAutoHaciaDerecha())
+    game.onTick(2000, "generacionAutosIzquierda", factoryAutos.crearAutoHaciaIzquierda())
 
     game.start()
    
