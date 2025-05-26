@@ -36,8 +36,6 @@ class Profesor {
   method aplicarEfecto(alumno){
     seleccion.seleccionar(preguntasYRespuestasCorrectas.anyOne())
   }
-
-
 }
 class PreguntaYRespuesta{
   const property pregunta
@@ -66,6 +64,8 @@ class PreguntaYRespuesta{
   }  
 
 }
+
+
 
 object alumno { //marcos
   var property position = game.at(8, 4)  // Para que no quede encima de la imagen estacion

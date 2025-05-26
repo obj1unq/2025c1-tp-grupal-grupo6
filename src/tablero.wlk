@@ -158,16 +158,16 @@ object tablero {
     const mapa = [
         [ac,ag,ac,v,v,v,v,v,v,v,v,v,ac,ag,ac],
         [p,p,p,v,v,v,v,v,v,v,v,v,p,p,p],
-        [cs,cs,cs,cs,cs,cs,cs,cs,cs,cs,cs,cs,cs,cs,cs],
-        [ci,ci,ci,ci,ci,ci,ci,ci,ci,ci,ci,ci,ci,ci,ci],
+        [cs,cs,cs,cs,cs,cs,cs,cs,cs,cs,cs,cs,cs,cs,cs],   //(0,15) (14,15)
+        [ci,ci,ci,ci,ci,ci,ci,ci,ci,ci,ci,ci,ci,ci,ci],   //(0,14) (14,14)
         [v,v,v,v,v,v,v,v,v,v,v,v,v,v,v],
         [v,v,v,v,v,v,v,v,v,v,v,v,v,v,v],
-        [cs,cs,cs,cs,cs,cs,cs,cs,cs,cs,cs,cs,cs,cs,cs],
-        [ci,ci,ci,ci,ci,ci,ci,ci,ci,ci,ci,ci,ci,ci,ci],
+        [cs,cs,cs,cs,cs,cs,cs,cs,cs,cs,cs,cs,cs,cs,cs],   //(0,11) (14,11)
+        [ci,ci,ci,ci,ci,ci,ci,ci,ci,ci,ci,ci,ci,ci,ci],   //(0,10) (14,10)
         [v,v,v,v,v,v,v,v,v,v,v,v,v,v,v],
         [v,v,v,v,v,v,v,v,v,v,v,v,v,v,v],
-        [cs,cs,cs,cs,cs,cs,cs,cs,cs,cs,cs,cs,cs,cs,cs],
-        [ci,ci,ci,ci,ci,ci,ci,ci,ci,ci,ci,ci,ci,ci,ci],        
+        [cs,cs,cs,cs,cs,cs,cs,cs,cs,cs,cs,cs,cs,cs,cs],   //(0,7) (14,7)
+        [ci,ci,ci,ci,ci,ci,ci,ci,ci,ci,ci,ci,ci,ci,ci],   //(0,6) (14,6)    
         [v,v,v,v,v,v,v,v,v,v,v,v,ac,ag,ac],
         [v,v,v,v,v,v,v,v,v,v,v,v,p,p,p],
         [_,_,_,_,_,_,_,_,_,_,_,_,_,_,_],
