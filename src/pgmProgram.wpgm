@@ -14,9 +14,11 @@ program demo{
     game.height(18)
     game.cellSize(96)
 
+    game.addVisual(reloj)
+
    /*game.addVisual(leo)
     game.addVisual(alumno)
-    game.addVisual(reloj)
+    
     game.addVisual(chancho)
     game.addVisual(debi)
     game.addVisual(isaias) 
@@ -24,10 +26,10 @@ program demo{
 
     keyboard.enter().onPressDo({game.say(alumno, "hola")})
 
-    keyboard.a().onPressDo({alumno.mover(izquierda)})
-    keyboard.s().onPressDo({alumno.mover(abajo)})
-    keyboard.d().onPressDo({alumno.mover(derecha)})
-    keyboard.w().onPressDo({alumno.mover(arriba)})
+    keyboard.left().onPressDo({alumno.mover(izquierda)})
+    keyboard.down().onPressDo({alumno.mover(abajo)})
+    keyboard.right().onPressDo({alumno.mover(derecha)})
+    keyboard.up().onPressDo({alumno.mover(arriba)})
 
     game.onTick(1000, "cuenta regresiva", {reloj.reducirTiempo()})
 

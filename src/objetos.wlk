@@ -19,9 +19,9 @@ class Profesor {
   var property position 
   var property image
   var property text = ""
-  const preguntasYRespuestasCorrectas = [self.nuevaPreguntaYSuRespuestaCorrecta("¿Qué es el polimorfismo?", ["blablabla", "blablabla", "correcta"], 2 ),
-                                         self.nuevaPreguntaYSuRespuestaCorrecta("otraPregunta2", ["correcta", "otraRespuesta2", "otraRespuesta2"], 0),
-                                         self.nuevaPreguntaYSuRespuestaCorrecta("otraPregunta3", ["otraRespuesta2", "correcta", "otraRespuesta2"], 1)]
+  const preguntasYRespuestasCorrectas = [self.nuevaPreguntaYSuRespuestaCorrecta("Decimos que dos objetos que comparten cierta interfaz en común, son _ para ese observador", ["a-iguales", "b-polimórficos", "c-equivalentes"], 1 ),
+                                         self.nuevaPreguntaYSuRespuestaCorrecta("Dentro de un metodo, cuando no podemos usar self (ya que entrariamos en un loop, que debemos usar?", ["inherits", "super", "override"], 1),
+                                         self.nuevaPreguntaYSuRespuestaCorrecta("A qué se conoce en la industria como “Code Smells?", ["a-cometarios dentro del código que utilizan lenguaje informal.", "b-errores de compilación, que impiden que el código se ejecute.correcta", "c-indicios de problemas profundos en el diseño, aunque no impiden que el programa funcione."], 2)]
     
   method nuevaPreguntaYSuRespuestaCorrecta(pregunta, respuestas, correcta){
     return new PreguntaYRespuesta(pregunta = pregunta, respuestas = respuestas, correcta=correcta, profesor=self)
