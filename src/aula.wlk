@@ -1,4 +1,4 @@
-import objetos.*
+/* import objetos.*
 import pgmProgram.*
 import posiciones.*
 import timer.*
@@ -9,35 +9,23 @@ class Visual {
     }
 }
 
-class Vereda inherits Visual {
+class Pupitre inherits Visual {
     const property position
 
     method image() {
-        return "vereda.png"
+        return "pupitre.png"
     }
 
     override method atravesable() { // El override es para redefinir un metodo de la clase, en este caso es igual. Es necesario? 
-        return true
+        return false
     }
 }
 
-class Pasto inherits Visual {
+class Escritorio inherits Visual {
     const property position
 
     method image() {
-        return "pasto.png"
-    }
-
-    override method atravesable() {
-        return true
-    }
-}
-
-class ArbustoChico inherits Visual {
-    const property position
-
-    method image() {
-        return "arbusto-chico.png"
+        return "escritorio.png"
     }
 
     override method atravesable() {
@@ -45,64 +33,18 @@ class ArbustoChico inherits Visual {
     }
 }
 
-class ArbustoGrande inherits Visual {
-    const property position
-
+object pizarronVerde inherits Visual {
     method image() {
-        return "arbusto-grande.png"
+        return "pizarron-verde.png"
     }
 
-    override method atravesable() {
-        return false
-    }
 }
 
-/* class Arbol inherits Visual {
-    const property position
-
+object pizarronNotas inherits Visual {
     method image() {
-        return "arbol.png"
+        return "pizarron-notas.png"
     }
 
-    override method atravesable() {
-        return trfalseue
-    }
-} */
-
-class CalleSuperior inherits Visual {
-    const property position
-
-    method image() {
-        return "calle-superior.png"
-    }
-
-    override method atravesable() {
-        return true
-    }
-}
-
-class CalleInferior inherits Visual {
-    const property position
-
-    method image() {
-        return "calle-inferior.png"
-    }
-
-    override method atravesable() {
-        return true
-    }
-}
-
-class Estacion inherits Visual {
-    const property position
-
-    method image() {
-        return "estacion-bernal.png" 
-    }
-
-    override method atravesable() {
-        return false 
-    }
 }
 
 object _ {
@@ -110,49 +52,31 @@ object _ {
     }
 }
 
-object v { // Vereda
+object p { // 
     method construir(posicion) {
-        game.addVisual(new Vereda(position=posicion))
+        game.addVisual(new Pupitre(position=posicion))
     }
 }
 
-object ci { // Calle Inferior
+object e { // 
     method construir(posicion) {
-        game.addVisual(new CalleInferior(position=posicion))
+        game.addVisual(new Escritorio(position=posicion))
     }
 }
 
-object cs { // Calle Superior
+object pi { //
     method construir(posicion) {
-        game.addVisual(new CalleSuperior(position=posicion))
+        game.addVisual(pizarronVerde)
     }
 }
 
-object p { // Pasto
+object pn { // 
     method construir(posicion) {
-        game.addVisual(new Pasto(position=posicion))
+        game.addVisual(pizarronNotas)
     }
 }
 
-object ac { // Arbusto Chico
-    method construir(posicion) {
-        game.addVisual(new ArbustoChico(position=posicion))
-    }
-}
-
-object ag { // Arbusto Grande
-    method construir(posicion) {
-        game.addVisual(new ArbustoGrande(position=posicion))
-    }
-}
-
-object estacion {
-    method construir(posicion) {
-        if (posicion.equals(game.at(0, 0))) {              // "Solo agregá la estación si esta celda es la celda (0, 0)"
-            game.addVisual(new Estacion(position=posicion))
-        }
-    }
-}
+object p
 
 object tablero {
     const mapa = [
@@ -191,3 +115,4 @@ object tablero {
         game.addVisual(alumno)
     }
 }
+ */
