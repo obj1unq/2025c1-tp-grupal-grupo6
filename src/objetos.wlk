@@ -2,6 +2,7 @@
 import wollok.game.*
 import posiciones.*
 import timer.*
+import tablero2.*
 
 object seleccion {
 
@@ -68,16 +69,21 @@ class PreguntaYRespuesta{
 }
 
 object alumno { //marcos
+
   var property position = game.at(8, 4)  // Para que no quede encima de la imagen estacion
   var direccion = abajo
-  
- /*  method image() = "alumno-frente.png" */
  
   method image() = "alumno-" + direccion.nombre() + ".png"
   
   method mover(nuevaDireccion) {
     direccion = nuevaDireccion
-    position = direccion.siguiente(self.position())
+    const destino = direccion.siguiente(self.position())
+
+    if (nivel.puedeMover(self, destino)) {
+      position = destino
+    } else { 
+      self.reducirTiempo(10)
+    }
   }
 
   method reducirTiempo(tiempo){
@@ -85,8 +91,7 @@ object alumno { //marcos
   }
 }
 
-
-object chancho{
+/* object chancho{
   var property position = game.at(3, 0)
   var property multa = 20
 
@@ -99,7 +104,7 @@ object chancho{
     position = position.left(1)
     self.cobroMulta(personaje)
   }
-}
+} */
 
 const debi = new Profesor (position = game.at(3,1), image = "debi.png")
 

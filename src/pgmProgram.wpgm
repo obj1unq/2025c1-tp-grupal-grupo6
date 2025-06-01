@@ -3,12 +3,13 @@ import objetos.*
 import posiciones.*
 import timer.*
 import tablero.*
-
-
+import tablero2.*
 
 program demo{
 
-    tablero.configurar()
+   // tablero.configurar()
+
+    tableroNivel2.configurar()
     
     game.width(15)
     game.height(18)
