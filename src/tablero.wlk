@@ -8,6 +8,8 @@ class Visual {
     method atravesable() {
         return true
     }
+
+    method aplicarEfecto(alumno){}
 }
 
 class Vereda inherits Visual {

@@ -5,9 +5,7 @@ import timer.*
 import tablero.*
 import autos.*
 
-
 program demo{
-
     const factoryAutos = new AutoFactory()
 
     tablero.configurar()
@@ -33,14 +31,16 @@ program demo{
 
     game.onTick(1000, "cuenta regresiva", {reloj.reducirTiempo()})
 
-    game.onCollideDo(alumno,  {algo => algo.aplicarEfecto(alumno)})
+    game.onCollideDo(alumno, {algo => algo.aplicarEfecto(alumno)})
 
     keyboard.num1().onPressDo({seleccion.respuesta(0)})
     keyboard.num2().onPressDo({seleccion.respuesta(1)})
     keyboard.num3().onPressDo({seleccion.respuesta(2)})
 
-    game.onTick(2000, "generacionAutosDerecha", factoryAutos.crearAutoHaciaDerecha())
-    game.onTick(2000, "generacionAutosIzquierda", factoryAutos.crearAutoHaciaIzquierda())
+    //game.onTick(2000, "generacionAutosDerecha", factoryAutos.generarAutosDerecha())
+    //game.onTick(2000, "generacionAutosIzquierda", factoryAutos.generarAutosIzquierda())
+
+    factoryAutos.generarAutosDerecha()
 
     game.start()
    

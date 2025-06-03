@@ -1,151 +1,150 @@
 import tablero.*
-import posiciones.*
+import wollok.game.*
 
 class Automovil inherits Visual{
-    var property position
+    var property position = game.at(0,0)
     const direccion = derecha
-    
-    method inicio(){
-        return position.x() // guarda la coordenada x de la posicion inicial
-    }
+    const tipo
     
     method image(){
-        return "Auto" + self.color() + direccion.nombre()
+        return "auto" + tipo.caracteristica() + direccion.nombre()
     }
 
-    method color()
-
     method movimiento(){
-        //inicio=0 es izq hacia der, inicio=14 es der hacia izq
-        direccion.movimiento(self)
-        if(self.inicio().x() == 14){
-            self.position().left(1)
-        }else if(position.x() < 0){
-            game.removeVisual(self)
-        }
+        game.onTick(2000,"movimiento auto",{direccion.movimiento(self)})
     }
 
     method choque(personaje){
         personaje.down(1)
-        self.aplicarEfecto()
     }
-
-    method aplicarEfecto()
-
-    //method advertencia() = "correte, que te choco"
-    //method efecto()
 }
 
-object movimientoDerecha{
-    method nombre(){
+class Direccion{
+    method nombre()
+    method direccion(personaje)
+    method limite()
+    method condicion(personaje)
+
+    method movimiento(personaje){
+        personaje.position(self.direccion(personaje))
+        if(self.condicion(personaje)){
+            game.removeVisual(personaje)
+        }
+    }   
+}
+
+object derecha inherits Direccion{
+    override method nombre(){
         return "Derecha"
     }
 
-    method movimiento(personaje){
-        //inicio=0 es izq hacia der, inicio=14 es der hacia izq
-        personaje.position(personaje.position().left(1))
-        if(personaje.position().x() >= game.width()){
-            game.removeVisual(personaje)
-        }
+    override method direccion(personaje){
+        return personaje.position().right(1)
+    }
+
+    override method limite(){
+        return game.width()
+    }
+
+    override method condicion(personaje){
+        return personaje.position().x() >= game.width()
     }
 }
-object movimientoIzquierda{
-    method nombre(){
+object izquierda inherits Direccion{
+    override method nombre(){
         return "Izquierda"
     }
 
-    method movimiento(personaje){
-        //inicio=0 es izq hacia der, inicio=14 es der hacia izq
-        personaje.position(personaje.position().right(1))
-        if(personaje.position().x() < 0){
-            game.removeVisual(personaje)
+    override method direccion(personaje){
+        return personaje.position().left(1)
+    }
+
+    override method limite(){
+        return 0
+    }
+
+    override method condicion(personaje){
+        return personaje.position().x() < 0
+    }
+}
+
+class AutoFactory {
+    //const property autosDerecha = [new AutoAmarillo(direccion = derecha), new AutoNegro(direccion = derecha), new AutoPolicia(direccion = derecha), new AutoVerde(direccion = derecha)]
+    //const property autosIzquierda = [new AutoAmarillo(direccion = izquierda), new AutoNegro(direccion = izquierda), new AutoPolicia(direccion = izquierda), new AutoVerde(direccion = izquierda)]
+    const autoDerecha = new Automovil(position = self.inicioRandom(iniciosDerecha), direccion = derecha, tipo = self.tipoRamdom())
+    const property iniciosDerecha = #{game.at(0,14), game.at(0,10), game.at(0,6)}
+    const property iniciosIzquierda = #{game.at(14,15), game.at(14,11), game.at(14,7)}
+    const property tipos = [amarillo, verde, negro, policia]
+    
+    method generarAutosDerecha() {
+        game.addVisual(autoDerecha.image())
+    }
+    
+    method generarAutosIzquierda() {
+        new Automovil(direccion = izquierda, tipo=self.tipoRamdom())
+    }
+
+    method inicioRandom(inicios) {
+        return inicios.anyOne()
+    }
+
+    method tipoRamdom(){
+        return tipos.anyOne()
+    }
+}
+
+class Tipo{
+    method caracteristica()
+    method aplicarEfecto(personaje){
+        personaje.down(1)
+    }
+    method ramdom(){
+        return (0.. (game.width()-1)).anyOne()
+    }
+}
+
+object amarillo inherits Tipo{
+    override method caracteristica(){
+        return "Amarillo"
+    }
+
+    override method aplicarEfecto(personaje){
+        personaje.up(2)
+        
+    }
+}
+
+object negro inherits Tipo{
+    override method caracteristica(){
+        return "Negro"
+    }
+}
+
+object policia inherits Tipo{
+    override method caracteristica(){
+        return "Policia"
+    }
+
+    override method aplicarEfecto(personaje){
+        personaje.position(0,self.ramdom())
+    }
+}
+
+object verde inherits Tipo{
+    override method caracteristica(){
+        return "Verde"
+    }
+
+    override method aplicarEfecto(personaje){
+        super(personaje)
+        if(personaje.position().x() + self.ramdom() >= game.width()){
+            self.reasignarX(personaje, 14)
+        }else{
+            self.reasignarX(personaje, personaje.position().x() + self.ramdom())
         }
     }
-}
 
-class AutoFactory{
-    const property autosDerecha = #{AutoAmarilloHaciaDerecha,AutoNegroHaciaDerecha,AutoPoliciaHaciaDerecha,AutoVerdeHaciaDerecha}
-    const property autosIzquierda = #{AutoAmarilloHaciaIzquierda,AutoNegroHaciaIzquierda,AutoPoliciaHaciaIzquierda,AutoVerdeHaciaIzquierda}
-    
-    method crearAutoHaciaDerecha(posicion){
-        self.crearAuto()
-    }
-
-    method crearAuto()
-    
-    method crearAutoHaciaIzquierda(){
-        game.addVisual(self.autosIzquierda().ramdomize())
-    }
-}
-
-object fila1Derecha{
-    const property inicio = game.at(0,6)
-}
-
-object fila2Derecha{
-    const property inicio = game.at(0,10)
-}
-
-object fila3Derecha{
-    const property inicio = game.at(0,14)
-}
-
-object fila1Izquierda{
-    const property inicio = game.at(14,7)
-}
-
-object fila2Izquierda{
-    const property inicio = game.at(14,11)
-}
-
-object fila3Izquierda{
-    const property inicio = game.at(14,15)
-}
-
-class AutoAmarilloHaciaDerecha inherits AutomovilDerecha {
-    override method image(){
-        return "autoAmarilloHaciaDerecha"
-    }
-}
-
-class AutoNegroHaciaDerecha inherits AutomovilDerecha {
-    override method image(){
-        return "autoNegroHaciaDerecha"
-    }
-}
-
-class AutoPoliciaHaciaDerecha inherits AutomovilDerecha {
-    override method image(){
-        return "autoPolicia"
-    }
-}
-
-class AutoVerdeHaciaDerecha inherits AutomovilDerecha {
-    override method image(){
-        return "autoVerdeHaciaDerecha"
-    }
-}
-
-class AutoAmarilloHaciaIzquierda inherits AutomovilIzquierda {
-    override method image(){
-        return "autoAmarilloHaciaIzquierda"
-    }
-}
-
-class AutoNegroHaciaIzquierda inherits AutomovilIzquierda {
-    override method image(){
-        return "autoNegroHaciaIzquierda"
-    }
-}
-
-class AutoPoliciaHaciaIzquierda inherits AutomovilIzquierda {
-    override method image(){
-        return "autoPoliciaParaIzquierda"
-    }
-}
-
-class AutoVerdeHaciaIzquierda inherits AutomovilIzquierda {
-    override method image(){
-        return "autoVerdeHaciaIzquierda"
+    method reasignarX(personaje, posicion){
+        personaje.position().x(posicion)
     }
 }
