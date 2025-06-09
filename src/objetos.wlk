@@ -2,6 +2,7 @@
 import wollok.game.*
 import posiciones.*
 import timer.*
+import tablero2.*
 
 object seleccion {
 
@@ -19,9 +20,16 @@ class Profesor {
   var property position 
   var property image
   var property text = ""
-  const preguntasYRespuestasCorrectas = [self.nuevaPreguntaYSuRespuestaCorrecta("¿Qué es el polimorfismo?", ["blablabla", "blablabla", "correcta"], 2 ),
-                                         self.nuevaPreguntaYSuRespuestaCorrecta("otraPregunta2", ["correcta", "otraRespuesta2", "otraRespuesta2"], 0),
-                                         self.nuevaPreguntaYSuRespuestaCorrecta("otraPregunta3", ["otraRespuesta2", "correcta", "otraRespuesta2"], 1)]
+  const preguntasYRespuestasCorrectas = [self.nuevaPreguntaYSuRespuestaCorrecta("Decimos que dos objetos que comparten cierta interfaz en común, son _ para ese observador", ["1-iguales", "2-polimórficos", "3-equivalentes"], 1 ),
+                                         self.nuevaPreguntaYSuRespuestaCorrecta("Cual es el equipo que más veces ganó la Copa Libertadores?", ["1-Boca", "2-Racing", "3-Independiente"], 2),
+                                         self.nuevaPreguntaYSuRespuestaCorrecta("En qué año se estrenó la película Matrix?", ["1-1999", "2-2000", "3-2002"], 0),
+                                         self.nuevaPreguntaYSuRespuestaCorrecta("Si tenemos dos referencias _, están apuntando al mismo objeto", ["1-gemelas", "2-idénticas", "3-iguales"], 1),
+                                         self.nuevaPreguntaYSuRespuestaCorrecta("El conjunto de referencias que tiene un objeto representa su _", ["1-Coleccion", "2-Estado", "3-Interfaz"], 1),
+                                         self.nuevaPreguntaYSuRespuestaCorrecta("Dos referencias son idénticas si apuntan al mismo objeto", ["1-Verdadero", "2-Falso", "3-Pasapalabra"], 0),
+                                         self.nuevaPreguntaYSuRespuestaCorrecta("Cual es el nombre de la considerada, primera programadora informatica?", ["1-Joan Clarke", "2-Kathleen Booth", "3-Ada Lovelace"], 2),
+                                         self.nuevaPreguntaYSuRespuestaCorrecta("Dentro de un metodo, cuando no podemos usar self (ya que entrariamos en un loop), que debemos usar?", ["1-inherits", "2-super", "3-override"], 1),
+                                         self.nuevaPreguntaYSuRespuestaCorrecta("A qué se conoce en la industria como “Code Smells?", ["1-cometarios dentro del código que utilizan lenguaje informal.", "2-errores de compilación, que impiden que el código se ejecute correctamente", "3-indicios de problemas profundos en el diseño, aunque no impiden que el programa funcione."], 2)]
+                                         
     
   method nuevaPreguntaYSuRespuestaCorrecta(pregunta, respuestas, correcta){
     return new PreguntaYRespuesta(pregunta = pregunta, respuestas = respuestas, correcta=correcta, profesor=self)
@@ -68,16 +76,21 @@ class PreguntaYRespuesta{
 
 
 object alumno { //marcos
+
   var property position = game.at(8, 4)  // Para que no quede encima de la imagen estacion
   var direccion = abajo
-  
- /*  method image() = "alumno-frente.png" */
  
   method image() = "alumno-" + direccion.nombre() + ".png"
   
   method mover(nuevaDireccion) {
     direccion = nuevaDireccion
-    position = direccion.siguiente(self.position())
+    const destino = direccion.siguiente(self.position())
+
+    if (nivel.puedeMover(self, destino)) {
+      position = destino
+    } else { 
+      self.reducirTiempo(10)
+    }
   }
 
   method reducirTiempo(tiempo){
@@ -85,8 +98,7 @@ object alumno { //marcos
   }
 }
 
-
-object chancho{
+/* object chancho{
   var property position = game.at(3, 0)
   var property multa = 20
 
@@ -99,7 +111,7 @@ object chancho{
     position = position.left(1)
     self.cobroMulta(personaje)
   }
-}
+} */
 
 const debi = new Profesor (position = game.at(3,1), image = "debi.png")
 
