@@ -40,7 +40,6 @@ program demo{
     keyboard.num2().onPressDo({seleccion.respuesta(1)})
     keyboard.num3().onPressDo({seleccion.respuesta(2)})
 
-
     game.start()
    
 }

@@ -2,11 +2,14 @@ import objetos.*
 import pgmProgram.*
 import posiciones.*
 import timer.*
+import autos.*
 
 class Visual {
     method atravesable() {
         return true
     }
+
+    method aplicarEfecto(alumno){}
 }
 
 class Vereda inherits Visual {
