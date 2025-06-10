@@ -1,8 +1,8 @@
+import src.nivel.*
 // src/objetos.wlk
 import wollok.game.*
 import posiciones.*
 import timer.*
-import tablero2.*
 
 object seleccion {
 
@@ -74,7 +74,38 @@ class PreguntaYRespuesta{
 }
 
 
+object alumno { //marcos
 
+  var property position = game.at(8, 4)  // Para que no quede encima de la imagen estacion
+  var direccion = abajo
+ 
+  method image() = "alumno-" + direccion.nombre() + ".png"
+  
+  method mover(nuevaDireccion) {
+    direccion = nuevaDireccion
+    const destino = direccion.siguiente(self.position())
+
+    if (nivelManager.nivelActual().puedeMover(self, destino)) {
+      position = destino
+      }
+    if (self.llegoAlFinalDelNivel()) {
+      nivelManager.avanzarNivel()
+      position = nivelManager.nivelActual().posicionInicial()  
+    } else { 
+      self.reducirTiempo(10)
+    }
+  }
+
+  method llegoAlFinalDelNivel() {
+    return nivelManager.nivelActual().excepcionesPositivas().contains(self.position())
+  }
+
+  method reducirTiempo(tiempo){
+
+  }
+} 
+
+/* 
 object alumno { //marcos
 
   var property position = game.at(8, 4)  // Para que no quede encima de la imagen estacion
@@ -96,7 +127,8 @@ object alumno { //marcos
   method reducirTiempo(tiempo){
 
   }
-}
+} */
+
 
 /* object chancho{
   var property position = game.at(3, 0)
