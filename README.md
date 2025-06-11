@@ -17,9 +17,9 @@ El juego consiste en 3 mini-juegos. Cada uno con propio desafio, pero siempre co
 
 A continuación, las reglas y objetivos de cada nivel: 
 
--1er Nivel: Sobrevivir a los obstaculos, evitando ser chocado y quedarse sin tiempo.
--2do Nivel: Enfrentarse al laberinto de estudiantes, evitando quedarse sin tiempo.
--3er Nivel: Enfrentarse a los 3 Boss y contestar correctamente sus preguntas, para aprobar el parcial.
+- 1er Nivel: Sobrevivir a los obstaculos, evitando ser chocado y quedarse sin tiempo.
+- 2do Nivel: Enfrentarse al laberinto de estudiantes, evitando quedarse sin tiempo.
+- 3er Nivel: Enfrentarse a los 3 Boss y contestar correctamente sus preguntas, para aprobar el parcial.
 
 
 ## Otros
