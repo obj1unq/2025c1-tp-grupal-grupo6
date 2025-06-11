@@ -47,6 +47,13 @@ object pizarronNotas inherits Visual {
 
 }
 
+object piso inherits Visual {
+    method image() {
+        return "pizarron-notas.png"
+    }
+
+}
+
 object _ {
     method construir(posicion) {// Tile vacío, no hace nada por ahora
     }
