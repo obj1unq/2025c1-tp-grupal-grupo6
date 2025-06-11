@@ -1,21 +1,25 @@
+
 import wollok.game.*
 import objetos.*
 import posiciones.*
 import timer.*
-import tablero.*
-import tablero2.*
+// import tablero.*
+// import tablero2.*
+import nivel.*
 
 program demo{
 
-   // tablero.configurar()
+    // tablero.configurar()
 
-    tableroNivel2.configurar()
+    // tableroNivel2.configurar()
+
+    nivel1.configurar()
     
     game.width(15)
     game.height(18)
     game.cellSize(96)
 
-    game.addVisual(reloj)
+   // game.addVisual(reloj)
 
    /*game.addVisual(leo)
     game.addVisual(alumno)
@@ -39,6 +43,7 @@ program demo{
     keyboard.num1().onPressDo({seleccion.respuesta(0)})
     keyboard.num2().onPressDo({seleccion.respuesta(1)})
     keyboard.num3().onPressDo({seleccion.respuesta(2)})
+
 
     game.start()
    
