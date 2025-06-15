@@ -1,4 +1,4 @@
-import tablero.*
+import nivel.*
 import wollok.game.*
 
 class Automovil inherits Visual{

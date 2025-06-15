@@ -3,8 +3,6 @@ import wollok.game.*
 import objetos.*
 import posiciones.*
 import timer.*
-// import tablero.*
-// import tablero2.*
 import nivel.*
 
 program demo{

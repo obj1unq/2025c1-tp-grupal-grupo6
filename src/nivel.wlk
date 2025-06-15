@@ -355,6 +355,109 @@ object P {
 
 // ------------------------ NIVEL 3 ------------------------------ 
 
+class Pupitre inherits Visual {
+    const property position
+
+    method image() {
+        return "pupitre.png"
+    }
+
+    override method atravesable() { // 
+        return false
+    }
+}
+
+class Escritorio inherits Visual {
+    const property position
+
+    method image() {
+        return "escritorio.png"
+    }
+
+    override method atravesable() {
+        return false
+    }
+}
+
+/*  class Piso inherits Visual {
+
+    const property position
+
+    method image() {
+        return "pisos.png"
+    }
+
+    override method atravesable() {
+        return true
+    }
+
+}  */
+
+/* object pizarronVerde inherits Visual {
+    method image() {
+        return "pizarron.png"
+    }
+
+}
+
+object pizarronNotas inherits Visual {
+    method image() {
+        return "tablero-notas.png"
+    }
+ */
+
+
+object pu {  
+    method construir(posicion) {
+        game.addVisual(new Pupitre(position=posicion))
+    }
+}
+
+object es {  
+    method construir(posicion) {
+        game.addVisual(new Escritorio(position=posicion))
+    }
+}
+/* 
+object pv { 
+    method construir(posicion) {
+        game.addVisual(pizarronVerde)
+    }
+}
+
+/* object pi { 
+    method construir(posicion) {
+        game.addVisual(new Piso(position=posicion))
+    }
+} */
+
+/* object tn { 
+    method construir(posicion) {
+        game.addVisual(pizarronNotas)
+    }
+} */ 
+
+class Pizarron inherits Visual {
+    const property position
+
+    method image() {
+        return "banner-pizarron.png" 
+    }
+
+    override method atravesable() {
+        return false 
+    }
+}
+
+object pizarron {
+    method construir(posicion) {
+        if (posicion.equals(game.at(0, 15))) {              // "Solo agregá la estación si esta celda es la celda (0, 0)"
+            game.addVisual(new Pizarron(position=posicion))
+        }
+    }
+}
+/* ------------------------NIVELES ------------------------- */
+
 object nivel1 inherits Nivel {
 
     override method mapa() = [
@@ -412,6 +515,31 @@ object nivel2 inherits Nivel {
 }
 
 object nivel3 inherits Nivel {
+    override method mapa() = [
+        [_,_,_,_,_,_,_,_,_,_,_,_,_,_,_],
+        [_,_,_,_,_,_,_,_,_,_,_,_,_,_,_],
+        [pizarron,_,_,_,_,_,_,_,_,_,_,_,_,_,_],
+        [_,_,_,_,_,_,_,_,_,_,_,_,_,_,_],
+        [_,_,es,_,es,_,es,_,es,_,es,_,_,_,_],
+        [_,_,_,_,_,_,_,_,_,_,_,_,_,_,_],
+        [_,_,es,_,es,_,es,_,es,_,es,_,_,_,_],
+        [_,_,_,_,_,_,_,_,_,_,_,_,_,_,_],
+        [_,_,es,_,es,_,es,_,es,_,es,_,_,_,_],
+        [_,_,_,_,_,_,_,_,_,_,_,_,_,_,_],
+        [_,_,es,_,es,_,es,_,es,_,es,_,_,_,_],
+        [_,_,_,_,_,_,_,_,_,_,_,_,_,_,_],
+        [_,_,_,_,_,_,_,_,_,_,_,_,_,_,_],
+        [_,_,_,_,_,_,_,_,_,_,_,_,_,_,_],
+        [_,_,_,_,_,_,_,_,_,_,_,_,_,_,_],
+        [_,_,_,_,_,_,_,_,_,_,_,_,_,_,_],
+        [_,_,_,_,_,_,_,_,_,_,_,_,_,_,_],
+        [_,_,_,_,_,_,_,_,_,_,_,_,_,_,_]
+
+    ]
+
+    override method usaBordes() = false
+    override method excepcionesPositivas() = []  
+    override method posicionInicial() = game.at(4, 0)
 
 }
 
