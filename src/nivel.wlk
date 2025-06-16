@@ -79,6 +79,7 @@ object _ {
 
 // ------------------------ NIVEL 1 ------------------------------
 
+
 class Vereda inherits Visual {
     const property position
 
@@ -355,6 +356,70 @@ object P {
 
 // ------------------------ NIVEL 3 ------------------------------ 
 
+class Computadora inherits Visual {
+    const property position
+
+    method image() {
+        return "escritoriofinal.png"
+    }
+
+    override method atravesable() {
+        return false
+    }
+}
+
+  class Piso inherits Visual {
+
+    const property position
+
+    method image() {
+        return "piso-final.png"
+    }
+
+    override method atravesable() {
+        return true
+    }
+
+}  
+
+object cm {  
+    method construir(posicion) {
+        game.addVisual(new Computadora(position=posicion))
+    }
+}
+
+
+object piso { 
+    method construir(posicion) {
+        if (posicion.equals(game.at(0, 0))) {              
+            game.addVisual(new Piso(position=posicion))
+        }
+    }
+} 
+
+
+
+class Pizarron inherits Visual {
+    const property position
+
+    method image() {
+        return "bannerPizarron.png" 
+    }
+
+    override method atravesable() {
+        return false 
+    }
+}
+
+object pizarron {
+    method construir(posicion) {
+        if (posicion.equals(game.at(0, 14))) {              // "Solo agregá la estación si esta celda es la celda (0, 0)"
+            game.addVisual(new Pizarron(position=posicion))
+        }
+    }
+}
+/* ------------------------NIVELES ------------------------- */
+
 object nivel1 inherits Nivel {
 
     override method mapa() = [
@@ -412,6 +477,31 @@ object nivel2 inherits Nivel {
 }
 
 object nivel3 inherits Nivel {
+    override method mapa() = [
+        [_,_,_,_,_,_,_,_,_,_,_,_,_,_,_],
+        [_,_,_,_,_,_,_,_,_,_,_,_,_,_,_],
+        [_,_,_,_,_,_,_,_,_,_,_,_,_,_,_],
+        [pizarron,_,_,_,_,_,_,_,_,_,_,_,_,_,_],
+        [_,_,_,_,_,_,_,_,_,_,_,_,_,_,_],
+        [_,_,cm,_,cm,_,cm,_,cm,_,cm,_,cm,_,_],
+        [_,_,_,_,_,_,_,_,_,_,_,_,_,_,_],
+        [_,_,cm,_,cm,_,cm,_,cm,_,cm,_,cm,_,_],
+        [_,_,_,_,_,_,_,_,_,_,_,_,_,_,_],
+        [_,_,cm,_,cm,_,cm,_,cm,_,cm,_,cm,_,_],
+        [_,_,_,_,_,_,_,_,_,_,_,_,_,_,_],
+        [_,_,cm,_,cm,_,cm,_,cm,_,cm,_,cm,_,_],
+        [_,_,_,_,_,_,_,_,_,_,_,_,_,_,_],
+        [_,_,cm,_,cm,_,cm,_,cm,_,cm,_,cm,_,_],
+        [_,_,_,_,_,_,_,_,_,_,_,_,_,_,_],
+        [_,_,cm,_,cm,_,cm,_,cm,_,cm,_,cm,_,_],
+        [_,_,_,_,_,_,_,_,_,_,_,_,_,_,_],
+        [piso,_,_,_,_,_,_,_,_,_,_,_,_,_,_]
+
+    ]
+
+    override method usaBordes() = false
+    override method excepcionesPositivas() = [game.at(4, 0)]  
+    override method posicionInicial() = game.at(4, 0)
 
 }
 
