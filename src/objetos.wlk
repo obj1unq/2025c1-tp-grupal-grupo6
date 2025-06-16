@@ -36,6 +36,7 @@ class Profesor {
   }
 
 
+
   //Esto parece viejo, revisar
   method efecto(alumno) {
     game.onCollideDo(alumno, {self.aplicarEfecto(alumno)})
@@ -45,6 +46,12 @@ class Profesor {
     seleccion.seleccionar(preguntasYRespuestasCorrectas.anyOne())
   }
 }
+
+const leo = new Profesor (position = game.at(3, 3), image = "leo.png" )
+const debi = new Profesor (position = game.at(3, 3), image = "leo.png" )
+const isa = new Profesor (position = game.at(3, 3), image = "leo.png" )
+
+
 class PreguntaYRespuesta{
   const property pregunta
   const property respuestas 
@@ -72,6 +79,7 @@ class PreguntaYRespuesta{
   }  
 
 }
+
 
 
 object alumno { //marcos
@@ -145,11 +153,7 @@ object alumno { //marcos
   }
 } */
 
-const debi = new Profesor (position = game.at(3,1), image = "debi.png")
 
-const isaias = new Profesor (position = game.at(3,2 ), image = "isaias.png" )
-
-const leo = new Profesor (position = game.at(3, 3), image = "leo.png" )
 
 
   

@@ -79,6 +79,7 @@ object _ {
 
 // ------------------------ NIVEL 1 ------------------------------
 
+
 class Vereda inherits Visual {
     const property position
 
@@ -355,23 +356,11 @@ object P {
 
 // ------------------------ NIVEL 3 ------------------------------ 
 
-class Pupitre inherits Visual {
+class Computadora inherits Visual {
     const property position
 
     method image() {
-        return "pupitre.png"
-    }
-
-    override method atravesable() { // 
-        return false
-    }
-}
-
-class Escritorio inherits Visual {
-    const property position
-
-    method image() {
-        return "escritorio.png"
+        return "escritoriofinal.png"
     }
 
     override method atravesable() {
@@ -379,69 +368,42 @@ class Escritorio inherits Visual {
     }
 }
 
-/*  class Piso inherits Visual {
+  class Piso inherits Visual {
 
     const property position
 
     method image() {
-        return "pisos.png"
+        return "piso-final.png"
     }
 
     override method atravesable() {
         return true
     }
 
-}  */
+}  
 
-/* object pizarronVerde inherits Visual {
-    method image() {
-        return "pizarron.png"
-    }
-
-}
-
-object pizarronNotas inherits Visual {
-    method image() {
-        return "tablero-notas.png"
-    }
- */
-
-
-object pu {  
+object cm {  
     method construir(posicion) {
-        game.addVisual(new Pupitre(position=posicion))
+        game.addVisual(new Computadora(position=posicion))
     }
 }
 
-object es {  
-    method construir(posicion) {
-        game.addVisual(new Escritorio(position=posicion))
-    }
-}
-/* 
-object pv { 
-    method construir(posicion) {
-        game.addVisual(pizarronVerde)
-    }
-}
 
-/* object pi { 
+object piso { 
     method construir(posicion) {
-        game.addVisual(new Piso(position=posicion))
+        if (posicion.equals(game.at(0, 0))) {              
+            game.addVisual(new Piso(position=posicion))
+        }
     }
-} */
+} 
 
-/* object tn { 
-    method construir(posicion) {
-        game.addVisual(pizarronNotas)
-    }
-} */ 
+
 
 class Pizarron inherits Visual {
     const property position
 
     method image() {
-        return "banner-pizarron.png" 
+        return "bannerPizarron.png" 
     }
 
     override method atravesable() {
@@ -451,7 +413,7 @@ class Pizarron inherits Visual {
 
 object pizarron {
     method construir(posicion) {
-        if (posicion.equals(game.at(0, 15))) {              // "Solo agregá la estación si esta celda es la celda (0, 0)"
+        if (posicion.equals(game.at(0, 14))) {              // "Solo agregá la estación si esta celda es la celda (0, 0)"
             game.addVisual(new Pizarron(position=posicion))
         }
     }
@@ -518,27 +480,27 @@ object nivel3 inherits Nivel {
     override method mapa() = [
         [_,_,_,_,_,_,_,_,_,_,_,_,_,_,_],
         [_,_,_,_,_,_,_,_,_,_,_,_,_,_,_],
+        [_,_,_,_,_,_,_,_,_,_,_,_,_,_,_],
         [pizarron,_,_,_,_,_,_,_,_,_,_,_,_,_,_],
         [_,_,_,_,_,_,_,_,_,_,_,_,_,_,_],
-        [_,_,es,_,es,_,es,_,es,_,es,_,_,_,_],
+        [_,_,cm,_,cm,_,cm,_,cm,_,cm,_,cm,_,_],
         [_,_,_,_,_,_,_,_,_,_,_,_,_,_,_],
-        [_,_,es,_,es,_,es,_,es,_,es,_,_,_,_],
+        [_,_,cm,_,cm,_,cm,_,cm,_,cm,_,cm,_,_],
         [_,_,_,_,_,_,_,_,_,_,_,_,_,_,_],
-        [_,_,es,_,es,_,es,_,es,_,es,_,_,_,_],
+        [_,_,cm,_,cm,_,cm,_,cm,_,cm,_,cm,_,_],
         [_,_,_,_,_,_,_,_,_,_,_,_,_,_,_],
-        [_,_,es,_,es,_,es,_,es,_,es,_,_,_,_],
+        [_,_,cm,_,cm,_,cm,_,cm,_,cm,_,cm,_,_],
         [_,_,_,_,_,_,_,_,_,_,_,_,_,_,_],
+        [_,_,cm,_,cm,_,cm,_,cm,_,cm,_,cm,_,_],
         [_,_,_,_,_,_,_,_,_,_,_,_,_,_,_],
+        [_,_,cm,_,cm,_,cm,_,cm,_,cm,_,cm,_,_],
         [_,_,_,_,_,_,_,_,_,_,_,_,_,_,_],
-        [_,_,_,_,_,_,_,_,_,_,_,_,_,_,_],
-        [_,_,_,_,_,_,_,_,_,_,_,_,_,_,_],
-        [_,_,_,_,_,_,_,_,_,_,_,_,_,_,_],
-        [_,_,_,_,_,_,_,_,_,_,_,_,_,_,_]
+        [piso,_,_,_,_,_,_,_,_,_,_,_,_,_,_]
 
     ]
 
     override method usaBordes() = false
-    override method excepcionesPositivas() = []  
+    override method excepcionesPositivas() = [game.at(4, 0)]  
     override method posicionInicial() = game.at(4, 0)
 
 }
