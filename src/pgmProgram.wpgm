@@ -20,7 +20,7 @@ program demo{
     game.cellSize(96)
 
    // game.addVisual(reloj)
-
+    
    /*game.addVisual(leo)
     game.addVisual(alumno)
     
@@ -38,7 +38,7 @@ program demo{
 
     game.onTick(1000, "cuenta regresiva", {reloj.reducirTiempo()})
 
-    game.onCollideDo(alumno,  {algo => algo.aplicarEfecto(alumno)})
+    game.onCollideDo(alumno, {algo => algo.aplicarEfecto(alumno)})
 
     keyboard.num1().onPressDo({seleccion.respuesta(0)})
     keyboard.num2().onPressDo({seleccion.respuesta(1)})

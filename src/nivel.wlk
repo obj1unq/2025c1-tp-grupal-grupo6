@@ -2,6 +2,7 @@ import objetos.*
 import pgmProgram.*
 import posiciones.*
 import timer.*
+import autos.*
 
 class Nivel {
 
@@ -318,7 +319,7 @@ object calleFacu inherits Visual {  // Fondo Gris
         return true
     }
 }
-    
+
 object c { // Calle principal 
 
     method construir(posicion) {
@@ -381,6 +382,13 @@ object nivel1 inherits Nivel {
     override method excepcionesNegativas() = [game.at(0, 3), game.at(1, 3), game.at(2, 3),game.at(3, 3), game.at(4, 3), game.at(5, 3), game.at(6, 3), game.at(7, 3), game.at(8, 3), game.at(9, 3), game.at(10, 3), game.at(11, 3), game.at(12, 3), game.at(13, 3), game.at(14, 3)] // Toda la fila 3, para que no pase a la estacion
     override method excepcionesPositivas() = [game.at(6,17), game.at(7, 17), game.at(8, 17)] // Pasaje borde superior
     override method posicionInicial() = game.at(8, 4)
+
+    override method configurar(){
+        super()
+        game.onTick(500, "generacionDerecha", {autoFactory.generarAutos(derecha)})
+        game.onTick(500, "generacionIzquierda", {autoFactory.generarAutos(izquierda)})
+        game.onTick(500, "movimientoDeAutos", {autoFactory.avanzar()})
+    }
 }
 
 object nivel2 inherits Nivel {
