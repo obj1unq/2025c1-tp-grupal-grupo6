@@ -8,7 +8,7 @@ import historiaJuego.*
 
 program demo{
 
-    
+    //nivel3.configurar()
     game.width(15)
     game.height(18)
     game.cellSize(96)

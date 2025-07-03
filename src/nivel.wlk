@@ -75,7 +75,7 @@ class Visual {
     }
 }
 
-object _ {
+object __ {
     method construir(posicion) {// Tile vacío, no hace nada por ahora
     }
 }
@@ -179,7 +179,7 @@ class Estacion inherits Visual {
     }
 }
 
-object v { // Vereda
+object ve { // Vereda
     method construir(posicion) {
         game.addVisual(new Vereda(position=posicion))
     }
@@ -197,7 +197,7 @@ object cs { // Calle Superior
     }
 }
 
-object p { // Pasto
+object po { // Pasto q
     method construir(posicion) {
         game.addVisual(new Pasto(position=posicion))
     }
@@ -215,7 +215,7 @@ object ag { // Arbusto Grande
     }
 }
 
-object estacion {
+object es {
     method construir(posicion) {
         if (posicion.equals(game.at(0, 0))) {              // "Solo agregá la estación si esta celda es la celda (0, 0)"
             game.addVisual(new Estacion(position=posicion))
@@ -285,14 +285,14 @@ class Cartel inherits Visual {
     }
 }
 
-object  cartel {
+object  ca {
     method construir(posicion) {
         game.addVisual(new Parque(position=posicion))
         game.addVisual(new Cartel(position=posicion))
     }
 }
 
-object f {
+object fc {
     method construir(posicion) {
      game.addVisual(new Facultad(position=posicion))
     }
@@ -323,7 +323,7 @@ object calleFacu inherits Visual {  // Fondo Gris
     }
 }
     
-object c { // Calle principal 
+object cf { // Calle principal 
 
     method construir(posicion) {
         calleFacu.position(posicion)
@@ -331,14 +331,14 @@ object c { // Calle principal
     }
 } 
 
-object arbol { // Calle principal 
+object ar { // Calle principal 
 
     method construir(posicion) {
         game.addVisual(new Arbol(position=posicion))
     }
 } 
 
-object farola { // Calle principal 
+object fa { // Calle principal 
 
     method construir(posicion) {
         game.addVisual(new Farola(position=posicion))
@@ -347,7 +347,7 @@ object farola { // Calle principal
 
 
 
-object P {
+object pm {
 
     const imagenes = ["personaje1-1.png", "personaje2-1.png", "personaje3-1.png", "personaje4-1.png","personaje5-1.png",
  "personaje6-1.png", "personaje7-1.png", "personaje8-1.png", "personaje9-1.png", "personaje10-1.png"]
@@ -392,7 +392,7 @@ object cm {
 }
 
 
-object piso { 
+object ps { 
     method construir(posicion) {
         if (posicion.equals(game.at(0, 0))) {              
             game.addVisual(new Piso(position=posicion))
@@ -414,7 +414,7 @@ class Pizarron inherits Visual {
     }
 }
 
-object pizarron {
+object pi {
     method construir(posicion) {
         if (posicion.equals(game.at(0, 14))) {              // "Solo agregá la estación si esta celda es la celda (0, 0)"
             game.addVisual(new Pizarron(position=posicion))
@@ -428,24 +428,24 @@ object pizarron {
 object nivel1 inherits Nivel {
 
     override method mapa() = [
-        [ac,ag,ac,v,v,v,v,v,v,v,v,v,ac,ag,ac],
-        [p,p,p,v,v,v,v,v,v,v,v,v,p,p,p],
+        [ac,ag,ac,ve,ve,ve,ve,ve,ve,ve,ve,ve,ac,ag,ac],
+        [po,po,po,ve,ve,ve,ve,ve,ve,ve,ve,ve,po,po,po],
         [cs,cs,cs,cs,cs,cs,cs,cs,cs,cs,cs,cs,cs,cs,cs],   //(0,15) (14,15)
         [ci,ci,ci,ci,ci,ci,ci,ci,ci,ci,ci,ci,ci,ci,ci],   //(0,14) (14,14)
-        [v,v,v,v,v,v,v,v,v,v,v,v,v,v,v],
-        [v,v,v,v,v,v,v,v,v,v,v,v,v,v,v],
+        [ve,ve,ve,ve,ve,ve,ve,ve,ve,ve,ve,ve,ve,ve,ve],
+        [ve,ve,ve,ve,ve,ve,ve,ve,ve,ve,ve,ve,ve,ve,ve],
         [cs,cs,cs,cs,cs,cs,cs,cs,cs,cs,cs,cs,cs,cs,cs],   //(0,11) (14,11)
         [ci,ci,ci,ci,ci,ci,ci,ci,ci,ci,ci,ci,ci,ci,ci],   //(0,10) (14,10)
-        [v,v,v,v,v,v,v,v,v,v,v,v,v,v,v],
-        [v,v,v,v,v,v,v,v,v,v,v,v,v,v,v],
+        [ve,ve,ve,ve,ve,ve,ve,ve,ve,ve,ve,ve,ve,ve,ve],
+        [ve,ve,ve,ve,ve,ve,ve,ve,ve,ve,ve,ve,ve,ve,ve],
         [cs,cs,cs,cs,cs,cs,cs,cs,cs,cs,cs,cs,cs,cs,cs],   //(0,7) (14,7)
         [ci,ci,ci,ci,ci,ci,ci,ci,ci,ci,ci,ci,ci,ci,ci],   //(0,6) (14,6)    
-        [v,v,v,v,v,v,v,v,v,v,v,v,ac,ag,ac],
-        [v,v,v,v,v,v,v,v,v,v,v,v,p,p,p],
-        [_,_,_,_,_,_,_,_,_,_,_,_,_,_,_],
-        [_,_,_,_,_,_,_,_,_,_,_,_,_,_,_],
-        [_,_,_,_,_,_,_,_,_,_,_,_,_,_,_],
-        [estacion,_,_,_,_,_,_,_,_,_,_,_,_,_,_]  // En este renglon quiero la imagen de la estación. Sera poner de fondo esa imagen y por arriba todo esto?
+        [ve,ve,ve,ve,ve,ve,ve,ve,ve,ve,ve,ve,ac,ag,ac],
+        [ve,ve,ve,ve,ve,ve,ve,ve,ve,ve,ve,ve,po,po,po],
+        [__,__,__,__,__,__,__,__,__,__,__,__,__,__,__],
+        [__,__,__,__,__,__,__,__,__,__,__,__,__,__,__],
+        [__,__,__,__,__,__,__,__,__,__,__,__,__,__,__],
+        [es,__,__,__,__,__,__,__,__,__,__,__,__,__,__]  // En este renglon quiero la imagen de la estación. Sera poner de fondo esa imagen y por arriba todo esto?
     ]
 
     override method excepcionesNegativas() = [game.at(0, 3), game.at(1, 3), game.at(2, 3),game.at(3, 3), game.at(4, 3), game.at(5, 3), game.at(6, 3), game.at(7, 3), game.at(8, 3), game.at(9, 3), game.at(10, 3), game.at(11, 3), game.at(12, 3), game.at(13, 3), game.at(14, 3)] // Toda la fila 3, para que no pase a la estacion
@@ -456,24 +456,24 @@ object nivel1 inherits Nivel {
 object nivel2 inherits Nivel {
 
     override method mapa() = [
-        [f,f,f,f,f,f,_,_,_,f,f,f,f,f,f], // Salida
-        [pa,pa,_,_,_,P,_,_,P,_,_,P,_,pa,pa],
-        [pa,pa,_,P,_,_,_,P,_,P,_,_,_,pa,pa],
-        [pa,pa,_,_,_,P,P,P,_,_,P,P,_,pa,pa],
-        [pa,pa,P,P,_,P,_,_,P,_,_,_,_,pa,pa],
-        [pa,pa,_,P,_,_,_,P,_,_,_,P,P,pa,pa],
-        [pa,pa,_,_,_,P,P,_,_,P,_,P,P,pa,pa],
-        [pa,pa,_,P,P,P,_,P,_,P,_,_,_,pa,cartel],
-        [pa,pa,_,_,_,_,_,_,P,P,P,P,_,pa,pa],
-        [pa,pa,_,P,P,_,P,_,P,_,_,_,_,pa,pa],
-        [pa,pa,P,P,_,_,P,_,_,_,P,P,P,pa,pa],
-        [pa,cartel,_,_,_,P,P,_,_,P,_,_,_,pa,pa],
-        [pa,pa,_,P,P,P,P,P,_,_,_,P,_,pa,pa],
-        [pa,pa,_,_,_,P,_,_,_,_,P,P,_,pa,pa],
-        [pa,pa,_,P,_,_,_,P,P,_,P,P,_,pa,pa],
-        [pa,pa,P,P,P,_,P,P,_,_,_,_,_,pa,pa],
-        [pa,pa,c,P,_,_,_,_,P,P,P,_,P,pa,pa],
-        [arbol,ag,ac,ag,ac,farola,_,_,_,farola,ac,ag,ac,ag,arbol]   // Entrada 
+        [fc,fc,fc,fc,fc,fc,__,__,__,fc,fc,fc,fc,fc,fc], // Salida
+        [pa,pa,__,__,__,pm,__,__,pm,__,__,pm,__,pa,pa],
+        [pa,pa,__,pm,__,__,__,pm,__,pm,__,__,__,pa,pa],
+        [pa,pa,__,__,__,pm,pm,pm,__,__,pm,pm,__,pa,pa],
+        [pa,pa,pm,pm,__,pm,__,__,pm,__,__,__,__,pa,pa],
+        [pa,pa,__,pm,__,__,__,pm,__,__,__,pm,pm,pa,pa],
+        [pa,pa,__,__,__,pm,pm,__,__,pm,__,pm,pm,pa,pa],
+        [pa,pa,__,pm,pm,pm,__,pm,__,pm,__,__,__,pa,ca],
+        [pa,pa,__,__,__,__,__,__,pm,pm,pm,pm,__,pa,pa],
+        [pa,pa,__,pm,pm,__,pm,__,pm,__,__,__,__,pa,pa],
+        [pa,pa,pm,pm,__,__,pm,__,__,__,pm,pm,pm,pa,pa],
+        [pa,ca,__,__,__,pm,pm,__,__,pm,__,__,__,pm,pm],
+        [pa,pa,__,pm,pm,pm,pm,pm,__,__,__,pm,__,pa,pa],
+        [pa,pa,__,__,__,pm,__,__,__,__,pm,pm,__,pa,pa],
+        [pa,pa,__,pm,__,__,__,pm,pm,__,pm,pm,__,pa,pa],
+        [pa,pa,pm,pm,pm,__,pm,pm,__,__,__,__,__,pa,pa],
+        [pa,pa,cf,pm,__,__,__,__,pm,pm,pm,__,pm,pa,pa],
+        [ar,ag,ac,ag,ac,fa,__,__,__,fa,ac,ag,ac,ag,ar]   // Entrada 
     ]
 
     override method imagenDeTransicion() = "transicion-2.png"
@@ -484,25 +484,26 @@ object nivel2 inherits Nivel {
 }
 
 object nivel3 inherits Nivel {
-    override method mapa() = [
-        [_,_,_,_,_,_,_,_,_,_,_,_,_,_,_],
-        [_,_,_,_,_,_,_,_,_,_,_,_,_,_,_],
-        [_,_,_,_,_,_,_,_,_,_,_,_,_,_,_],
-        [pizarron,_,_,_,_,_,_,_,_,_,_,_,_,_,_],
-        [_,_,_,_,_,_,_,_,_,_,_,_,_,_,_],
-        [_,_,cm,_,cm,_,cm,_,cm,_,cm,_,cm,_,_],
-        [_,_,_,_,_,_,_,_,_,_,_,_,_,_,_],
-        [_,_,cm,_,cm,_,cm,_,cm,_,cm,_,cm,_,_],
-        [_,_,_,_,_,_,_,_,_,_,_,_,_,_,_],
-        [_,_,cm,_,cm,_,cm,_,cm,_,cm,_,cm,_,_],
-        [_,_,_,_,_,_,_,_,_,_,_,_,_,_,_],
-        [_,_,cm,_,cm,_,cm,_,cm,_,cm,_,cm,_,_],
-        [_,_,_,_,_,_,_,_,_,_,_,_,_,_,_],
-        [_,_,cm,_,cm,_,cm,_,cm,_,cm,_,cm,_,_],
-        [_,_,_,_,_,_,_,_,_,_,_,_,_,_,_],
-        [_,_,cm,_,cm,_,cm,_,cm,_,cm,_,cm,_,_],
-        [_,_,_,_,_,_,_,_,_,_,_,_,_,_,_],
-        [piso,_,_,_,_,_,_,_,_,_,_,_,_,_,_]
+    override method mapa() = 
+    [
+        [__,__,__,__,__,__,__,__,__,__,__,__,__,__,__],
+        [__,__,__,__,__,__,__,__,__,__,__,__,__,__,__],
+        [__,__,__,__,__,__,__,__,__,__,__,__,__,__,__],
+        [pi,__,__,__,__,__,__,__,__,__,__,__,__,__,__],
+        [__,__,__,__,__,__,__,__,__,__,__,__,__,__,__],
+        [__,__,cm,__,cm,__,cm,__,cm,__,cm,__,cm,__,__],
+        [__,__,__,__,__,__,__,__,__,__,__,__,__,__,__],
+        [__,__,cm,__,cm,__,cm,__,cm,__,cm,__,cm,__,__],
+        [__,__,__,__,__,__,__,__,__,__,__,__,__,__,__],
+        [__,__,cm,__,cm,__,cm,__,cm,__,cm,__,cm,__,__],
+        [__,__,__,__,__,__,__,__,__,__,__,__,__,__,__],
+        [__,__,cm,__,cm,__,cm,__,cm,__,cm,__,cm,__,__],
+        [__,__,__,__,__,__,__,__,__,__,__,__,__,__,__],
+        [__,__,cm,__,cm,__,cm,__,cm,__,cm,__,cm,__,__],
+        [__,__,__,__,__,__,__,__,__,__,__,__,__,__,__],
+        [__,__,cm,__,cm,__,cm,__,cm,__,cm,__,cm,__,__],
+        [__,__,__,__,__,__,__,__,__,__,__,__,__,__,__],
+        [ps,__,__,__,__,__,__,__,__,__,__,__,__,__,__]
 
     ]
     override method excepcionesNegativas() = [game.at(0, 15), game.at(1, 15), game.at(2, 15),game.at(3, 15), game.at(4, 15), game.at(5, 15), game.at(6, 15), game.at(7, 15), game.at(8, 15), game.at(9, 15), game.at(10, 15), game.at(11, 14), game.at(12, 15), game.at(13, 15), game.at(14, 15)] //14 
@@ -512,6 +513,8 @@ object nivel3 inherits Nivel {
     override method configurar() {
         super()
         game.addVisual(leo)
+        game.addVisual(debi)
+        game.addVisual(isa)
     }
 
 }

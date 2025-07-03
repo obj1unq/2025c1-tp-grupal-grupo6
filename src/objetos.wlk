@@ -47,13 +47,13 @@ class Profesor inherits Visual {
   }
 }
 
-object leo inherits Profesor (position = game.at(7, 14), image = "leo.png" ) {
-  
-}
+object leo inherits Profesor (position = game.at(7, 14), image = "88.png" ) {}
 
-//const leo = new Profesor (position = game.at(3, 3), image = "leo.png" )
-const debi = new Profesor (position = game.at(3, 3), image = "leo.png" )
-const isa = new Profesor (position = game.at(3, 3), image = "leo.png" )
+object debi inherits Profesor (position = game.at(5, 14), image = "22.png" ) {}
+
+object isa inherits Profesor (position = game.at(10, 14), image = "55.png" ){}
+
+
 
 
 class PreguntaYRespuesta{
