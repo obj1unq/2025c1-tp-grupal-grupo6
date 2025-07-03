@@ -16,7 +16,7 @@ object seleccion {
     pregunta.responder(indice)
   }
 }
-class Profesor {
+class Profesor inherits Visual {
   var property position 
   var property image
   var property text = ""
@@ -47,7 +47,11 @@ class Profesor {
   }
 }
 
-const leo = new Profesor (position = game.at(3, 3), image = "leo.png" )
+object leo inherits Profesor (position = game.at(7, 14), image = "leo.png" ) {
+  
+}
+
+//const leo = new Profesor (position = game.at(3, 3), image = "leo.png" )
 const debi = new Profesor (position = game.at(3, 3), image = "leo.png" )
 const isa = new Profesor (position = game.at(3, 3), image = "leo.png" )
 

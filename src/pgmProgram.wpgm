@@ -4,28 +4,18 @@ import objetos.*
 import posiciones.*
 import timer.*
 import nivel.*
+import historiaJuego.*
 
 program demo{
 
-    // tablero.configurar()
-
-    // tableroNivel2.configurar()
-
-    nivel1.configurar()
     
     game.width(15)
     game.height(18)
     game.cellSize(96)
 
    // game.addVisual(reloj)
+    keyboard.c().onPressDo({historiaActual.continuar()})
 
-   /*game.addVisual(leo)
-    game.addVisual(alumno)
-    
-    game.addVisual(chancho)
-    game.addVisual(debi)
-    game.addVisual(isaias) 
-    game.addVisual(autoRosa)*/
 
     keyboard.enter().onPressDo({game.say(alumno, "hola")})
 
@@ -44,5 +34,6 @@ program demo{
 
 
     game.start()
+    historiaActual.iniciar()
    
 }

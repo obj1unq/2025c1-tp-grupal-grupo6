@@ -5,27 +5,51 @@ import posiciones.*
 import timer.*
 import nivel.*
 
+
 class Historia {
-  method position() = game.at(0, 0) // revisar 
+  method position() = game.at(5, 0) 
   
   method image()
   
-  method ejecutar() {
+  method iniciar() {
     game.removeTickEvent("reloj")
     game.addVisual(self)
   }
+
+  method ejecutar(){
+    self.iniciar()
+  }
+
+}
+
+object historiaActual {
+  var property actual = inicio
+
+  method continuar() {
+    actual.ejecutar()
+  }
+
+  method iniciar() {
+    actual.iniciar()
+  }
+}
+
+object jugando {
+  method ejecutar() {}
 }
 
 object inicio inherits Historia {
   var orden = 0
-  var ejecutandoInicio = true
   
-  override method image() = ("0" + orden.toString()) + "-intro.png"
+  override method image() {
+    const image = ("0" + orden.toString()) + "-intro.png"
+    return image
+  }
   
   override method ejecutar() {
-    super()
-    keyboard.c().onPressDo({ if (ejecutandoInicio) self.cambiar() })
+    self.cambiar()
   }
+
   
   method seguirMostrando() = orden < 9
   
@@ -33,16 +57,34 @@ object inicio inherits Historia {
     if (self.seguirMostrando()) {
       orden += 1
     } else {
-      ejecutandoInicio = false
+      historiaActual.actual(jugando)
+      game.removeVisual(self)
       nivel1.configurar()
       
     }
   }
 }
 
+class Transicion inherits Historia {
+  var nivel 
+  var property image
+
+  override method iniciar() {
+    super()
+    game.schedule(5000, {self.ejecutar()})
+  }
+
+  override method  ejecutar(){
+    game.removeVisual(self)
+    nivel.iniciar()
+  }
+}
+
+
+
 object pantallaFinal inherits Historia {
 
-  var orden = 1
+  var orden = 0
   var finDeJuego = null // = finDeJuegoSinTiempo o finDeJuegoGano
   
   override method image() = "0" + orden.toString() + "-fin.png"
