@@ -71,6 +71,8 @@ class Visual {
     method atravesable() {
         return true
     }
+
+    method aplicarEfecto(personaje){}
 }
 
 object _ {
@@ -385,9 +387,9 @@ object nivel1 inherits Nivel {
 
     override method configurar(){
         super()
-        game.onTick(500, "generacionDerecha", {autoFactory.generarAutos(derecha)})
-        game.onTick(500, "generacionIzquierda", {autoFactory.generarAutos(izquierda)})
-        game.onTick(500, "movimientoDeAutos", {autoFactory.avanzar()})
+        game.onTick(1900, "generacionDerecha", {autoFactory.generarAutos(derechaAuto)})
+        game.onTick(1900, "generacionIzquierda", {autoFactory.generarAutos(izquierdaAuto)})
+        game.onTick(400, "movimientoDeAutos", {autoFactory.avanzar()})
     }
 }
 

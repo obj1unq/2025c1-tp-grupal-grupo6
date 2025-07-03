@@ -36,7 +36,7 @@ program demo{
     keyboard.right().onPressDo({alumno.mover(derecha)})
     keyboard.up().onPressDo({alumno.mover(arriba)})
 
-    game.onTick(1000, "cuenta regresiva", {reloj.reducirTiempo()})
+    game.schedule(1000, {reloj.reducirTiempo()})
 
     game.onCollideDo(alumno, {algo => algo.aplicarEfecto(alumno)})
 
