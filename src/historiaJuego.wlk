@@ -7,7 +7,7 @@ import nivel.*
 
 
 class Historia {
-  method position() = game.at(5, 0) 
+  method position() = game.at(0, 0) 
   
   method image()
   
@@ -42,7 +42,7 @@ object inicio inherits Historia {
   var orden = 0
   
   override method image() {
-    const image = ("0" + orden.toString()) + "-intro.png"
+    const image = (orden.toString()) + "-intro.png"
     return image
   }
   

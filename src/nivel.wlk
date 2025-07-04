@@ -476,7 +476,7 @@ object nivel2 inherits Nivel {
         [ar,ag,ac,ag,ac,fa,__,__,__,fa,ac,ag,ac,ag,ar]   // Entrada 
     ]
 
-    override method imagenDeTransicion() = "transicion-2.png"
+    override method imagenDeTransicion() = "transicion-1nueva.png"
 
     override method usaBordes() = false
     override method excepcionesPositivas() = [game.at(7, 0), game.at(6,17), game.at(7, 17), game.at(8, 17)]  // puertas en el borde superior
@@ -506,6 +506,8 @@ object nivel3 inherits Nivel {
         [ps,__,__,__,__,__,__,__,__,__,__,__,__,__,__]
 
     ]
+    override method imagenDeTransicion() = "transicion-2nueva.png"
+
     override method excepcionesNegativas() = [game.at(0, 15), game.at(1, 15), game.at(2, 15),game.at(3, 15), game.at(4, 15), game.at(5, 15), game.at(6, 15), game.at(7, 15), game.at(8, 15), game.at(9, 15), game.at(10, 15), game.at(11, 14), game.at(12, 15), game.at(13, 15), game.at(14, 15)] //14 
     override method usaBordes() = false
     override method excepcionesPositivas() = [game.at(4, 0)]  
