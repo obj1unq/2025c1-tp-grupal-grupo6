@@ -1,150 +1,148 @@
 import nivel.*
 import wollok.game.*
+import nivel.*
 
-class Automovil inherits Visual{
-    var property position = game.at(0,0)
-    const direccion = derecha
-    const tipo
-    
-    method image(){
-        return "auto" + tipo.caracteristica() + direccion.nombre()
-    }
-
-    method movimiento(){
-        game.onTick(2000,"movimiento auto",{direccion.movimiento(self)})
-    }
-
-    method choque(personaje){
-        personaje.down(1)
-    }
+class Automovil inherits Visual {
+  var property position
+  const direccion
+  const tipo
+  
+  method image() = (("auto" + tipo.caracteristica()) + direccion.nombre()) + ".png"
+  
+  method tipo() = tipo.caracteristica()
+  
+  method direccion() = direccion.nombre()
+  
+  method mover() {
+    direccion.mover(self)
+  }
+  
+  override method aplicarEfecto(personaje) {
+    tipo.aplicarEfecto(personaje)
+  }
 }
 
-class Direccion{
-    method nombre()
-    method direccion(personaje)
-    method limite()
-    method condicion(personaje)
-
-    method movimiento(personaje){
-        personaje.position(self.direccion(personaje))
-        if(self.condicion(personaje)){
-            game.removeVisual(personaje)
-        }
-    }   
+class DireccionAuto {
+  method nombre()
+  
+  method condicion(auto)
+  
+  method mover(auto) {
+    if (self.condicion(auto)) game.removeVisual(auto)
+  }
 }
 
-object derecha inherits Direccion{
-    override method nombre(){
-        return "Derecha"
-    }
-
-    override method direccion(personaje){
-        return personaje.position().right(1)
-    }
-
-    override method limite(){
-        return game.width()
-    }
-
-    override method condicion(personaje){
-        return personaje.position().x() >= game.width()
-    }
-}
-object izquierda inherits Direccion{
-    override method nombre(){
-        return "Izquierda"
-    }
-
-    override method direccion(personaje){
-        return personaje.position().left(1)
-    }
-
-    override method limite(){
-        return 0
-    }
-
-    override method condicion(personaje){
-        return personaje.position().x() < 0
-    }
+object derechaAuto inherits DireccionAuto {
+  override method nombre() = "Derecha"
+  
+  override method mover(auto) {
+    super(auto)
+    auto.position(auto.position().right(1))
+  }
+  
+  override method condicion(auto) = auto.position().x() >= (game.width() - 1)
 }
 
-class AutoFactory {
-    //const property autosDerecha = [new AutoAmarillo(direccion = derecha), new AutoNegro(direccion = derecha), new AutoPolicia(direccion = derecha), new AutoVerde(direccion = derecha)]
-    //const property autosIzquierda = [new AutoAmarillo(direccion = izquierda), new AutoNegro(direccion = izquierda), new AutoPolicia(direccion = izquierda), new AutoVerde(direccion = izquierda)]
-    const autoDerecha = new Automovil(position = self.inicioRandom(iniciosDerecha), direccion = derecha, tipo = self.tipoRamdom())
-    const property iniciosDerecha = #{game.at(0,14), game.at(0,10), game.at(0,6)}
-    const property iniciosIzquierda = #{game.at(14,15), game.at(14,11), game.at(14,7)}
-    const property tipos = [amarillo, verde, negro, policia]
-    
-    method generarAutosDerecha() {
-        game.addVisual(autoDerecha.image())
-    }
-    
-    method generarAutosIzquierda() {
-        new Automovil(direccion = izquierda, tipo=self.tipoRamdom())
-    }
-
-    method inicioRandom(inicios) {
-        return inicios.anyOne()
-    }
-
-    method tipoRamdom(){
-        return tipos.anyOne()
-    }
+object izquierdaAuto inherits DireccionAuto {
+  override method nombre() = "Izquierda"
+  
+  override method mover(auto) {
+    super(auto)
+    auto.position(auto.position().left(1))
+  }
+  
+  override method condicion(auto) = auto.position().x() < 1
 }
 
-class Tipo{
-    method caracteristica()
-    method aplicarEfecto(personaje){
-        personaje.down(1)
+object autoFactory {
+  const property iniciosDerecha = #{
+    game.at(0, 14),
+    game.at(0, 10),
+    game.at(0, 6)
+  }
+  const property iniciosIzquierda = #{
+    game.at(14, 15),
+    game.at(14, 11),
+    game.at(14, 7)
+  }
+  const property tipos = [amarillo, verde, negro, policia]
+  const property autos = []
+  
+  method spawnAuto(auto) {
+    autos.add(auto)
+    game.addVisual(auto)
+  }
+  
+  method generarAutos(_direccion) {
+    if (_direccion.toString() == "derechaAuto") {
+      self.spawnAuto(
+        new Automovil(
+          position = self.inicioRandom(iniciosDerecha),
+          direccion = _direccion,
+          tipo = self.tipoRamdom()
+        )
+      )
+    } else {
+      if (_direccion.toString() == "izquierdaAuto") self.spawnAuto(
+          new Automovil(
+            position = self.inicioRandom(iniciosIzquierda),
+            direccion = _direccion,
+            tipo = self.tipoRamdom()
+          )
+        )
     }
-    method ramdom(){
-        return (0.. (game.width()-1)).anyOne()
-    }
+  }
+  
+  method avanzar() {
+    autos.forEach({ auto => auto.mover() })
+  }
+  
+  method inicioRandom(inicios) = inicios.anyOne()
+  
+  method tipoRamdom() = tipos.anyOne()
 }
 
-object amarillo inherits Tipo{
-    override method caracteristica(){
-        return "Amarillo"
-    }
-
-    override method aplicarEfecto(personaje){
-        personaje.up(2)
-        
-    }
+class Tipo {
+  method caracteristica()
+  
+  method aplicarEfecto(personaje) {
+    personaje.position(personaje.position().down(1))
+  }
+  
+  method ramdom() = (0 .. (game.width() - 1)).anyOne()
 }
 
-object negro inherits Tipo{
-    override method caracteristica(){
-        return "Negro"
-    }
+object amarillo inherits Tipo {
+  override method caracteristica() = "Amarillo"
+  
+  override method aplicarEfecto(personaje) {
+    personaje.position(personaje.position().up(2))
+  }
 }
 
-object policia inherits Tipo{
-    override method caracteristica(){
-        return "Policia"
-    }
-
-    override method aplicarEfecto(personaje){
-        personaje.position(0,self.ramdom())
-    }
+object negro inherits Tipo {
+  override method caracteristica() = "Negro"
 }
 
-object verde inherits Tipo{
-    override method caracteristica(){
-        return "Verde"
-    }
+object policia inherits Tipo {
+  override method caracteristica() = "Policia"
+  
+  override method aplicarEfecto(personaje) {
+    personaje.position(game.at(self.ramdom(), 4))
+  }
+}
 
-    override method aplicarEfecto(personaje){
-        super(personaje)
-        if(personaje.position().x() + self.ramdom() >= game.width()){
-            self.reasignarX(personaje, 14)
-        }else{
-            self.reasignarX(personaje, personaje.position().x() + self.ramdom())
-        }
-    }
-
-    method reasignarX(personaje, posicion){
-        personaje.position().x(posicion)
-    }
+object verde inherits Tipo {
+  override method caracteristica() = "Verde"
+  
+  override method aplicarEfecto(personaje) {
+    super(personaje)
+    if ((personaje.position().x() + self.ramdom()) >= game.width())
+      self.reasignarX(personaje, 14)
+    else self.reasignarX(personaje, self.ramdom())
+  }
+  
+  method reasignarX(personaje, posicion) {
+    personaje.position(game.at(posicion, personaje.position().y()))
+  }
 }

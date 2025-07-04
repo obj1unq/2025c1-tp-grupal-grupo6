@@ -2,6 +2,7 @@ import objetos.*
 import pgmProgram.*
 import posiciones.*
 import timer.*
+import autos.*
 import historiaJuego.*
 
 class Nivel {
@@ -86,6 +87,8 @@ class Visual {
     method atravesable() {
         return true
     }
+
+    method aplicarEfecto(personaje){}
 }
 
 object __ {
@@ -337,7 +340,7 @@ object calleFacu inherits Visual {  // Fondo Gris
         return true
     }
 }
-    
+   
 object cf { // Calle principal 
 
     method construir(posicion) {
@@ -465,9 +468,14 @@ object nivel1 inherits Nivel {
     override method excepcionesPositivas() = [game.at(6,17), game.at(7, 17), game.at(8, 17)] // Pasaje borde superior
     override method posicionInicial() = game.at(8, 4)
 
+    override method configurar(){
+        super()
+        game.onTick(1900, "generacionDerecha", {autoFactory.generarAutos(derechaAuto)})
+        game.onTick(1900, "generacionIzquierda", {autoFactory.generarAutos(izquierdaAuto)})
+        game.onTick(400, "movimientoDeAutos", {autoFactory.avanzar()})
+    }
 
-
-    override method valorNivel() {
+    overoverride method valorNivel() {
         return "Nivel1"
     }
 }

@@ -90,6 +90,7 @@ object alumno { //marcos
 
   var property position = game.at(8, 4)  // Para que no quede encima de la imagen estacion
   var direccion = abajo
+  var property puedeMover = true
  
   method image() = "alumno-" + direccion.nombre() + ".png"
   
