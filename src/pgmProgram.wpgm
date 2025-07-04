@@ -3,34 +3,22 @@ import wollok.game.*
 import objetos.*
 import posiciones.*
 import timer.*
-// import tablero.*
-// import tablero2.*
 import nivel.*
+import historiaJuego.*
 
 program demo{
 
-    // tablero.configurar()
-
-    // tableroNivel2.configurar()
-
-    nivel1.configurar()
-    
+    //nivel3.configurar()
     game.width(15)
     game.height(18)
     game.cellSize(96)
 
    // game.addVisual(reloj)
-    
-   /*game.addVisual(leo)
-    game.addVisual(alumno)
-    
-    game.addVisual(chancho)
-    game.addVisual(debi)
-    game.addVisual(isaias) 
-    game.addVisual(autoRosa)*/
 
     keyboard.enter().onPressDo({game.say(alumno, "hola")})
 
+    keyboard.c().onPressDo({historiaActual.continuar()})
+    
     keyboard.left().onPressDo({alumno.mover(izquierda)})
     keyboard.down().onPressDo({alumno.mover(abajo)})
     keyboard.right().onPressDo({alumno.mover(derecha)})
@@ -46,5 +34,8 @@ program demo{
 
 
     game.start()
-   
+    historiaActual.iniciar()
+    
+    /* const rain = game.sound("musicaNivel1.mp3")
+    game.schedule(500, { rain.play()} ) */
 }
