@@ -27,6 +27,7 @@ class Nivel {
         })
 
         game.addVisual(alumno)
+        self.musicaDeFondo()
     }
 
     method usaBordes() = true // Por defecto los bordes están habilitados
@@ -67,6 +68,18 @@ class Nivel {
     }
 
     method posicionInicial() = game.at(0, 0)
+
+    method musicaDeFondo() {
+        
+        const musica = game.sound("musica" + self.valorNivel() + ".mp3")
+        musica.shouldLoop(true)
+        game.schedule(500, { musica.play()} )
+
+        return musica
+
+    }
+
+    method valorNivel() 
 }
 
 class Visual {
@@ -79,6 +92,8 @@ object __ {
     method construir(posicion) {// Tile vacío, no hace nada por ahora
     }
 }
+
+
 
 // ------------------------ NIVEL 1 ------------------------------
 
@@ -379,10 +394,6 @@ class Computadora inherits Visual {
         return "piso-final.png"
     }
 
-    override method atravesable() {
-        return true
-    }
-
 }  
 
 object cm {  
@@ -416,7 +427,7 @@ class Pizarron inherits Visual {
 
 object pi {
     method construir(posicion) {
-        if (posicion.equals(game.at(0, 14))) {              // "Solo agregá la estación si esta celda es la celda (0, 0)"
+        if (posicion.equals(game.at(0, 14))) {              // 
             game.addVisual(new Pizarron(position=posicion))
         }
     }
@@ -448,9 +459,17 @@ object nivel1 inherits Nivel {
         [es,__,__,__,__,__,__,__,__,__,__,__,__,__,__]  // En este renglon quiero la imagen de la estación. Sera poner de fondo esa imagen y por arriba todo esto?
     ]
 
+    override method imagenDeTransicion() = "transicion-1nueva.png"
+
     override method excepcionesNegativas() = [game.at(0, 3), game.at(1, 3), game.at(2, 3),game.at(3, 3), game.at(4, 3), game.at(5, 3), game.at(6, 3), game.at(7, 3), game.at(8, 3), game.at(9, 3), game.at(10, 3), game.at(11, 3), game.at(12, 3), game.at(13, 3), game.at(14, 3)] // Toda la fila 3, para que no pase a la estacion
     override method excepcionesPositivas() = [game.at(6,17), game.at(7, 17), game.at(8, 17)] // Pasaje borde superior
     override method posicionInicial() = game.at(8, 4)
+
+
+
+    override method valorNivel() {
+        return "Nivel1"
+    }
 }
 
 object nivel2 inherits Nivel {
@@ -476,11 +495,18 @@ object nivel2 inherits Nivel {
         [ar,ag,ac,ag,ac,fa,__,__,__,fa,ac,ag,ac,ag,ar]   // Entrada 
     ]
 
-    override method imagenDeTransicion() = "transicion-1nueva.png"
+    override method imagenDeTransicion() = "transicion-2nueva.png"
+
+    
 
     override method usaBordes() = false
     override method excepcionesPositivas() = [game.at(7, 0), game.at(6,17), game.at(7, 17), game.at(8, 17)]  // puertas en el borde superior
     override method posicionInicial() = game.at(7, 0)
+
+
+    override method valorNivel() {
+        return "Nivel2"
+    }
 }
 
 object nivel3 inherits Nivel {
@@ -506,7 +532,7 @@ object nivel3 inherits Nivel {
         [ps,__,__,__,__,__,__,__,__,__,__,__,__,__,__]
 
     ]
-    override method imagenDeTransicion() = "transicion-2nueva.png"
+    
 
     override method excepcionesNegativas() = [game.at(0, 15), game.at(1, 15), game.at(2, 15),game.at(3, 15), game.at(4, 15), game.at(5, 15), game.at(6, 15), game.at(7, 15), game.at(8, 15), game.at(9, 15), game.at(10, 15), game.at(11, 14), game.at(12, 15), game.at(13, 15), game.at(14, 15)] //14 
     override method usaBordes() = false
@@ -517,6 +543,11 @@ object nivel3 inherits Nivel {
         game.addVisual(leo)
         game.addVisual(debi)
         game.addVisual(isa)
+    }
+
+
+    override method valorNivel() {
+        return "Nivel3"
     }
 
 }

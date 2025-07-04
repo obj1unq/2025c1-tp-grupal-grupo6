@@ -60,7 +60,7 @@ object inicio inherits Historia {
       historiaActual.actual(jugando)
       game.removeVisual(self)
       nivel1.configurar()
-      
+      nivel1.musicaDeFondo()
     }
   }
 }
@@ -80,9 +80,17 @@ class Transicion inherits Historia {
   }
 }
 
+class PantallaFinal inherits Historia {
+
+  override method  ejecutar(){
+    game.removeVisual(self)
+  }
+  
+
+}
 
 
-object pantallaFinal inherits Historia {
+/* object fin inherits PantallaFinal {
 
   var orden = 0
   var finDeJuego = null // = finDeJuegoSinTiempo o finDeJuegoGano
@@ -112,6 +120,7 @@ object pantallaFinal inherits Historia {
     keyboard.c().onPressDo({ self.cambiar() })
   }
 } 
+ */
 
 //se quedo sin tiempo
 object finDeJuegoSinTiempo inherits Historia {
@@ -123,9 +132,8 @@ object finDeJuegoSinTiempo inherits Historia {
 } 
 
 // no aprobo el parcial
-
 object noAproboParcial inherits Historia {
-  override method image() = "01-fin.png"
+  override method image() = "desaprobo.png"
   override method ejecutar() {
     super()
     keyboard.c().onPressDo({ fin.ejecutar() })
@@ -133,20 +141,19 @@ object noAproboParcial inherits Historia {
 } 
 
 // aprobo el parcial
-
 object ganoJuego inherits Historia {
-  override method image() = "02-fin.png"
+  override method image() = "aprobo.png"
   override method ejecutar() {
     super()
     keyboard.c().onPressDo({ fin.ejecutar() })
   }
 } 
 
-//pantalla final, independientemente del resultado
+//pantalla final, luego de haber ganado
 object fin inherits Historia {
   override method image() = "final.png"
   override method ejecutar() {
     super()
-    game.stop()
+    game.stop() //termina el juego
   }
 }
