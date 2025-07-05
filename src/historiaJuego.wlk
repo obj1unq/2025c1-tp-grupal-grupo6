@@ -39,8 +39,7 @@ object inicio inherits Historia {
   var orden = 0
   
   override method image() {
-    const image = "00" + (orden.toString()) + "-intro.png"
-    return image
+    return "00" + (orden.toString()) + "-intro.png"
   }
   
   override method ejecutar() {

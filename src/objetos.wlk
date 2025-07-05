@@ -1,5 +1,4 @@
-import src.nivel.*
-// src/objetos.wlk
+import nivel.*
 import wollok.game.*
 import posiciones.*
 import timer.*
@@ -35,13 +34,6 @@ class Profesor inherits Visual {
     return new PreguntaYRespuesta(pregunta = pregunta, respuestas = respuestas, correcta=correcta, profesor=self)
   }
 
-
-
-  //Esto parece viejo, revisar
-  method efecto(alumno) {
-    game.onCollideDo(alumno, {self.aplicarEfecto(alumno)})
-  }
-
   override method aplicarEfecto(alumno){
     seleccion.seleccionar(preguntasYRespuestasCorrectas.anyOne())
   }
@@ -52,8 +44,6 @@ object leo inherits Profesor (position = game.at(7, 14), image = "88.png" ) {}
 object debi inherits Profesor (position = game.at(5, 14), image = "22.png" ) {}
 
 object isa inherits Profesor (position = game.at(10, 14), image = "55.png" ){}
-
-
 
 
 class PreguntaYRespuesta{
@@ -83,7 +73,6 @@ class PreguntaYRespuesta{
   }  
 
 }
-
 
 
 object alumno { //marcos
