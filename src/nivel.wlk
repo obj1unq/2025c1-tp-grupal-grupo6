@@ -1,3 +1,4 @@
+import wollok.game.*
 import objetos.*
 import pgmProgram.*
 import posiciones.*
