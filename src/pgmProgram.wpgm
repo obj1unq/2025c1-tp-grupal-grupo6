@@ -7,11 +7,13 @@ import historiaJuego.*
 
 program demo{
 
+
     game.width(15)
     game.height(18)
     game.cellSize(96)
 
    // game.addVisual(reloj)
+   // nivel1.configurar()
 
     keyboard.enter().onPressDo({game.say(alumno, "hola")})
 

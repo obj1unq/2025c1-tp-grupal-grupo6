@@ -109,10 +109,7 @@ class Vereda inherits Visual {
 
 class Pasto inherits Visual {
     const property position
-
-    method image() {
-        return "pastito.jpg"
-    }
+    const property image
 }
 
 class Arbusto inherits Visual {
@@ -143,7 +140,7 @@ class Estacion inherits Visual {
     const property position
 
     method image() {
-        return "estacion.png" 
+        return "estacionNueva.png" 
     }
 
     override method atravesable() {
@@ -153,7 +150,7 @@ class Estacion inherits Visual {
 
 object ve { // Vereda Normal
     method construir(posicion) {
-        game.addVisual(new Vereda(position=posicion, image= "prueba.png"))
+        game.addVisual(new Vereda(position=posicion, image= "vereda.png"))
     }
 
     method construirEncima(posicion) {}
@@ -161,14 +158,14 @@ object ve { // Vereda Normal
 
 object vs { // Vereda Cordon Superior
     method construir(posicion) {
-        game.addVisual(new Vereda(position=posicion, image= "veredaConCordonS.png" ))
+        game.addVisual(new Vereda(position=posicion, image= "veredaCS.png" ))
     }
     method construirEncima(posicion) {}
 }
 
 object vi { // Vereda Cordon Inferior
     method construir(posicion) {
-        game.addVisual(new Vereda(position=posicion, image= "cordonInf.png" ))
+        game.addVisual(new Vereda(position=posicion, image= "veredaCI.png" ))
     }
     method construirEncima(posicion) {}
 
@@ -188,9 +185,23 @@ object cs { // Calle Superior
     method construirEncima(posicion) {}
 }
 
-object po { // Pasto 
+object po { // Pasto Normal
     method construir(posicion) {
-        game.addVisual(new Pasto(position=posicion))
+        game.addVisual(new Pasto(position=posicion, image= "pasto.png"))
+    }
+    method construirEncima(posicion) {}
+}
+
+object pc { // Pasto Cordon Superior
+    method construir(posicion) {
+        game.addVisual(new Pasto(position=posicion, image= "pastoCS.png"))
+    }
+    method construirEncima(posicion) {}
+}
+
+object pI { // Pasto Cordon Inferior
+    method construir(posicion) {
+        game.addVisual(new Pasto(position=posicion, image= "pastoCI.png"))
     }
     method construirEncima(posicion) {}
 }
@@ -473,7 +484,7 @@ object nivel1 inherits Nivel {
 
     override method mapa() = [
         [ac,ag,ac,ve,ve,ve,ve,ve,ve,ve,ve,ve,ac,ag,ac],
-        [po,po,po,vi,vi,vi,vi,vi,vi,vi,vi,vi,po,po,po],
+        [pI,pI,pI,vi,vi,vi,vi,vi,vi,vi,vi,vi,pI,pI,pI],
         [cs,cs,cs,cs,cs,cs,cs,cs,cs,cs,cs,cs,cs,cs,cs],   //(0,15) (14,15)
         [ci,ci,ci,ci,ci,ci,ci,ci,ci,ci,ci,ci,ci,ci,ci],   //(0,14) (14,14)
         [vs,vs,vs,vs,vs,vs,vs,vs,vs,vs,vs,vs,vs,vs,vs],
@@ -484,7 +495,7 @@ object nivel1 inherits Nivel {
         [vi,vi,vi,vi,vi,vi,vi,vi,vi,vi,vi,vi,vi,vi,vi],
         [cs,cs,cs,cs,cs,cs,cs,cs,cs,cs,cs,cs,cs,cs,cs],   //(0,7) (14,7)
         [ci,ci,ci,ci,ci,ci,ci,ci,ci,ci,ci,ci,ci,ci,ci],   //(0,6) (14,6)    
-        [vs,vs,vs,vs,vs,vs,vs,vs,vs,vs,vs,vs,ac,ag,ac],
+        [vs,vs,vs,vs,vs,vs,vs,vs,vs,vs,vs,vs,pc,pc,pc],
         [ve,ve,ve,ve,ve,ve,ve,ve,ve,ve,ve,ve,po,po,po],
         [__,__,__,__,__,__,__,__,__,__,__,__,__,__,__],
         [__,__,__,__,__,__,__,__,__,__,__,__,__,__,__],
