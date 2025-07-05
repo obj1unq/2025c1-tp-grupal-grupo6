@@ -1,14 +1,11 @@
+import wollok.game.*
 import objetos.*
-import pgmProgram.*
 import posiciones.*
 import timer.*
 import autos.*
 import historiaJuego.*
 
 class Nivel {
-
-    // const visualesActuales = []
-
     method imagenDeTransicion() = "transicion-1.png"
 
     method mapa() = []
@@ -107,10 +104,6 @@ class Vereda inherits Visual {
     method image() {
         return "vereda.png"
     }
-
-    override method atravesable() { // El override es para redefinir un metodo de la clase, en este caso es igual. Es necesario? 
-        return true
-    }
 }
 
 class Pasto inherits Visual {
@@ -118,10 +111,6 @@ class Pasto inherits Visual {
 
     method image() {
         return "pasto.png"
-    }
-
-    override method atravesable() {
-        return true
     }
 }
 
@@ -167,10 +156,6 @@ class CalleSuperior inherits Visual {
     method image() {
         return "calle-superior.png"
     }
-
-    override method atravesable() {
-        return true
-    }
 }
 
 class CalleInferior inherits Visual {
@@ -178,10 +163,6 @@ class CalleInferior inherits Visual {
 
     method image() {
         return "calle-inferior.png"
-    }
-
-    override method atravesable() {
-        return true
     }
 }
 
@@ -316,13 +297,6 @@ object fc {
     }
 }
 
-/* object a { // alumno
-    method construir(posicion) {
-        game.addVisual(alumno)
-    }
-}
- */
-
 object pa { // Parque
     method construir(posicion) {
         game.addVisual(new Parque(position=posicion))
@@ -334,10 +308,6 @@ object calleFacu inherits Visual {  // Fondo Gris
     
     method image() {
         return "calle-facu.jpg"
-    }
-
-    override method atravesable() {
-        return true
     }
 }
    
@@ -475,7 +445,7 @@ object nivel1 inherits Nivel {
         game.onTick(400, "movimientoDeAutos", {autoFactory.avanzar()})
     }
 
-    overoverride method valorNivel() {
+    override method valorNivel() {
         return "Nivel1"
     }
 }
@@ -583,7 +553,3 @@ object nivelManager {
     self.nivelActual().configurar()
   } 
 }
-
-
-
-

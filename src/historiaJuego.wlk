@@ -1,10 +1,8 @@
-
 import wollok.game.*
 import objetos.*
 import posiciones.*
 import timer.*
 import nivel.*
-
 
 class Historia {
   method position() = game.at(0, 0) 
@@ -19,7 +17,6 @@ class Historia {
   method ejecutar(){
     self.iniciar()
   }
-
 }
 
 object historiaActual {
@@ -42,8 +39,7 @@ object inicio inherits Historia {
   var orden = 0
   
   override method image() {
-    const image = "00" + (orden.toString()) + "-intro.png"
-    return image
+    return "00" + (orden.toString()) + "-intro.png"
   }
   
   override method ejecutar() {
@@ -66,7 +62,7 @@ object inicio inherits Historia {
 }
 
 class Transicion inherits Historia {
-  var nivel 
+  const nivel 
   var property image
 
   override method iniciar() {
