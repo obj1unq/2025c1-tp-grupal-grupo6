@@ -1,13 +1,13 @@
 import wollok.game.*
 import posiciones.*
 import objetos.*
+import nivel.*
 
-object reloj {
+object reloj inherits Visual{
     var property segundos = 150
     var property position = game.at(7,3)
 
     method text(){
-        
         return if (self.tieneAunTiempo()){
             segundos.printString()
         }else {""}
@@ -30,9 +30,4 @@ object reloj {
     method disminuirTiempo(tiempo){
         self.segundos(segundos-tiempo)
     }
-    
-    method aplicarEfecto(personaje) {
-
-    }
 }
-
