@@ -1,4 +1,3 @@
-
 import wollok.game.*
 import objetos.*
 import posiciones.*
@@ -19,7 +18,6 @@ class Historia {
   method ejecutar(){
     self.iniciar()
   }
-
 }
 
 object historiaActual {
@@ -45,6 +43,7 @@ object inicio inherits Historia {
     const image = "00" + (orden.toString()) + "-intro.png"
     return image
   }
+  
   
   override method ejecutar() {
     self.cambiar()
@@ -88,6 +87,7 @@ class PantallaFinal inherits Historia {
   
 
 }
+
 
 
 /* object fin inherits PantallaFinal {

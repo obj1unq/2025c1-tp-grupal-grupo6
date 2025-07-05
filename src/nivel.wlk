@@ -2,6 +2,7 @@ import objetos.*
 import pgmProgram.*
 import posiciones.*
 import timer.*
+import autos.*
 import historiaJuego.*
 
 class Nivel {
@@ -69,23 +70,21 @@ class Nivel {
 
     method posicionInicial() = game.at(0, 0)
 
-    method musicaDeFondo() {
-        
-        const musica = game.sound("musica" + self.valorNivel() + ".mp3")
+    method musicaDeFondo() {   
+        const musica = game.sound("musica.mp3")
         musica.shouldLoop(true)
         game.schedule(500, { musica.play()} )
-
         return musica
 
     }
-
-    method valorNivel() 
 }
 
 class Visual {
     method atravesable() {
         return true
     }
+
+    method aplicarEfecto(personaje){}
 }
 
 object __ {
@@ -337,7 +336,7 @@ object calleFacu inherits Visual {  // Fondo Gris
         return true
     }
 }
-    
+   
 object cf { // Calle principal 
 
     method construir(posicion) {
@@ -465,13 +464,14 @@ object nivel1 inherits Nivel {
     override method excepcionesPositivas() = [game.at(6,17), game.at(7, 17), game.at(8, 17)] // Pasaje borde superior
     override method posicionInicial() = game.at(8, 4)
 
-
-
-    override method valorNivel() {
-        return "Nivel1"
+    override method configurar(){
+        super()
+        game.onTick(1900, "generacionDerecha", {autoFactory.generarAutos(derechaAuto)})
+        game.onTick(1900, "generacionIzquierda", {autoFactory.generarAutos(izquierdaAuto)})
+        game.onTick(400, "movimientoDeAutos", {autoFactory.avanzar()})
     }
-}
 
+}
 object nivel2 inherits Nivel {
 
     override method mapa() = [
@@ -504,10 +504,8 @@ object nivel2 inherits Nivel {
     override method posicionInicial() = game.at(7, 0)
 
 
-    override method valorNivel() {
-        return "Nivel2"
-    }
 }
+
 
 object nivel3 inherits Nivel {
     override method mapa() = 
@@ -543,11 +541,13 @@ object nivel3 inherits Nivel {
         game.addVisual(leo)
         game.addVisual(debi)
         game.addVisual(isa)
+
+        //game.addVisual(maxi)
+        //game.addVisual(maria)
     }
 
+    override  method imagenDeTransicion() {
 
-    override method valorNivel() {
-        return "Nivel3"
     }
 
 }

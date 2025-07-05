@@ -16,7 +16,7 @@ program demo{
    // game.addVisual(reloj)
     keyboard.c().onPressDo({historiaActual.continuar()})
 
-    keyboard.enter().onPressDo({game.say(alumno, "hola")}) //revisar esto,no hace nada 
+    //keyboard.enter().onPressDo({game.say(alumno, "hola")}) //revisar esto,no hace nada 
 
     keyboard.left().onPressDo({alumno.mover(izquierda)})
     keyboard.down().onPressDo({alumno.mover(abajo)})
@@ -32,9 +32,9 @@ program demo{
     keyboard.num3().onPressDo({seleccion.respuesta(2)})
 
 
+
     game.start()
     historiaActual.iniciar()
     
-    /* const rain = game.sound("musicaNivel1.mp3")
-    game.schedule(500, { rain.play()} ) */
+
 }

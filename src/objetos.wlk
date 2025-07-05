@@ -1,5 +1,4 @@
 import src.nivel.*
-// src/objetos.wlk
 import wollok.game.*
 import posiciones.*
 import timer.*
@@ -16,6 +15,25 @@ object seleccion {
     pregunta.responder(indice)
   }
 }
+
+/* class Grupo inherits Visual {
+
+  var property position 
+  var property image
+  var property dialogo
+
+  override method aplicarEfecto(alumno){
+    game.say(alumno, self.dialogo())
+  }
+
+}
+
+
+object maxi inherits Grupo (position = game.at(0, 0), image = "5rkpd6rc.png", dialogo= "Hola!"){}
+
+
+object maria inherits Grupo (position = game.at(9, 9), image = "maria.png",dialogo= "Suerte!" ) {} */
+
 class Profesor inherits Visual {
   var property position 
   var property image
@@ -38,11 +56,11 @@ class Profesor inherits Visual {
 
 
   //Esto parece viejo, revisar
-  method efecto(alumno) {
+/*   method efecto(alumno) {
     game.onCollideDo(alumno, {self.aplicarEfecto(alumno)})
-  }
+  } */
 
-  method aplicarEfecto(alumno){
+  override method aplicarEfecto(alumno){
     seleccion.seleccionar(preguntasYRespuestasCorrectas.anyOne())
   }
 }
@@ -90,6 +108,7 @@ object alumno { //marcos
 
   var property position = game.at(8, 4)  // Para que no quede encima de la imagen estacion
   var direccion = abajo
+  var property puedeMover = true
  
   method image() = "alumno-" + direccion.nombre() + ".png"
   
@@ -116,6 +135,8 @@ object alumno { //marcos
 
   }
 } 
+
+
 
 /* 
 object alumno { //marcos
