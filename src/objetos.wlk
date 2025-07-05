@@ -42,7 +42,7 @@ class Profesor inherits Visual {
     game.onCollideDo(alumno, {self.aplicarEfecto(alumno)})
   }
 
-  method aplicarEfecto(alumno){
+  override method aplicarEfecto(alumno){
     seleccion.seleccionar(preguntasYRespuestasCorrectas.anyOne())
   }
 }
@@ -100,7 +100,7 @@ object alumno { //marcos
 
     if (nivelManager.nivelActual().puedeMover(self, destino)) {
       position = destino
-      }
+    }
     if (self.llegoAlFinalDelNivel()) {
       nivelManager.avanzarNivel()
       position = nivelManager.nivelActual().posicionInicial()  
@@ -116,89 +116,4 @@ object alumno { //marcos
   method reducirTiempo(tiempo){
 
   }
-} 
-
-/* 
-object alumno { //marcos
-
-  var property position = game.at(8, 4)  // Para que no quede encima de la imagen estacion
-  var direccion = abajo
- 
-  method image() = "alumno-" + direccion.nombre() + ".png"
-  
-  method mover(nuevaDireccion) {
-    direccion = nuevaDireccion
-    const destino = direccion.siguiente(self.position())
-
-    if (nivel.puedeMover(self, destino)) {
-      position = destino
-    } else { 
-      self.reducirTiempo(10)
-    }
-  }
-
-  method reducirTiempo(tiempo){
-
-  }
-} */
-
-
-/* object chancho{
-  var property position = game.at(3, 0)
-  var property multa = 20
-
-  method cobroMulta(personaje){
-    personaje.reducirTiempo(multa)
-    game.say(self, "Te cobre " + multa + " segundos de multa")
-  }
-
-  method aplicarEfecto(personaje){
-    position = position.left(1)
-    self.cobroMulta(personaje)
-  }
-} */
-
-
-
-
-  
-
-
-
-/* object debi{
-  var property position = game.at(3, 1)
-
-  method image() = "debi.png"
-
-  method hacerPregunta(personaje){
-    pregunqta = new Pregunta(texto="Que es el polimorfismo?", opciones = [Respusta(texto = "repsuesta correcta)", "no se", "esto es filosofia?"], 0)
-    seleccion.seleccionar(pregunta)
-  }
-
-  method aplicarEfecto(personaje){
-    self.hacerPregunta(personaje)
-  }
 }
-object isaias{
-  var property position = game.at(3,2)
-
-  method image() = "isaias.png"
-
-  method aplicarEfecto(personaje){
-//    reloj.aumentarTiempo(30)
-  }
-}
- */
-/* object leo{
-  var property position = game.at(3, 4)
-
-  method image() = "leo.png"
-
-
-
-  method aplicarEfecto(){}
-}
- */
-
-
-

@@ -1,6 +1,5 @@
 import nivel.*
 import wollok.game.*
-import nivel.*
 
 class Automovil inherits Visual {
   var property position
@@ -8,10 +7,6 @@ class Automovil inherits Visual {
   const tipo
   
   method image() = (("auto" + tipo.caracteristica()) + direccion.nombre()) + ".png"
-  
-  method tipo() = tipo.caracteristica()
-  
-  method direccion() = direccion.nombre()
   
   method mover() {
     direccion.mover(self)
