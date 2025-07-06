@@ -12,7 +12,6 @@ program juego{
     game.height(18)
     game.cellSize(96)
 
-   // game.addVisual(reloj)
 
     keyboard.c().onPressDo({historiaActual.continuar()})
     
@@ -20,8 +19,6 @@ program juego{
     keyboard.down().onPressDo({alumno.mover(abajo)})
     keyboard.right().onPressDo({alumno.mover(derecha)})
     keyboard.up().onPressDo({alumno.mover(arriba)})
-
-    game.schedule(1000, {reloj.reducirTiempo()})
 
     game.onCollideDo(alumno, {algo => algo.aplicarEfecto(alumno)})
 

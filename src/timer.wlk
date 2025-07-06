@@ -4,20 +4,12 @@ import objetos.*
 import nivel.*
 
 object reloj inherits Visual{
-    var property segundos = 150
+    var property segundos = 20
     var property position = game.at(7,3)
-
-    method text(){
-        return if (self.tieneAunTiempo()){
-            segundos.printString()
-        }else {""}
-    }
 
     method reducirTiempo(){
         self.segundos(segundos-1)
     }
-
-    method textColor() ="FF87CEEB"
 
     method tieneAunTiempo() {
         return segundos > 0
@@ -30,4 +22,49 @@ object reloj inherits Visual{
     method disminuirTiempo(tiempo){
         self.segundos(segundos-tiempo)
     }
+
+    method segundosParaString(){
+        return segundos.toString()
+    }
+
+    method charDigitoEnPosicion(unaPosicion){
+        return self.segundosParaString().charAt(unaPosicion)
+    }
+
+    method removerDigitoDerecho(){
+        if (segundos.digits().equals(1)){ game.removeVisual(digitoDerecho)}
+    }
+    
+    method removerDigitoIzquierdo(){
+        if (segundos < 0) {game.removeVisual(digitoIzquierdo)}
+    }
+
+    method visualizarReloj(){
+        game.addVisual(fondoReloj)
+        game.addVisual(digitoDerecho)
+        game.addVisual(digitoIzquierdo)
+    }
+
 }
+
+object fondoReloj{
+    const property position = game.at(0,17)
+    method image()= "fondoReloj.png" 
+}
+
+
+class DigitoVisual{
+    const property position
+    const posicionChar
+
+    method image(){
+        return self.digitoQueDeboMostrar()+".png"
+    }
+
+    method digitoQueDeboMostrar(){
+        return reloj.charDigitoEnPosicion(posicionChar)
+    }
+}
+
+const digitoIzquierdo = new DigitoVisual(posicionChar=0, position=game.at(0,17))
+const digitoDerecho = new DigitoVisual(posicionChar=1, position=game.at(1,17)) 
