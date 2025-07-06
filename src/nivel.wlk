@@ -52,7 +52,7 @@ class Nivel {
     method estaDentroDeLimite(posicion) { 	// Revisa si la celda está dentro del tamaño del mapa.
         const x = posicion.x()
         const y = posicion.y()
-        return x >= 0 && x < game.width() && y >= 0 && y < game.height() 
+        return (x >= 0 && x < game.width()) && (y >= 0 && y < game.height())
     }
 
     method estaEnBorde(posicion) {  // Revisa si está en una fila o columna de borde.
@@ -476,6 +476,8 @@ object pi {
             game.addVisual(new Pizarron(position=posicion))
         }
     }
+
+    method construirEncima(posicion){}
 }
 
 /* ------------------------NIVELES ------------------------- */
@@ -547,9 +549,15 @@ object nivel2 inherits Nivel {
     override method imagenDeTransicion() = "transicion-2nueva.png"
 
     override method usaBordes() = false
-    override method excepcionesPositivas() = [game.at(7, 0), game.at(6,16), game.at(7, 16), game.at(8, 16)]  // puertas en el borde superior
+    override method excepcionesPositivas() = [game.at(6,16), game.at(7, 16), game.at(8, 16)]  // puertas en el borde superior
     override method posicionInicial() = game.at(7, 0)
 
+    override method configurar(){
+        super()
+        game.removeTickEvent("generacionDerecha")
+        game.removeTickEvent("generacionIzquierda")
+        game.removeTickEvent("movimientoDeAutos")
+    }
 
     override method valorNivel() {
         return "Nivel2"
@@ -609,7 +617,7 @@ object nivelManager {
     const nivelTerminado = self.nivelActual()
     indiceNivelActual = indiceNivelActual + 1
     self.limpiarNivelActual()
-    const transicion = new Transicion (image= nivelTerminado.imagenDeTransicion(), nivel = self.nivelActual() )
+    const transicion = new Transicion (image= nivelTerminado.imagenDeTransicion())
     historiaActual.actual(transicion)
     historiaActual.iniciar()
 

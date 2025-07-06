@@ -1,58 +1,111 @@
-/* import wollok.game.*
+import wollok.game.*
 import objetos.*
 import posiciones.*
 import timer.*
+import nivel.*
+import autos.*
 
 //escenario 1
 
 describe "movilidad alumno" {
 
     method inicialize() {
-
+      game.width(15)
+      game.height(18)
+      game.cellSize(96)
+      nivel1.configurar()
     }
     test "puede moverse hacia arriba" {
-    
-    }
-
-    test "no puede moverse hacia arriba" {
-    
+      alumno.position(game.at(3,4))
+      //assert.equals(alumno.position(),game.at(8, 4))
+      assert.that(nivel1.puedeAtravesar(alumno, game.at(8, 5)))
+      //assert.that(nivel1.puedePasar(game.at(8, 5)))
+      //assert.that(nivel1.estaDentroDeLimite(game.at(8, 5)))//esto falla, deberia dar true//
+      assert.notThat(nivel1.estaEnBorde(game.at(8, 5)))
+      assert.that(nivel1.usaBordes())
+      assert.notThat(nivel1.excepcionesNegativas().contains(game.at(8, 5)))
+      assert.that(alumno.position().x() >= 0)
+      assert.that(alumno.position().x() < game.width()) // aca esta el fallo, Expected <8> but found <5>
+      assert.that(alumno.position().y() >= 0)
+      assert.that(alumno.position().y() < game.height())
+      assert.equals(8, game.width())
     }
 
     test "puede moverse hacia abajo" {
-    
+      alumno.position(game.at(5,5))
+      assert.notThat(nivel1.estaEnBorde(game.at(5, 5)))
+      assert.that(nivel1.estaDentroDeLimite(game.at(5, 4)))//aca falla, supongo que mismo error que test anterior
+      assert.that(nivel1.puedePasar(game.at(5, 4)))
     }
 
     test "no puede moverse hacia abajo" {
-    
+      assert.equals(alumno.position(),game.at(8, 4))
+      assert.that(nivel1.puedeAtravesar(alumno, game.at(8, 3)))
+      assert.notThat(nivel1.puedePasar(game.at(8, 3)))
     }
 
     test "puede moverse hacia izquierda" {
-    
+      alumno.position(game.at(5,5))
+      assert.notThat(nivel1.estaEnBorde(game.at(4, 5)))
+      assert.that(nivel1.estaDentroDeLimite(game.at(4, 5)))
+      assert.that(nivel1.puedePasar(game.at(4, 5)))
     }
 
     test "no puede moverse hacia izquierda" {
-    
+      alumno.position(game.at(0,5))
+      assert.that(nivel1.estaEnBorde(game.at(0, 5)))
+      assert.notThat(nivel1.puedePasar(game.at(-1, 5)))
     }
 
     test "puede moverse hacia derecha" {
-    
+      alumno.position(game.at(5,5))
+      assert.notThat(nivel1.estaEnBorde(game.at(6, 5)))
+      assert.that(nivel1.estaDentroDeLimite(game.at(6, 5)))
+      assert.that(nivel1.puedePasar(game.at(6, 5)))
     }
 
     test "no puede moverse hacia derecha" {
-    
+      alumno.position(game.at(14,5))
+      assert.notThat(nivel1.estaEnBorde(game.at(15, 5)))
+      assert.that(nivel1.puedePasar(game.at(15, 5)))
     }
 
     test "no puede avanzar si hay un arbusto"{
+      alumno.position(game.at(1,16))
+      //game.at(1,21) tiene arbusto grande
+      assert.notThat(nivel1.puedeAtravesar(alumno, game.at(1, 17)))
+    }
 
+    test "el auto amarillo choca con el alumno" {
+      const am = new Automovil(position = game.at(8,8),direccion = derecha,tipo = amarillo)
+      alumno.position(game.at(8,8))
+      am.aplicarEfecto(alumno)
+      assert.equals(alumno.position(),game.at(8,10))
+    }
+
+    test "el auto negro choca con el alumno" {
+      const ne = new Automovil(position = game.at(8,8),direccion = derecha,tipo = negro)
+      alumno.position(game.at(8,8))
+      ne.aplicarEfecto(alumno)
+      assert.equals(alumno.position(),game.at(8,7))
+    }
+
+    test "el auto policia choca con el alumno" {
+      const po = new Automovil(position = game.at(8,8),direccion = derecha,tipo = policia)
+      alumno.position(game.at(8,8))
+      po.aplicarEfecto(alumno)
+      assert.equals(alumno.position().y(),4)
+    }
+
+    test "el auto verde choca con el alumno" {
+      const ve = new Automovil(position = game.at(8,8),direccion = derecha,tipo = verde)
+      alumno.position(game.at(8,8))
+      ve.aplicarEfecto(alumno)
+      assert.equals(alumno.position().y(),7)
     }
 }
 
-
-describe "interaccion con auto" {
-  test "el auto choca con el alumno" {
-    
-  }
-} */
+  
 
 
 

@@ -62,7 +62,7 @@ object inicio inherits Historia {
 }
 
 class Transicion inherits Historia {
-  const nivel 
+  //const nivel 
   var property image
 
   override method iniciar() {
@@ -72,7 +72,7 @@ class Transicion inherits Historia {
 
   override method  ejecutar(){
     game.removeVisual(self)
-    nivel.iniciar()
+    //nivel.iniciar()
   }
 }
 

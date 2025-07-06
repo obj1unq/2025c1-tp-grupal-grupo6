@@ -6,7 +6,7 @@ class Automovil inherits Visual {
   const direccion
   const tipo
   
-  method image() = (("auto" + tipo.caracteristica()) + direccion.nombre()) + ".png"
+  method image() = "auto" + tipo.caracteristica() + direccion.nombre() + ".png"
   
   method mover() {
     direccion.mover(self)
