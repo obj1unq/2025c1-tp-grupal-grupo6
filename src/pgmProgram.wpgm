@@ -1,5 +1,5 @@
 import wollok.game.*
-import objetos.*
+import profesAlumnos.*
 import posiciones.*
 import timer.*
 import nivel.*
@@ -11,8 +11,7 @@ program juego{
     game.height(18)
     game.cellSize(96)
 
-    keyboard.c().onPressDo({historiaActual.continuar()})
-    
+    keyboard.c().onPressDo({historiaActual.continuar()})    
     keyboard.left().onPressDo({alumno.mover(izquierda)})
     keyboard.down().onPressDo({alumno.mover(abajo)})
     keyboard.right().onPressDo({alumno.mover(derecha)})
@@ -25,5 +24,6 @@ program juego{
     keyboard.num3().onPressDo({seleccion.respuesta(2)})
 
     game.start()
-   historiaActual.iniciar()
+    historiaActual.iniciar()
+
 }

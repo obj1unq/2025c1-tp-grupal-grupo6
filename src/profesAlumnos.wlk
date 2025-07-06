@@ -4,13 +4,13 @@ import posiciones.*
 import timer.*
 
 object seleccion {
-
   var property pregunta = null
+  
   method seleccionar(_pregunta) {
     pregunta = _pregunta
     pregunta.preguntar()
   }
-
+  
   method respuesta(indice) {
     pregunta.responder(indice)
   }
@@ -29,16 +29,16 @@ class Estudiante inherits Visual {
 
 object maxi inherits Estudiante (position = game.at(1, 4), image = "maxi.png") {}
 
-object yami inherits Estudiante (position = game.at(2, 4), image = "yamii.png" ) {}
+object yami inherits Estudiante (position = game.at(12, 9), image = "yamii.png" ) {}
 
-object maria inherits Estudiante (position = game.at(3, 4), image = "maria.png" ){}
-
+object maria inherits Estudiante (position = game.at(10, 2), image = "maria.png" ){}
 
 
 class Profesor inherits Visual {
-  var property position 
+  var property position
   var property image
   var property text = ""
+
   const preguntasYRespuestasCorrectas = [self.nuevaPreguntaYSuRespuestaCorrecta("Decimos que dos objetos que comparten ciertos mensajes en común, son _ para ese observador", ["1-iguales", "2-polimórficos", "3-equivalentes"], 1 ),
                                          self.nuevaPreguntaYSuRespuestaCorrecta("Cual es el equipo que más veces ganó la Copa Libertadores?", ["1-Boca", "2-Racing", "3-Independiente"], 2),
                                          self.nuevaPreguntaYSuRespuestaCorrecta("En qué año se estrenó la película Matrix?", ["1-1999", "2-2000", "3-2002"], 0),
@@ -55,6 +55,7 @@ class Profesor inherits Visual {
   }
 
   override method aplicarEfecto(alumno){
+
     seleccion.seleccionar(preguntasYRespuestasCorrectas.anyOne())
   }
 }
@@ -66,34 +67,28 @@ object debi inherits Profesor (position = game.at(5, 14), image = "debiVersionFi
 object isa inherits Profesor (position = game.at(10, 14), image = "isaVersionFinal.png" ){}
 
 
-class PreguntaYRespuesta{
+class PreguntaYRespuesta {
   const property pregunta
-  const property respuestas 
+  const property respuestas
   const property correcta
   const property profesor
-
+  
   method preguntar() {
-      var texto = " 1: " + respuestas.get(0)
-      texto = texto + " 2: " + respuestas.get(1)
-      texto = texto + " 3: " + respuestas.get(2)
-
-
-      texto = pregunta + texto
-      game.say(profesor, texto )
-      profesor.text(texto)
+    var texto = " 1: " + respuestas.get(0)
+    texto = (texto + " 2: ") + respuestas.get(1)
+    texto = (texto + " 3: ") + respuestas.get(2)
+    
+    
+    texto = pregunta + texto
+    game.say(profesor, texto)
+    profesor.text(texto)
   }
-
+  
   method responder(opcion) {
-    if (correcta == opcion) {
-      game.say(profesor, "Muy bien!")
-    }
-    else {
-      game.say(profesor, "reprobado!")
-    }
-  }  
-
+    if (correcta == opcion) game.say(profesor, "Muy bien!")
+    else game.say(profesor, "reprobado!")
+  }
 }
-
 
 object alumno { //marcos
 
@@ -131,27 +126,4 @@ object alumno { //marcos
     nivelManager.avanzarNivel()
     position = nivelManager.nivelActual().posicionInicial()
   }
-
-  // var property position = game.at(8, 4)  // Para que no quede encima de la imagen estacion
-  // var direccion = abajo
-  // // var property puedeMover = true
- 
-  // method image() = "alumno-" + direccion.nombre() + ".png"
-  
-  // method mover(nuevaDireccion) {
-  //   direccion = nuevaDireccion
-  //   const destino = direccion.siguiente(self.position())
-
-  //   if (nivelManager.nivelActual().puedeMover(self, destino)) {
-  //     position = destino
-  //   }
-  //   if (self.llegoAlFinalDelNivel()) {
-  //     nivelManager.avanzarNivel()
-  //     position = nivelManager.nivelActual().posicionInicial()  
-  //   } 
-  }
-
-
-
-
-
+}

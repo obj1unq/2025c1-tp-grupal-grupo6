@@ -1,6 +1,6 @@
 import wollok.game.*
 import posiciones.*
-import objetos.*
+import profesAlumnos.*
 import nivel.*
 
 object reloj inherits Visual{
@@ -45,13 +45,19 @@ object reloj inherits Visual{
         game.addVisual(digitoIzquierdo)
     }
 
+    method empezarACorrer() {
+        self.reducirTiempo()
+        self.removerDigitoIzquierdo()
+        self.removerDigitoDerecho()
+    }
+    
+
 }
 
 object fondoReloj{
     const property position = game.at(0,17)
     method image()= "fondoReloj.png" 
 }
-
 
 class DigitoVisual{
     const property position
