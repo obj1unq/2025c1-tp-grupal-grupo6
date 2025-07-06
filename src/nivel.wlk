@@ -40,16 +40,19 @@ class Nivel {
 
     method usaBordes() = true // Por defecto los bordes están habilitados
 
-    method excepcionesPositivas() = [] // Salidas, cambio el nombre? Se puede pasar aunque esté en borde
+    method excepcionesMeta() = [] // Salidas
+    method excepcionesPositivas() = [] // Posiciones Iniciales
     method excepcionesNegativas() = [] // No se puede pasar, no importa donde sea
 
     method puedePasar(posicion) {
-        return self.excepcionesPositivas().contains(posicion) ||
+        return self.estaDentroDeLimite(posicion) &&
+           (
+               self.excepcionesPositivas().contains(posicion) ||
                (
-                   self.estaDentroDeLimite(posicion) &&
                    (not self.estaEnBorde(posicion) || self.usaBordes()) &&
                    not self.excepcionesNegativas().contains(posicion)
                )
+           )
     }
 
     method estaDentroDeLimite(posicion) { 	// Revisa si la celda está dentro del tamaño del mapa.
@@ -65,9 +68,7 @@ class Nivel {
     }
 
     method puedeMover(personaje, posicion) {  // Chequea si un personaje puede moverse a una celda
-        return 
-               self.puedePasar(posicion) &&
-               self.puedeAtravesar(personaje, posicion)
+        return self.puedePasar(posicion) && self.puedeAtravesar(personaje, posicion)
     }
 
     method puedeAtravesar(personaje, posicion) {  // Evalúa si la celda está libre de obstáculos no atravesables.
@@ -107,6 +108,7 @@ class Nivel {
         game.removeTickEvent("cuenta regresiva")
         game.removeTickEvent("quitar timer si llego a meta")
     }
+
 }
 
 //-- -------------------------- Musica
@@ -551,7 +553,7 @@ object nivel1 inherits Nivel {
     override method imagenDeTransicion() = "transicion-1nueva.png"
 
     override method excepcionesNegativas() = [game.at(0, 3), game.at(1, 3), game.at(2, 3),game.at(3, 3), game.at(4, 3), game.at(5, 3), game.at(6, 3), game.at(7, 3), game.at(8, 3), game.at(9, 3), game.at(10, 3), game.at(11, 3), game.at(12, 3), game.at(13, 3), game.at(14, 3)] // Toda la fila 3, para que no pase a la estacion
-    override method excepcionesPositivas() = [game.at(6,17), game.at(7, 17), game.at(8, 17)] // Pasaje borde superior
+    override method excepcionesMeta() = [game.at(6,17), game.at(7, 17), game.at(8, 17)] // Pasaje borde superior
     override method posicionInicial() = game.at(8, 4)
 
     override method configurar(){
@@ -596,7 +598,8 @@ object nivel2 inherits Nivel {
     override method imagenDeTransicion() = "transicion-2nueva.png"
 
     override method usaBordes() = false
-    override method excepcionesPositivas() = [game.at(7, 0), game.at(6,16), game.at(7, 16), game.at(8, 16)]  // puertas en el borde superior
+    override method excepcionesPositivas() = [game.at(2, 0), game.at(3, 0), game.at(4, 0), game.at(5, 0), game.at(6, 0), game.at(7, 0), game.at(8, 0), game.at(9, 0), game.at(10, 0), game.at(11, 0), game.at(12, 0)]
+    override method excepcionesMeta() = [game.at(6,16), game.at(7, 16), game.at(8, 16)]  // puertas en el borde superior
     override method posicionInicial() = game.at(7, 0)
     override method configurar(){
         super()
@@ -652,8 +655,6 @@ object nivel3 inherits Nivel {
         self.quitarGeneracionDeAutos()
         self.quitarTimer()
         self.agregarProfesoresYEstudiantes()
-
-
     }
 
     method agregarProfesoresYEstudiantes() {
@@ -676,7 +677,7 @@ object nivelManager {
     const nivelTerminado = self.nivelActual()
     indiceNivelActual = indiceNivelActual + 1
     self.limpiarNivelActual()
-    const transicion = new Transicion (image= nivelTerminado.imagenDeTransicion(), nivel = self.nivelActual() )
+    const transicion = new Transicion (image= nivelTerminado.imagenDeTransicion()) // , nivel = self.nivelActual() 
     historiaActual.actual(transicion)
     historiaActual.iniciar()
 

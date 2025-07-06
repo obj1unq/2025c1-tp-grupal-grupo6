@@ -8,55 +8,51 @@ import nivel.*
 import pgmProgram.*
 
 //nivel 1
-/* 
-describe "movilidad de marcos en nivel 1" {
+// describe "movilidad de marcos en nivel 1" {
 
-    method inicialize() {
 
-    nivel1.configurar()
 
-    }
-    test "puede moverse hacia arriba" {
+    // test "puede moverse hacia arriba" {
     
-    alumno.position(game.at(8, 5))
-    assert.equals(alumno.position(), game.at(8, 5))
+    // alumno.position(game.at(8, 5))
+    // assert.equals(alumno.position(), game.at(8, 5))
     
-    assert.that(alumno.sePuedeMover(derecha.siguiente(alumno.position())))
-    alumno.mover(derecha)
-    }
+    // assert.that(alumno.sePuedeMover(derecha.siguiente(alumno.position())))
+    // alumno.mover(derecha)
+    // }
 
-    test "no puede moverse hacia arriba" {
+    // test "no puede moverse hacia arriba" {
     
-    }
+    // }
 
-    test "puede moverse hacia abajo" {
+    // test "puede moverse hacia abajo" {
     
-    }
+    // }
 
-    test "no puede moverse hacia abajo" {
+    // test "no puede moverse hacia abajo" {
     
-    }
+    // }
 
-    test "puede moverse hacia izquierda" {
+    // test "puede moverse hacia izquierda" {
     
-    }
+    // }
 
-    test "no puede moverse hacia izquierda" {
+    // test "no puede moverse hacia izquierda" {
     
-    }
+    // }
 
-    test "puede moverse hacia derecha" {
+    // test "puede moverse hacia derecha" {
     
-    }
+    // }
 
-    test "no puede moverse hacia derecha" {
+    // test "no puede moverse hacia derecha" {
     
-    }
+    // }
 
-    test "no puede avanzar si hay un arbusto"{
+    // test "no puede avanzar si hay un arbusto"{
 
-    }
-}
+    // }
+
 
 //nivel 2
 

@@ -7,7 +7,6 @@ import historiaJuego.*
 
 program juego{
 
-
     game.width(15)
     game.height(18)
     game.cellSize(96)
@@ -26,7 +25,5 @@ program juego{
     keyboard.num3().onPressDo({seleccion.respuesta(2)})
 
     game.start()
-    historiaActual.iniciar()
-    
-    
+   historiaActual.iniciar()
 }

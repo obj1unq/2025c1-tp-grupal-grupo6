@@ -45,7 +45,6 @@ object inicio inherits Historia {
   override method ejecutar() {
     self.cambiar()
   }
-
   
   method seguirMostrando() = orden < 9
   
@@ -56,13 +55,13 @@ object inicio inherits Historia {
       historiaActual.actual(jugando)
       game.removeVisual(self)
       nivel1.configurar()
-      nivel1.musica().reproducir()
+      // nivel1.musica().reproducir()
     }
   }
 }
 
 class Transicion inherits Historia {
-  const nivel 
+  // const nivel 
   var property image
 
   override method iniciar() {
@@ -72,7 +71,7 @@ class Transicion inherits Historia {
 
   override method  ejecutar(){
     game.removeVisual(self)
-    nivel.iniciar()
+    // nivel.iniciar()
   }
 }
 
