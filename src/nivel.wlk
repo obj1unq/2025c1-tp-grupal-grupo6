@@ -549,7 +549,7 @@ object nivel2 inherits Nivel {
     override method imagenDeTransicion() = "transicion-2nueva.png"
 
     override method usaBordes() = false
-    override method excepcionesPositivas() = [game.at(6,16), game.at(7, 16), game.at(8, 16)]  // puertas en el borde superior
+    override method excepcionesPositivas() = [game.at(7,0), game.at(6,16), game.at(7, 16), game.at(8, 16)]  // puertas en el borde superior
     override method posicionInicial() = game.at(7, 0)
 
     override method configurar(){
