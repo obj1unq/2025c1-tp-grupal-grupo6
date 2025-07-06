@@ -94,7 +94,7 @@ class Nivel {
     method esNivelConTimer() = true
 
     method esPosicionDeMeta(unaPosicion){
-        return self.excepcionesPositivas().copyWithout(self.posicionInicial()).contains(unaPosicion) // es posicion de meta sin la posicion inicial
+        return self.excepcionesMeta().contains(unaPosicion) // es posicion de meta sin la posicion inicial
     }
 
 
