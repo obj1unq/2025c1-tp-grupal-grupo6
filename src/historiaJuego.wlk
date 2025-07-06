@@ -44,7 +44,6 @@ object inicio inherits Historia {
   override method ejecutar() {
     self.cambiar()
   }
-
   
   method seguirMostrando() = orden < 9
   

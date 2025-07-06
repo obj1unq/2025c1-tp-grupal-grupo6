@@ -90,30 +90,40 @@ class PreguntaYRespuesta {
   }
 }
 
-object alumno {
-  //marcos
-  var property position = game.at(8, 4)
-  // Para que no quede encima de la imagen estacion
+object alumno { //marcos
+
+  var property position = game.at(8, 4)  // Para que no quede encima de la imagen estacion
   var direccion = abajo
-  var property puedeMover = true
-  
+
   method image() = "alumno-" + direccion.nombre() + ".png"
-  
+
   method mover(nuevaDireccion) {
     direccion = nuevaDireccion
     const destino = direccion.siguiente(self.position())
-    
-    if (nivelManager.nivelActual().puedeMover(self, destino)) {
-      position = destino
-    }
-    if (self.llegoAlFinalDelNivel()) {
-      nivelManager.avanzarNivel()
 
-      position = nivelManager.nivelActual().posicionInicial()  
-    } 
+    if (self.puedeMoverA(destino)) {
+      self.avanzarA(destino)
+    }
+  }
+
+  method puedeMoverA(destino) {
+    return nivelManager.nivelActual().puedeMover(self, destino)
+  }
+
+  method avanzarA(destino) {
+    position = destino
+
+    if (self.llegoAlFinalDelNivel()) {
+      self.cambiarDeNivel()
+    }
   }
 
   method llegoAlFinalDelNivel() {
-    return nivelManager.nivelActual().excepcionesPositivas().contains(self.position())
+    return nivelManager.nivelActual().excepcionesMeta().contains(self.position())
+  }
+
+  method cambiarDeNivel() {
+    nivelManager.avanzarNivel()
+    position = nivelManager.nivelActual().posicionInicial()
   }
 }

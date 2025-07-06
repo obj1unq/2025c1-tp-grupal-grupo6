@@ -25,4 +25,5 @@ program juego{
 
     game.start()
     historiaActual.iniciar()
+
 }
