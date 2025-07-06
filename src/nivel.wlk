@@ -1,5 +1,5 @@
 import wollok.game.*
-import objetos.*
+import profesAlumnos.*
 import posiciones.*
 import timer.*
 import autos.*
@@ -473,6 +473,18 @@ class Computadora inherits Visual {
     }
 }
 
+class ComputadoraError inherits Visual {
+    const property position
+
+    method image() {
+        return "compuError.png"
+    }
+
+    override method atravesable() {
+        return false
+    }
+}
+
   class Piso inherits Visual {
 
     const property position
@@ -489,6 +501,16 @@ object cm {
     }
 
     method construirEncima(posicion) {}
+}
+
+object ce {
+
+    method construir(posicion) {
+        game.addVisual(new ComputadoraError(position=posicion))
+    }
+
+    method construirEncima(posicion) {}
+
 }
 
 
@@ -561,9 +583,7 @@ object nivel1 inherits Nivel {
 
         game.onTick(400, "movimientoDeAutos", {autoFactory.avanzar()})
         reloj.visualizarReloj()
-        game.onTick(1000, "cuenta regresiva", { reloj.reducirTiempo()
-                                                reloj.removerDigitoIzquierdo()
-                                                reloj.removerDigitoDerecho()
+        game.onTick(1000, "cuenta regresiva", { reloj.empezarACorrer()
                                                 self.teQuedasteSinTiempo()})
     }
 
@@ -624,24 +644,24 @@ object nivel3 inherits Nivel {
         [__,__,__,__,__,__,__,__,__,__,__,__,__,__,__],
         [pi,__,__,__,__,__,__,__,__,__,__,__,__,__,__],
         [__,__,__,__,__,__,__,__,__,__,__,__,__,__,__],
-        [__,__,cm,__,cm,__,cm,__,cm,__,cm,__,cm,__,__],
+        [__,__,ce,__,cm,__,cm,__,cm,__,cm,__,cm,__,__],
+        [__,__,__,__,__,__,__,__,__,__,__,__,__,__,__],
+        [__,__,ce,__,cm,__,cm,__,cm,__,cm,__,ce,__,__],
+        [__,__,__,__,__,__,__,__,__,__,__,__,__,__,__], 
+        [__,__,cm,__,cm,__,ce,__,cm,__,cm,__,cm,__,__], 
         [__,__,__,__,__,__,__,__,__,__,__,__,__,__,__],
         [__,__,cm,__,cm,__,cm,__,cm,__,cm,__,cm,__,__],
         [__,__,__,__,__,__,__,__,__,__,__,__,__,__,__],
-        [__,__,cm,__,cm,__,cm,__,cm,__,cm,__,cm,__,__],
+        [__,__,cm,__,ce,__,ce,__,cm,__,cm,__,cm,__,__],
         [__,__,__,__,__,__,__,__,__,__,__,__,__,__,__],
-        [__,__,cm,__,cm,__,cm,__,cm,__,cm,__,cm,__,__],
-        [__,__,__,__,__,__,__,__,__,__,__,__,__,__,__],
-        [__,__,cm,__,cm,__,cm,__,cm,__,cm,__,cm,__,__],
-        [__,__,__,__,__,__,__,__,__,__,__,__,__,__,__],
-        [__,__,cm,__,cm,__,cm,__,cm,__,cm,__,cm,__,__],
+        [__,__,cm,__,cm,__,cm,__,cm,__,cm,__,cm,__,__], 
         [__,__,__,__,__,__,__,__,__,__,__,__,__,__,__],
         [ps,__,__,__,__,__,__,__,__,__,__,__,__,__,__]
 
     ]
     
 
-    override method excepcionesNegativas() = [game.at(0, 15), game.at(1, 15), game.at(2, 15),game.at(3, 15), game.at(4, 15), game.at(5, 15), game.at(6, 15), game.at(7, 15), game.at(8, 15), game.at(9, 15), game.at(10, 15), game.at(11, 14), game.at(12, 15), game.at(13, 15), game.at(14, 15)] //14 
+    override method excepcionesNegativas() = [game.at(0, 15), game.at(1, 15), game.at(2, 15),game.at(3, 15), game.at(4, 15), game.at(5, 15), game.at(6, 15), game.at(7, 15), game.at(8, 15), game.at(9, 15), game.at(10, 15), game.at(11, 14), game.at(12, 15), game.at(13, 15), game.at(14, 15)] //15 
     override method usaBordes() = false
     override method excepcionesPositivas() = [game.at(4, 0)]  
     override method posicionInicial() = game.at(4, 0)
@@ -676,7 +696,7 @@ object nivelManager {
     const nivelTerminado = self.nivelActual()
     indiceNivelActual = indiceNivelActual + 1
     self.limpiarNivelActual()
-    const transicion = new Transicion (image= nivelTerminado.imagenDeTransicion(), nivel = self.nivelActual() )
+    const transicion = new Transicion (image= nivelTerminado.imagenDeTransicion() )
     historiaActual.actual(transicion)
     historiaActual.iniciar()
 

@@ -29,9 +29,9 @@ class Estudiante inherits Visual {
 
 object maxi inherits Estudiante (position = game.at(1, 4), image = "maxi.png") {}
 
-object yami inherits Estudiante (position = game.at(2, 4), image = "yamii.png" ) {}
+object yami inherits Estudiante (position = game.at(12, 9), image = "yamii.png" ) {}
 
-object maria inherits Estudiante (position = game.at(3, 4), image = "maria.png" ){}
+object maria inherits Estudiante (position = game.at(10, 2), image = "maria.png" ){}
 
 
 
