@@ -514,6 +514,10 @@ object nivel1 inherits Nivel {
         game.onTick(1900, "generacionDerecha", {autoFactory.generarAutos(derechaAuto)})
         game.onTick(1900, "generacionIzquierda", {autoFactory.generarAutos(izquierdaAuto)})
         game.onTick(400, "movimientoDeAutos", {autoFactory.avanzar()})
+        reloj.visualizarReloj()
+        game.onTick(1000, "cuenta regresiva", { reloj.reducirTiempo()
+                                                reloj.removerDigitoIzquierdo()
+                                                reloj.removerDigitoDerecho()})
     }
 
     override method valorNivel() {
@@ -549,7 +553,10 @@ object nivel2 inherits Nivel {
     override method usaBordes() = false
     override method excepcionesPositivas() = [game.at(7, 0), game.at(6,16), game.at(7, 16), game.at(8, 16)]  // puertas en el borde superior
     override method posicionInicial() = game.at(7, 0)
-
+    override method configurar(){
+        super()
+        reloj.visualizarReloj()
+    }
 
     override method valorNivel() {
         return "Nivel2"
