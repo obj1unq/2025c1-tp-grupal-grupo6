@@ -6,6 +6,9 @@ import autos.*
 import historiaJuego.*
 
 class Nivel {
+
+    const property musica = musicaNivel
+
     method imagenDeTransicion() = "transicion-1.png"
 
     method mapa() = []
@@ -32,7 +35,7 @@ class Nivel {
     })
 
         game.addVisual(alumno)
-        self.musicaDeFondo()
+        musica.reproducir()
     }
 
     method usaBordes() = true // Por defecto los bordes están habilitados
@@ -74,16 +77,58 @@ class Nivel {
 
     method posicionInicial() = game.at(0, 0)
 
-    method musicaDeFondo() {
-        
-        const musica = game.sound("musicaJuego.mp3")
-        musica.shouldLoop(true)
-        game.schedule(500, { musica.play()} )
+    method sonidoDeGameover(){
+        const gameOver = game.sound("gameOver.mp3")
+        gameOver.play()
+    }
 
-        return musica
+    method teQuedasteSinTiempo(){
+        if(not reloj.tieneAunTiempo()){
+            musica.parar()
+            self.sonidoDeGameover()
+            historiaActual.actual(finDeJuegoSinTiempo)
+            historiaActual.continuar()
+        }
+    }
+    
+    method esNivelConTimer() = true
 
+    method esPosicionDeMeta(unaPosicion){
+        return self.excepcionesPositivas().copyWithout(self.posicionInicial()).contains(unaPosicion) // es posicion de meta sin la posicion inicial
+    }
+
+
+    method quitarGeneracionDeAutos(){
+        game.removeTickEvent("generacionDerecha")
+        game.removeTickEvent("generacionIzquierda")
+    }
+    
+    method quitarTimer(){
+        game.removeTickEvent("cuenta regresiva")
+        game.removeTickEvent("quitar timer si llego a meta")
     }
 }
+
+//-- -------------------------- Musica
+object musicaNivel{
+    var property musica = game.sound("musicaJuego.mp3")
+
+    method reproducir(){
+        musica.shouldLoop(true)
+        game.schedule(500, { musica.play()} )
+    }
+
+    method parar(){
+		musica.pause()
+    }
+
+    method reanudar(){
+        musica.resume()
+    }
+
+}
+//-- -------------------------- 
+
 
 class Visual {
     method atravesable() {
@@ -518,7 +563,8 @@ object nivel1 inherits Nivel {
         reloj.visualizarReloj()
         game.onTick(1000, "cuenta regresiva", { reloj.reducirTiempo()
                                                 reloj.removerDigitoIzquierdo()
-                                                reloj.removerDigitoDerecho()})
+                                                reloj.removerDigitoDerecho()
+                                                self.teQuedasteSinTiempo()})
     }
 
 
@@ -554,9 +600,20 @@ object nivel2 inherits Nivel {
     override method posicionInicial() = game.at(7, 0)
     override method configurar(){
         super()
+        self.quitarGeneracionDeAutos()
         reloj.visualizarReloj()
+        game.onTick(1000,"quitar timer si llego a meta", {self.quitarTimerSiEstoyPasandoDeNivel()})
     }
 
+    method quitarTimerSiEstoyPasandoDeNivel(){
+        if(self.esPosicionDeMeta(alumno.position())){
+            game.removeTickEvent("cuenta regresiva")
+            game.removeTickEvent("quitar timer si llego a meta")
+            game.removeVisual(digitoDerecho)
+            game.removeVisual(digitoIzquierdo)
+            game.removeVisual(fondoReloj)
+        }
+    }
 }
 
 object nivel3 inherits Nivel {
@@ -588,9 +645,12 @@ object nivel3 inherits Nivel {
     override method usaBordes() = false
     override method excepcionesPositivas() = [game.at(4, 0)]  
     override method posicionInicial() = game.at(4, 0)
-
+    override method esNivelConTimer() = false
+    
     override method configurar(){
         super()
+        self.quitarGeneracionDeAutos()
+        self.quitarTimer()
         self.agregarProfesoresYEstudiantes()
 
 
@@ -602,20 +662,7 @@ object nivel3 inherits Nivel {
         
         personajes.forEach { persona => game.addVisual(persona)}
     }
-    
-
-
-        /*
-        
-        game.addVisual(leo)
-        game.addVisual(debi)
-        game.addVisual(isa)
-
-        game.addVisual(maxi)
-        game.addVisual(yami)
-        game.addVisual(maria) */
-
-    }
+}
 
 
 

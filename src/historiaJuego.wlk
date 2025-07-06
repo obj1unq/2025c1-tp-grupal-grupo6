@@ -10,7 +10,7 @@ class Historia {
   method image()
   
   method iniciar() {
-    game.removeTickEvent("reloj")
+    //game.removeTickEvent("reloj")
     game.addVisual(self)
   }
 
@@ -56,7 +56,7 @@ object inicio inherits Historia {
       historiaActual.actual(jugando)
       game.removeVisual(self)
       nivel1.configurar()
-      nivel1.musicaDeFondo()
+      nivel1.musica().reproducir()
     }
   }
 }
@@ -120,8 +120,9 @@ class PantallaFinal inherits Historia {
 
 //se quedo sin tiempo
 object finDeJuegoSinTiempo inherits Historia {
-  override method image() = "00-fin.png"
-  override method ejecutar() {
+  override method image() = "sin-tiempo.png"
+
+  override method iniciar(){
     super()
     keyboard.c().onPressDo({ fin.ejecutar() })
   }
