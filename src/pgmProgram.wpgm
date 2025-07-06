@@ -1,30 +1,21 @@
 import wollok.game.*
-import objetos.*
+import profesAlumnos.*
 import posiciones.*
 import timer.*
 import nivel.*
 import historiaJuego.*
 
-program demo{
-
+program juego{
 
     game.width(15)
     game.height(18)
     game.cellSize(96)
 
-   // game.addVisual(reloj)
-   // nivel1.configurar()
-
-    keyboard.enter().onPressDo({game.say(alumno, "hola")})
-
-    keyboard.c().onPressDo({historiaActual.continuar()})
-    
+    keyboard.c().onPressDo({historiaActual.continuar()})    
     keyboard.left().onPressDo({alumno.mover(izquierda)})
     keyboard.down().onPressDo({alumno.mover(abajo)})
     keyboard.right().onPressDo({alumno.mover(derecha)})
     keyboard.up().onPressDo({alumno.mover(arriba)})
-
-    game.schedule(1000, {reloj.reducirTiempo()})
 
     game.onCollideDo(alumno, {algo => algo.aplicarEfecto(alumno)})
 
@@ -32,10 +23,6 @@ program demo{
     keyboard.num2().onPressDo({seleccion.respuesta(1)})
     keyboard.num3().onPressDo({seleccion.respuesta(2)})
 
-
     game.start()
     historiaActual.iniciar()
-    
-    /* const rain = game.sound("musicaNivel1.mp3")
-    game.schedule(500, { rain.play()} ) */
 }

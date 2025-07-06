@@ -1,11 +1,14 @@
 import wollok.game.*
-import objetos.*
+import profesAlumnos.*
 import posiciones.*
 import timer.*
 import autos.*
 import historiaJuego.*
 
 class Nivel {
+
+    const property musica = musicaNivel
+
     method imagenDeTransicion() = "transicion-1.png"
 
     method mapa() = []
@@ -32,7 +35,7 @@ class Nivel {
     })
 
         game.addVisual(alumno)
-        self.musicaDeFondo()
+        musica.reproducir()
     }
 
     method usaBordes() = true // Por defecto los bordes están habilitados
@@ -68,24 +71,64 @@ class Nivel {
     }
 
     method puedeAtravesar(personaje, posicion) {  // Evalúa si la celda está libre de obstáculos no atravesables.
-
         return game.getObjectsIn(posicion).copyWithout(personaje).all({obj => obj.atravesable()})
     }
 
     method posicionInicial() = game.at(0, 0)
 
-    method musicaDeFondo() {
-        
-        const musica = game.sound("musica" + self.valorNivel() + ".mp3")
-        musica.shouldLoop(true)
-        game.schedule(500, { musica.play()} )
-
-        return musica
-
+    method sonidoDeGameover(){
+        const gameOver = game.sound("gameOver.mp3")
+        gameOver.play()
     }
 
-    method valorNivel() 
+    method teQuedasteSinTiempo(){
+        if(not reloj.tieneAunTiempo()){
+            musica.parar()
+            self.sonidoDeGameover()
+            historiaActual.actual(finDeJuegoSinTiempo)
+            historiaActual.continuar()
+        }
+    }
+    
+    method esNivelConTimer() = true
+
+    method esPosicionDeMeta(unaPosicion){
+        return self.excepcionesPositivas().copyWithout(self.posicionInicial()).contains(unaPosicion) // es posicion de meta sin la posicion inicial
+    }
+
+
+    method quitarGeneracionDeAutos(){
+        game.removeTickEvent("generacionDerecha")
+        game.removeTickEvent("generacionIzquierda")
+        game.removeTickEvent("movimientoDeAutos")
+    }
+    
+    method quitarTimer(){
+        game.removeTickEvent("cuenta regresiva")
+        game.removeTickEvent("quitar timer si llego a meta")
+    }
 }
+
+//-- -------------------------- Musica
+object musicaNivel{
+    var property musica = game.sound("musicaJuego.mp3")
+
+    method reproducir(){
+        musica.shouldLoop(true)
+        game.schedule(500, { musica.play()} )
+    }
+
+    method parar(){
+		musica.pause()
+    }
+
+    method reanudar(){
+        musica.resume()
+    }
+
+}
+//-- -------------------------- 
+
 
 class Visual {
     method atravesable() {
@@ -133,7 +176,6 @@ class Arbol inherits Visual {
 class Calle inherits Visual {
     const property position
     const property image
-    
 }
 
 class Estacion inherits Visual {
@@ -168,7 +210,6 @@ object vi { // Vereda Cordon Inferior
         game.addVisual(new Vereda(position=posicion, image= "veredaCI.png" ))
     }
     method construirEncima(posicion) {}
-
 }
 
 object ci { // Calle Inferior
@@ -292,7 +333,7 @@ class Cartel inherits Visual {
 
 object  ca {
     method construir(posicion) {
-        game.addVisual(new Parque(position=posicion)) // ¿?
+        game.addVisual(new Parque(position=posicion))
         game.addVisual(new Cartel(position=posicion))
     }
     method construirEncima(posicion) {}
@@ -356,7 +397,6 @@ object calleFacu inherits Visual {  // Fondo Gris
 }
    
 object cf { // Calle principal 
-
     method construir(posicion) {
         calleFacu.position(posicion)
         game.addVisual(calleFacu)
@@ -365,7 +405,6 @@ object cf { // Calle principal
 } 
 
 object fa { // Calle principal 
-
     method construir(posicion) {
         game.addVisual(new Parque(position=posicion))
     }
@@ -407,7 +446,7 @@ object a3 {
 object pm {
 
     const imagenes = ["personaje1-1.png", "personaje2-1.png", "personaje3-1.png", "personaje4-1.png","personaje5-1.png",
- "personaje6-1.png", "personaje7-1.png", "personaje8-1.png", "personaje9-1.png", "personaje10-1.png"]
+                    "personaje6-1.png", "personaje7-1.png", "personaje8-1.png", "personaje9-1.png", "personaje10-1.png"]
 
     method construir(posicion) {
        game.addVisual(new PersonajeMuro(position=posicion, imagen=imagenes.anyOne()))
@@ -423,6 +462,18 @@ class Computadora inherits Visual {
 
     method image() {
         return "escritoriofinal.png"
+    }
+
+    override method atravesable() {
+        return false
+    }
+}
+
+class ComputadoraError inherits Visual {
+    const property position
+
+    method image() {
+        return "compuError.png"
     }
 
     override method atravesable() {
@@ -446,6 +497,15 @@ object cm {
     }
 
     method construirEncima(posicion) {}
+}
+
+object ce {
+    method construir(posicion) {
+        game.addVisual(new ComputadoraError(position=posicion))
+    }
+
+    method construirEncima(posicion) {}
+
 }
 
 
@@ -476,9 +536,10 @@ object pi {
             game.addVisual(new Pizarron(position=posicion))
         }
     }
-
-    method construirEncima(posicion){}
+    method construirEncima(posicion) {}
 }
+
+    
 
 /* ------------------------NIVELES ------------------------- */
 
@@ -515,11 +576,11 @@ object nivel1 inherits Nivel {
         super()
         game.onTick(1900, "generacionDerecha", {autoFactory.generarAutos(derechaAuto)})
         game.onTick(1900, "generacionIzquierda", {autoFactory.generarAutos(izquierdaAuto)})
-        game.onTick(400, "movimientoDeAutos", {autoFactory.avanzar()})
-    }
 
-    override method valorNivel() {
-        return "Nivel1"
+        game.onTick(400, "movimientoDeAutos", {autoFactory.avanzar()})
+        reloj.visualizarReloj()
+        game.onTick(1000, "cuenta regresiva", { reloj.empezarACorrer()
+                                                self.teQuedasteSinTiempo()})
     }
 }
 
@@ -551,60 +612,70 @@ object nivel2 inherits Nivel {
     override method usaBordes() = false
     override method excepcionesPositivas() = [game.at(7,0), game.at(6,16), game.at(7, 16), game.at(8, 16)]  // puertas en el borde superior
     override method posicionInicial() = game.at(7, 0)
-
     override method configurar(){
         super()
-        game.removeTickEvent("generacionDerecha")
-        game.removeTickEvent("generacionIzquierda")
-        game.removeTickEvent("movimientoDeAutos")
+        self.quitarGeneracionDeAutos()
+        reloj.visualizarReloj()
+        game.onTick(1000,"quitar timer si llego a meta", {self.quitarTimerSiEstoyPasandoDeNivel()})
     }
 
-    override method valorNivel() {
-        return "Nivel2"
+    method quitarTimerSiEstoyPasandoDeNivel(){
+        if(self.esPosicionDeMeta(alumno.position())){
+            game.removeTickEvent("cuenta regresiva")
+            game.removeTickEvent("quitar timer si llego a meta")
+            game.removeVisual(digitoDerecho)
+            game.removeVisual(digitoIzquierdo)
+            game.removeVisual(fondoReloj)
+        }
     }
 }
 
+
 object nivel3 inherits Nivel {
-    override method mapa() = 
-    [
+
+    override method mapa() = [
         [__,__,__,__,__,__,__,__,__,__,__,__,__,__,__],
         [__,__,__,__,__,__,__,__,__,__,__,__,__,__,__],
         [__,__,__,__,__,__,__,__,__,__,__,__,__,__,__],
         [pi,__,__,__,__,__,__,__,__,__,__,__,__,__,__],
         [__,__,__,__,__,__,__,__,__,__,__,__,__,__,__],
-        [__,__,cm,__,cm,__,cm,__,cm,__,cm,__,cm,__,__],
+        [__,__,ce,__,cm,__,cm,__,cm,__,cm,__,cm,__,__],
+        [__,__,__,__,__,__,__,__,__,__,__,__,__,__,__],
+        [__,__,ce,__,cm,__,cm,__,cm,__,cm,__,ce,__,__],
+        [__,__,__,__,__,__,__,__,__,__,__,__,__,__,__], 
+        [__,__,cm,__,cm,__,ce,__,cm,__,cm,__,cm,__,__], 
         [__,__,__,__,__,__,__,__,__,__,__,__,__,__,__],
         [__,__,cm,__,cm,__,cm,__,cm,__,cm,__,cm,__,__],
         [__,__,__,__,__,__,__,__,__,__,__,__,__,__,__],
-        [__,__,cm,__,cm,__,cm,__,cm,__,cm,__,cm,__,__],
+        [__,__,cm,__,ce,__,ce,__,cm,__,cm,__,cm,__,__],
         [__,__,__,__,__,__,__,__,__,__,__,__,__,__,__],
-        [__,__,cm,__,cm,__,cm,__,cm,__,cm,__,cm,__,__],
-        [__,__,__,__,__,__,__,__,__,__,__,__,__,__,__],
-        [__,__,cm,__,cm,__,cm,__,cm,__,cm,__,cm,__,__],
-        [__,__,__,__,__,__,__,__,__,__,__,__,__,__,__],
-        [__,__,cm,__,cm,__,cm,__,cm,__,cm,__,cm,__,__],
+        [__,__,cm,__,cm,__,cm,__,cm,__,cm,__,cm,__,__], 
         [__,__,__,__,__,__,__,__,__,__,__,__,__,__,__],
         [ps,__,__,__,__,__,__,__,__,__,__,__,__,__,__]
 
     ]
     
-
-    override method excepcionesNegativas() = [game.at(0, 15), game.at(1, 15), game.at(2, 15),game.at(3, 15), game.at(4, 15), game.at(5, 15), game.at(6, 15), game.at(7, 15), game.at(8, 15), game.at(9, 15), game.at(10, 15), game.at(11, 14), game.at(12, 15), game.at(13, 15), game.at(14, 15)] //14 
+    override method excepcionesNegativas() = [game.at(0, 15), game.at(1, 15), game.at(2, 15),game.at(3, 15), game.at(4, 15), game.at(5, 15), game.at(6, 15), game.at(7, 15), game.at(8, 15), game.at(9, 15), game.at(10, 15), game.at(11, 14), game.at(12, 15), game.at(13, 15), game.at(14, 15)] //15 
     override method usaBordes() = false
     override method excepcionesPositivas() = [game.at(4, 0)]  
     override method posicionInicial() = game.at(4, 0)
-    override method configurar() {
+    override method esNivelConTimer() = false
+    
+    override method configurar(){
         super()
-        game.addVisual(leo)
-        game.addVisual(debi)
-        game.addVisual(isa)
+        self.quitarGeneracionDeAutos()
+        self.quitarTimer()
+        self.agregarProfesoresYEstudiantes()
     }
 
-    override method valorNivel() {
-        return "Nivel3"
-    }
+    method agregarProfesoresYEstudiantes() {
 
+        const personajes = [leo, debi, isa, maxi, yami, maria]
+        
+        personajes.forEach { persona => game.addVisual(persona)}
+    }
 }
+
 
 
 object nivelManager {
@@ -617,7 +688,8 @@ object nivelManager {
     const nivelTerminado = self.nivelActual()
     indiceNivelActual = indiceNivelActual + 1
     self.limpiarNivelActual()
-    const transicion = new Transicion (image= nivelTerminado.imagenDeTransicion())
+
+    const transicion = new Transicion (image= nivelTerminado.imagenDeTransicion() )
     historiaActual.actual(transicion)
     historiaActual.iniciar()
 

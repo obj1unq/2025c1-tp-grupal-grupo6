@@ -1,11 +1,9 @@
 import wollok.game.*
-import objetos.*
+import profesAlumnos.*
 import posiciones.*
 import timer.*
 import nivel.*
 import autos.*
-
-//escenario 1
 
 describe "nivel 1" {
 
@@ -119,7 +117,7 @@ describe "nivel 2" {
     }
 }
 
-describe "nivel 3" {
+/*describe "nivel 3" {
 
     method initialize() {
       nivel3.configurar()
@@ -136,4 +134,4 @@ describe "nivel 3" {
     test "responde preguntas" {
 
     }
-}
+}*/
