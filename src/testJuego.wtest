@@ -1,17 +1,28 @@
-/* import wollok.game.*
+import wollok.game.*
 import objetos.*
 import posiciones.*
 import timer.*
+import autos.*
+import historiaJuego.*
+import nivel.*
+import pgmProgram.*
 
-//escenario 1
-
-describe "movilidad alumno" {
+//nivel 1
+/* 
+describe "movilidad de marcos en nivel 1" {
 
     method inicialize() {
+
+    nivel1.configurar()
 
     }
     test "puede moverse hacia arriba" {
     
+    alumno.position(game.at(8, 5))
+    assert.equals(alumno.position(), game.at(8, 5))
+    
+    assert.that(alumno.sePuedeMover(derecha.siguiente(alumno.position())))
+    alumno.mover(derecha)
     }
 
     test "no puede moverse hacia arriba" {
@@ -47,12 +58,22 @@ describe "movilidad alumno" {
     }
 }
 
+//nivel 2
+
+/* 
 
 describe "interaccion con auto" {
   test "el auto choca con el alumno" {
     
   }
+}  */
+
+//nivel 3
+
+/* describe "interaccion con profe" {
+  test " " {
+
+  }
 } */
 
-
-
+  

@@ -76,15 +76,13 @@ class Nivel {
 
     method musicaDeFondo() {
         
-        const musica = game.sound("musica" + self.valorNivel() + ".mp3")
+        const musica = game.sound("musicaJuego.mp3")
         musica.shouldLoop(true)
         game.schedule(500, { musica.play()} )
 
         return musica
 
     }
-
-    method valorNivel() 
 }
 
 class Visual {
@@ -476,6 +474,8 @@ object pi {
             game.addVisual(new Pizarron(position=posicion))
         }
     }
+
+    method construirEncima(posicion) {}
 }
 
 /* ------------------------NIVELES ------------------------- */
@@ -513,12 +513,11 @@ object nivel1 inherits Nivel {
         super()
         game.onTick(1900, "generacionDerecha", {autoFactory.generarAutos(derechaAuto)})
         game.onTick(1900, "generacionIzquierda", {autoFactory.generarAutos(izquierdaAuto)})
-        game.onTick(400, "movimientoDeAutos", {autoFactory.avanzar()})
-    }
+        game.onTick(400, "movimientoDeAutos", {autoFactory.avanzar()}) 
+    
+ 
+}
 
-    override method valorNivel() {
-        return "Nivel1"
-    }
 }
 
 object nivel2 inherits Nivel {
@@ -551,9 +550,6 @@ object nivel2 inherits Nivel {
     override method posicionInicial() = game.at(7, 0)
 
 
-    override method valorNivel() {
-        return "Nivel2"
-    }
 }
 
 object nivel3 inherits Nivel {
@@ -585,18 +581,35 @@ object nivel3 inherits Nivel {
     override method usaBordes() = false
     override method excepcionesPositivas() = [game.at(4, 0)]  
     override method posicionInicial() = game.at(4, 0)
-    override method configurar() {
+
+    override method configurar(){
         super()
+        self.agregarProfesoresYEstudiantes()
+
+
+    }
+
+    method agregarProfesoresYEstudiantes() {
+
+        const personajes = [leo, debi, isa, maxi, yami, maria]
+        
+        personajes.forEach { persona => game.addVisual(persona)}
+    }
+    
+
+
+        /*
+        
         game.addVisual(leo)
         game.addVisual(debi)
         game.addVisual(isa)
+
+        game.addVisual(maxi)
+        game.addVisual(yami)
+        game.addVisual(maria) */
+
     }
 
-    override method valorNivel() {
-        return "Nivel3"
-    }
-
-}
 
 
 object nivelManager {

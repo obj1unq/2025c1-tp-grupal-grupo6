@@ -5,7 +5,7 @@ import timer.*
 import nivel.*
 import historiaJuego.*
 
-program demo{
+program juego{
 
 
     game.width(15)
@@ -13,9 +13,6 @@ program demo{
     game.cellSize(96)
 
    // game.addVisual(reloj)
-   // nivel1.configurar()
-
-    keyboard.enter().onPressDo({game.say(alumno, "hola")})
 
     keyboard.c().onPressDo({historiaActual.continuar()})
     
@@ -32,10 +29,8 @@ program demo{
     keyboard.num2().onPressDo({seleccion.respuesta(1)})
     keyboard.num3().onPressDo({seleccion.respuesta(2)})
 
-
     game.start()
     historiaActual.iniciar()
     
-    /* const rain = game.sound("musicaNivel1.mp3")
-    game.schedule(500, { rain.play()} ) */
+    
 }
