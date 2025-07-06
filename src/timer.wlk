@@ -4,7 +4,7 @@ import objetos.*
 import nivel.*
 
 object reloj inherits Visual{
-    var property segundos = 20
+    var property segundos = 60
     var property position = game.at(7,3)
 
     method reducirTiempo(){

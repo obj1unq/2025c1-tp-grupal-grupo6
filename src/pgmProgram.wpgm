@@ -12,7 +12,6 @@ program juego{
     game.height(18)
     game.cellSize(96)
 
-
     keyboard.c().onPressDo({historiaActual.continuar()})
     
     keyboard.left().onPressDo({alumno.mover(izquierda)})
