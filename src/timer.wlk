@@ -59,7 +59,6 @@ object fondoReloj{
     method image()= "fondoReloj.png" 
 }
 
-
 class DigitoVisual{
     const property position
     const posicionChar

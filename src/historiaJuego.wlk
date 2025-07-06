@@ -10,7 +10,6 @@ class Historia {
   method image()
   
   method iniciar() {
-    //game.removeTickEvent("reloj")
     game.addVisual(self)
   }
 
@@ -56,13 +55,12 @@ object inicio inherits Historia {
       historiaActual.actual(jugando)
       game.removeVisual(self)
       nivel1.configurar()
-      nivel1.musica().reproducir()
+      //nivel1.musica().reproducir()
     }
   }
 }
 
 class Transicion inherits Historia {
-  
   var property image
 
   override method iniciar() {
@@ -72,51 +70,8 @@ class Transicion inherits Historia {
 
   override method  ejecutar(){
     game.removeVisual(self)
-
   }
 }
-
-class PantallaFinal inherits Historia {
-
-  override method  ejecutar(){
-    game.removeVisual(self)
-  }
-  
-
-}
-
-
-/* object fin inherits PantallaFinal {
-
-  var orden = 0
-  var finDeJuego = null // = finDeJuegoSinTiempo o finDeJuegoGano
-  
-  override method image() = "0" + orden.toString() + "-fin.png"
-  
-  method seguirMostrando() = orden < finDeJuego.limiteDeMuestra()
-  
-  method cambiar() {
-    if (orden == 1) {
-      orden = finDeJuego.ordenInicial()
-    } else {
-      if (self.seguirMostrando()) {
-        orden += 1
-      } else {
-        fin.ejecutar()
-      }
-    }
-  }
-  
-  method finDeJuego(final) {
-    finDeJuego = final
-  }
-  
-  override method ejecutar() {
-    super()
-    keyboard.c().onPressDo({ self.cambiar() })
-  }
-} 
- */
 
 //se quedo sin tiempo
 object finDeJuegoSinTiempo inherits Historia {

@@ -2,78 +2,136 @@ import wollok.game.*
 import profesAlumnos.*
 import posiciones.*
 import timer.*
-import autos.*
-import historiaJuego.*
 import nivel.*
-import pgmProgram.*
+import autos.*
 
-//nivel 1
-/* 
-describe "movilidad de marcos en nivel 1" {
+describe "nivel 1" {
 
-    method inicialize() {
-
-    nivel1.configurar()
-
+    method initialize() {
+      nivel1.configurar()
     }
+
     test "puede moverse hacia arriba" {
-    
-    alumno.position(game.at(8, 5))
-    assert.equals(alumno.position(), game.at(8, 5))
-    
-    assert.that(alumno.sePuedeMover(derecha.siguiente(alumno.position())))
-    alumno.mover(derecha)
-    }
-
-    test "no puede moverse hacia arriba" {
-    
+      assert.equals(alumno.position(),game.at(8, 4))
+      assert.that(nivel1.puedeAtravesar(alumno, game.at(8, 5)))
+      assert.that(nivel1.puedePasar(game.at(8, 5)))
     }
 
     test "puede moverse hacia abajo" {
-    
+      alumno.position(game.at(5,5))
+      assert.notThat(nivel1.estaEnBorde(game.at(5, 5)))
+      assert.that(nivel1.estaDentroDeLimite(game.at(5, 4)))
+      assert.that(nivel1.puedePasar(game.at(5, 4)))
     }
 
     test "no puede moverse hacia abajo" {
-    
+      assert.equals(alumno.position(),game.at(8, 4))
+      assert.that(nivel1.puedeAtravesar(alumno, game.at(8, 3)))
+      assert.notThat(nivel1.puedePasar(game.at(8, 3)))
     }
 
     test "puede moverse hacia izquierda" {
-    
+      assert.notThat(nivel1.estaEnBorde(game.at(7,4)))
+      assert.that(nivel1.estaDentroDeLimite(game.at(7,4)))
+      assert.that(nivel1.puedePasar(game.at(7,4)))
     }
 
     test "no puede moverse hacia izquierda" {
-    
+      alumno.position(game.at(0,5))
+      assert.that(nivel1.estaEnBorde(game.at(0, 5)))
+      assert.notThat(nivel1.puedePasar(game.at(-1, 5)))
     }
 
     test "puede moverse hacia derecha" {
-    
+      assert.notThat(nivel1.estaEnBorde(game.at(9,4)))
+      assert.that(nivel1.estaDentroDeLimite(game.at(9,4)))
+      assert.that(nivel1.puedePasar(game.at(9,4)))
     }
 
     test "no puede moverse hacia derecha" {
-    
+      alumno.position(game.at(14,5))
+      assert.that(nivel1.estaEnBorde(game.at(14, 5)))
+      assert.notThat(nivel1.puedePasar(game.at(15, 5)))
     }
 
     test "no puede avanzar si hay un arbusto"{
+      alumno.position(game.at(1,16))
+      //game.at(1,17) tiene arbusto grande
+      assert.notThat(nivel1.puedeAtravesar(alumno, game.at(1, 17)))
+    }
 
+    test "el auto amarillo choca con el alumno" {
+      const am = new Automovil(position = game.at(8,8),direccion = derecha,tipo = amarillo)
+      alumno.position(game.at(8,8))
+      am.aplicarEfecto(alumno)
+      assert.equals(alumno.position(),game.at(8,10))
+    }
+
+    test "el auto negro choca con el alumno" {
+      const ne = new Automovil(position = game.at(8,8),direccion = derecha,tipo = negro)
+      alumno.position(game.at(8,8))
+      ne.aplicarEfecto(alumno)
+      assert.equals(alumno.position(),game.at(8,7))
+    }
+
+    test "el auto policia choca con el alumno" {
+      const po = new Automovil(position = game.at(8,8),direccion = derecha,tipo = policia)
+      alumno.position(game.at(8,8))
+      po.aplicarEfecto(alumno)
+      assert.equals(alumno.position().y(),4)
+    }
+
+    test "el auto verde choca con el alumno" {
+      const ve = new Automovil(position = game.at(8,8),direccion = derecha,tipo = verde)
+      alumno.position(game.at(8,8))
+      ve.aplicarEfecto(alumno)
+      assert.equals(alumno.position().y(),7)
     }
 }
 
-//nivel 2
+describe "nivel 2" {
 
-/* 
+    method initialize() {
+      nivel2.configurar()
+    }
 
-describe "interaccion con auto" {
-  test "el auto choca con el alumno" {
-    
-  }
-}  */
+    test "no puede moverse hacia abajo en fila x=0" {
+      assert.equals(alumno.position(),game.at(7,0))
+      assert.notThat(nivel2.puedePasar(game.at(9,4)))
+    }
 
-//nivel 3
+    test "el alumno no puede atravesar a una persona" {
+      alumno.position(game.at(6,4))
+      assert.notThat(nivel2.puedeAtravesar(alumno, game.at(6,5)))
+      assert.notThat(nivel2.puedeAtravesar(alumno, game.at(5,4)))
+      assert.that(nivel2.puedeAtravesar(alumno, game.at(6,3)))
+      assert.that(nivel2.puedeAtravesar(alumno, game.at(7,4)))
+    }
 
-/* describe "interaccion con profe" {
-  test " " {
+    test "celda (6,15) bloqueada hacia abajo, izquierda y derecha pero permite pasar nivel" {
+      alumno.position(game.at(6,15))
+      assert.that(nivel2.puedePasar(game.at(6,16)))
+      assert.notThat(nivel2.puedeAtravesar(alumno, game.at(6,14)))
+      assert.notThat(nivel2.puedeAtravesar(alumno, game.at(5,15)))
+      assert.notThat(nivel2.puedeAtravesar(alumno, game.at(7,15)))
+    }
+}
 
-  }
-} */
+/*describe "nivel 3" {
 
-  
+    method initialize() {
+      nivel3.configurar()
+    }
+
+    test "colision con miembros del equipo" {
+
+    }
+
+    test "colision con profesores" {
+
+    }
+
+    test "responde preguntas" {
+
+    }
+}*/

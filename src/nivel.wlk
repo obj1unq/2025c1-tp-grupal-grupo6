@@ -55,7 +55,7 @@ class Nivel {
     method estaDentroDeLimite(posicion) { 	// Revisa si la celda está dentro del tamaño del mapa.
         const x = posicion.x()
         const y = posicion.y()
-        return x >= 0 && x < game.width() && y >= 0 && y < game.height() 
+        return (x >= 0 && x < game.width()) && (y >= 0 && y < game.height())
     }
 
     method estaEnBorde(posicion) {  // Revisa si está en una fila o columna de borde.
@@ -71,7 +71,6 @@ class Nivel {
     }
 
     method puedeAtravesar(personaje, posicion) {  // Evalúa si la celda está libre de obstáculos no atravesables.
-
         return game.getObjectsIn(posicion).copyWithout(personaje).all({obj => obj.atravesable()})
     }
 
@@ -101,6 +100,7 @@ class Nivel {
     method quitarGeneracionDeAutos(){
         game.removeTickEvent("generacionDerecha")
         game.removeTickEvent("generacionIzquierda")
+        game.removeTickEvent("movimientoDeAutos")
     }
     
     method quitarTimer(){
@@ -176,7 +176,6 @@ class Arbol inherits Visual {
 class Calle inherits Visual {
     const property position
     const property image
-    
 }
 
 class Estacion inherits Visual {
@@ -211,7 +210,6 @@ object vi { // Vereda Cordon Inferior
         game.addVisual(new Vereda(position=posicion, image= "veredaCI.png" ))
     }
     method construirEncima(posicion) {}
-
 }
 
 object ci { // Calle Inferior
@@ -335,7 +333,7 @@ class Cartel inherits Visual {
 
 object  ca {
     method construir(posicion) {
-        game.addVisual(new Parque(position=posicion)) // ¿?
+        game.addVisual(new Parque(position=posicion))
         game.addVisual(new Cartel(position=posicion))
     }
     method construirEncima(posicion) {}
@@ -399,7 +397,6 @@ object calleFacu inherits Visual {  // Fondo Gris
 }
    
 object cf { // Calle principal 
-
     method construir(posicion) {
         calleFacu.position(posicion)
         game.addVisual(calleFacu)
@@ -408,7 +405,6 @@ object cf { // Calle principal
 } 
 
 object fa { // Calle principal 
-
     method construir(posicion) {
         game.addVisual(new Parque(position=posicion))
     }
@@ -450,7 +446,7 @@ object a3 {
 object pm {
 
     const imagenes = ["personaje1-1.png", "personaje2-1.png", "personaje3-1.png", "personaje4-1.png","personaje5-1.png",
- "personaje6-1.png", "personaje7-1.png", "personaje8-1.png", "personaje9-1.png", "personaje10-1.png"]
+                    "personaje6-1.png", "personaje7-1.png", "personaje8-1.png", "personaje9-1.png", "personaje10-1.png"]
 
     method construir(posicion) {
        game.addVisual(new PersonajeMuro(position=posicion, imagen=imagenes.anyOne()))
@@ -504,7 +500,6 @@ object cm {
 }
 
 object ce {
-
     method construir(posicion) {
         game.addVisual(new ComputadoraError(position=posicion))
     }
@@ -541,9 +536,10 @@ object pi {
             game.addVisual(new Pizarron(position=posicion))
         }
     }
-
     method construirEncima(posicion) {}
 }
+
+    
 
 /* ------------------------NIVELES ------------------------- */
 
@@ -586,8 +582,6 @@ object nivel1 inherits Nivel {
         game.onTick(1000, "cuenta regresiva", { reloj.empezarACorrer()
                                                 self.teQuedasteSinTiempo()})
     }
-
-
 }
 
 object nivel2 inherits Nivel {
@@ -616,7 +610,7 @@ object nivel2 inherits Nivel {
     override method imagenDeTransicion() = "transicion-2nueva.png"
 
     override method usaBordes() = false
-    override method excepcionesPositivas() = [game.at(7, 0), game.at(6,16), game.at(7, 16), game.at(8, 16)]  // puertas en el borde superior
+    override method excepcionesPositivas() = [game.at(7,0), game.at(6,16), game.at(7, 16), game.at(8, 16)]  // puertas en el borde superior
     override method posicionInicial() = game.at(7, 0)
     override method configurar(){
         super()
@@ -636,9 +630,10 @@ object nivel2 inherits Nivel {
     }
 }
 
+
 object nivel3 inherits Nivel {
-    override method mapa() = 
-    [
+
+    override method mapa() = [
         [__,__,__,__,__,__,__,__,__,__,__,__,__,__,__],
         [__,__,__,__,__,__,__,__,__,__,__,__,__,__,__],
         [__,__,__,__,__,__,__,__,__,__,__,__,__,__,__],
@@ -660,7 +655,6 @@ object nivel3 inherits Nivel {
 
     ]
     
-
     override method excepcionesNegativas() = [game.at(0, 15), game.at(1, 15), game.at(2, 15),game.at(3, 15), game.at(4, 15), game.at(5, 15), game.at(6, 15), game.at(7, 15), game.at(8, 15), game.at(9, 15), game.at(10, 15), game.at(11, 14), game.at(12, 15), game.at(13, 15), game.at(14, 15)] //15 
     override method usaBordes() = false
     override method excepcionesPositivas() = [game.at(4, 0)]  
@@ -672,8 +666,6 @@ object nivel3 inherits Nivel {
         self.quitarGeneracionDeAutos()
         self.quitarTimer()
         self.agregarProfesoresYEstudiantes()
-
-
     }
 
     method agregarProfesoresYEstudiantes() {
@@ -696,6 +688,7 @@ object nivelManager {
     const nivelTerminado = self.nivelActual()
     indiceNivelActual = indiceNivelActual + 1
     self.limpiarNivelActual()
+
     const transicion = new Transicion (image= nivelTerminado.imagenDeTransicion() )
     historiaActual.actual(transicion)
     historiaActual.iniciar()

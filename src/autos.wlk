@@ -6,7 +6,7 @@ class Automovil inherits Visual {
   const direccion
   const tipo
   
-  method image() = (("auto" + tipo.caracteristica()) + direccion.nombre()) + ".png"
+  method image() = "auto" + tipo.caracteristica() + direccion.nombre() + ".png"
   
   method mover() {
     direccion.mover(self)
@@ -50,16 +50,8 @@ object izquierdaAuto inherits DireccionAuto {
 }
 
 object autoFactory {
-  const property iniciosDerecha = #{
-    game.at(0, 14),
-    game.at(0, 10),
-    game.at(0, 6)
-  }
-  const property iniciosIzquierda = #{
-    game.at(14, 15),
-    game.at(14, 11),
-    game.at(14, 7)
-  }
+  const property iniciosDerecha = #{game.at(0, 14), game.at(0, 10), game.at(0, 6)}
+  const property iniciosIzquierda = #{game.at(14, 15), game.at(14, 11), game.at(14, 7)}
   const property tipos = [amarillo, verde, negro, policia]
   const property autos = []
   
@@ -70,21 +62,11 @@ object autoFactory {
   
   method generarAutos(_direccion) {
     if (_direccion.toString() == "derechaAuto") {
-      self.spawnAuto(
-        new Automovil(
-          position = self.inicioRandom(iniciosDerecha),
-          direccion = _direccion,
-          tipo = self.tipoRamdom()
-        )
-      )
+      self.spawnAuto(new Automovil(position = self.inicioRandom(iniciosDerecha), direccion = _direccion, tipo = self.tipoRamdom()))
     } else {
-      if (_direccion.toString() == "izquierdaAuto") self.spawnAuto(
-          new Automovil(
-            position = self.inicioRandom(iniciosIzquierda),
-            direccion = _direccion,
-            tipo = self.tipoRamdom()
-          )
-        )
+        if (_direccion.toString() == "izquierdaAuto"){
+          self.spawnAuto(new Automovil(position = self.inicioRandom(iniciosIzquierda), direccion = _direccion, tipo = self.tipoRamdom()))
+        }
     }
   }
   
@@ -132,9 +114,11 @@ object verde inherits Tipo {
   
   override method aplicarEfecto(personaje) {
     super(personaje)
-    if ((personaje.position().x() + self.ramdom()) >= game.width())
+    if ((personaje.position().x() + self.ramdom()) >= game.width()){
       self.reasignarX(personaje, 14)
-    else self.reasignarX(personaje, self.ramdom())
+    } else {
+      self.reasignarX(personaje, self.ramdom())
+    }
   }
   
   method reasignarX(personaje, posicion) {
