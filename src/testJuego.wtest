@@ -117,13 +117,14 @@ describe "nivel 2" {
     }
 }
 
-/*describe "nivel 3" {
+describe "nivel 3" {
 
     method initialize() {
       nivel3.configurar()
     }
 
     test "colision con miembros del equipo" {
+      assert.notThat(nivel3.puedeAtravesar(alumno, game.at(1, 4)))
 
     }
 
@@ -134,4 +135,4 @@ describe "nivel 2" {
     test "responde preguntas" {
 
     }
-}*/
+}

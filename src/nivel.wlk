@@ -655,7 +655,7 @@ object nivel3 inherits Nivel {
     ]
     
     override method excepcionesNegativas() = [game.at(0, 15), game.at(1, 15), game.at(2, 15),game.at(3, 15), game.at(4, 15), game.at(5, 15), game.at(6, 15), game.at(7, 15), game.at(8, 15), game.at(9, 15), game.at(10, 15), game.at(11, 14), game.at(12, 15), game.at(13, 15), game.at(14, 15)] //15 
-    override method usaBordes() = false
+    override method usaBordes() = true
     override method excepcionesPositivas() = [game.at(4, 0)]  
     override method posicionInicial() = game.at(4, 0)
     override method esNivelConTimer() = false
@@ -667,11 +667,14 @@ object nivel3 inherits Nivel {
         self.agregarProfesoresYEstudiantes()
     }
 
+    
+
     method agregarProfesoresYEstudiantes() {
 
         const personajes = [leo, debi, isa, maxi, yami, maria]
         
         personajes.forEach { persona => game.addVisual(persona)}
+        game.onCollideDo(alumno, {persona => persona.mensaje()})
     }
 }
 
