@@ -85,7 +85,8 @@ class Nivel {
     method teQuedasteSinTiempo(){
         if(not reloj.tieneAunTiempo()){
             self.quitarGeneracionDeAutos()
-            musica.parar()
+            self.quitarTimer()
+            musica.parar()  
             self.sonidoDeGameover()
             historiaActual.actual(finDeJuegoSinTiempo)
             historiaActual.continuar()
@@ -127,6 +128,17 @@ object musicaNivel{
     method reanudar(){
         musica.resume()
     }
+
+//     wollok.lang.EvaluationError  // Transicion
+
+//         at src.nivel.musicaNivel.parar() [src/nivel.wlk:124]
+//         at If [src/nivel.wlk:88]
+//         at src.nivel.Nivel.teQuedasteSinTiempo() [src/nivel.wlk:86]
+// wollok.lang.EvaluationError
+//         at src.nivel.musicaNivel.parar() [src/nivel.wlk:124]
+//         at If [src/nivel.wlk:88]
+//         at src.nivel.Nivel.teQuedasteSinTiempo() [src/nivel.wlk:86]
+// wollok.lang.EvaluationError
 
 }
 //---------------------------- 

@@ -111,7 +111,7 @@ class Profesor inherits Visual {
     historiaActual.continuar()
   }
 }
-
+  
 object leo inherits Profesor (position = game.at(7, 14), image = "leoVersionFinal.png" ) {}
 
 object debi inherits Profesor (position = game.at(5, 14), image = "debiVersionFinal.png" ) {}
