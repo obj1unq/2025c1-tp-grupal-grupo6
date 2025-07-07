@@ -64,7 +64,7 @@ object leo inherits Profesor (position = game.at(7, 14), image = "leoVersionFina
 
 object debi inherits Profesor (position = game.at(5, 14), image = "debiVersionFinal.png" ) {}
 
-object isa inherits Profesor (position = game.at(10, 14), image = "isaVersionFinal.png" ){}
+object isa inherits Profesor (position = game.at(9, 14), image = "isaVersionFinal.png" ){}
 
 
 class PreguntaYRespuesta {
