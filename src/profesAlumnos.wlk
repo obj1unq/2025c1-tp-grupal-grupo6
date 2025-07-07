@@ -72,6 +72,7 @@ class Profesor inherits Visual {
     var contadorRespuestas = 0
     const preguntas = preguntasYRespuestasCorrectas
     self.selectorRespuesta()
+    self.escena(indicacionesParcial) 
     game.onTick(10000,"preguntados",{
       contadorRespuestas += 1
       const pregunta = self.preguntaAleatoria(preguntas)

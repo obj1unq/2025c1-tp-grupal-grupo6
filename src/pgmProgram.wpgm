@@ -7,7 +7,6 @@ import historiaJuego.*
 
 program juego{
 
-    nivel1.configurar()
     game.width(15)
     game.height(18)
     game.cellSize(96)
@@ -21,5 +20,5 @@ program juego{
     game.onCollideDo(alumno, {algo => algo.aplicarEfecto(alumno)})
 
     game.start()
-    // historiaActual.iniciar()
+    historiaActual.iniciar()
 }
