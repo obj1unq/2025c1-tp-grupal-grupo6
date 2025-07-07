@@ -106,15 +106,11 @@ class Profesor inherits Visual {
 
   method validarAprobado(){
     if(nota.contador() >= 6){
-      game.schedule(6000, {
         self.escena(ganoJuego)
-      })
     }else{
-      game.schedule(6000, {
+
         self.escena(noAproboParcial)
-      })
     }
-    self.escena(fin)
   }
 
   method escena(escena){
@@ -155,10 +151,10 @@ class PreguntaYRespuesta {
 }
 
 object nota {
-  var property contador = 10
+  var property contador = 0
 
   method incrementar(){
-    contador -= 1
+    contador += 1
   }
 }
 

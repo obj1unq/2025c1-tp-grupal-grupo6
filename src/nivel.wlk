@@ -84,6 +84,7 @@ class Nivel {
 
     method teQuedasteSinTiempo(){
         if(not reloj.tieneAunTiempo()){
+            self.quitarGeneracionDeAutos()
             musica.parar()
             self.sonidoDeGameover()
             historiaActual.actual(finDeJuegoSinTiempo)
