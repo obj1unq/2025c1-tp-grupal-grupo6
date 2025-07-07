@@ -183,11 +183,43 @@ class Estacion inherits Visual {
     const property position
 
     method image() {
-        return "estacionNueva.png" 
+        return "estacionNueva01.png" 
     }
 
     override method atravesable() {
         return false 
+    }
+}
+
+class Obstaculo inherits Visual {
+    const property position
+
+    method image() {
+        return "obstaNormal.png" 
+    }
+
+    override method atravesable() {
+        return false 
+    }
+}
+
+object oi { // Vereda Normal
+    method construir(posicion) {
+        game.addVisual(new Vereda(position=posicion, image= "veredaCI.png"))
+    }
+
+    method construirEncima(posicion) {
+        game.addVisual(new Obstaculo(position=posicion))
+    }
+}
+
+object os { // Vereda Normal
+    method construir(posicion) {
+        game.addVisual(new Vereda(position=posicion, image= "veredaCS.png"))
+    }
+
+    method construirEncima(posicion) {
+        game.addVisual(new Obstaculo(position=posicion))
     }
 }
 
@@ -248,19 +280,38 @@ object pI { // Pasto Cordon Inferior
     method construirEncima(posicion) {}
 }
 
-object ac { // Arbusto Chico
+object pE { // Pasto Cordon Inferior
     method construir(posicion) {
-        game.addVisual(new Arbusto(position=posicion, image= "arbusto-chico.png"))
+        game.addVisual(new Pasto(position=posicion, image= "pastoCI.png"))
     }
-    method construirEncima(posicion) {}
+    method construirEncima(posicion) {
+        game.addVisual(new Arbol(position=posicion, image="arbusto-color01.png"))
+    }
 }
 
-object ag { // Arbusto Grande
+// Aca tengo que corregir, uso Arbol. Ya hay un arbusto deberia chequear
+object pe { // Pasto Cordon Inferior
     method construir(posicion) {
-        game.addVisual(new Arbusto(position=posicion, image="arbusto-grande.png"))
+        game.addVisual(new Pasto(position=posicion, image= "pasto.png"))
     }
-    method construirEncima(posicion) {}
+    method construirEncima(posicion) {
+        game.addVisual(new Arbol(position=posicion, image="arbusto-color01.png"))
+    }
 }
+
+// object ac { // Arbusto Chico
+//     method construir(posicion) {
+//         game.addVisual(new Arbusto(position=posicion, image= "arbusto-chico.png"))
+//     }
+//     method construirEncima(posicion) {}
+// }
+
+// object ag { // Arbusto Grande
+//     method construir(posicion) {
+//         game.addVisual(new Arbusto(position=posicion, image="arbusto-grande.png"))
+//     }
+//     method construirEncima(posicion) {}
+// }
 
 object es {
     method construir(posicion) {
@@ -298,10 +349,7 @@ class Facultad inherits Visual {
 
 class Parque inherits Visual {
     const property position
-
-    method image() {
-        return "pastito-facu.jpg"
-    }
+    const property image
 
     override method atravesable() { 
         return false
@@ -332,9 +380,62 @@ class Cartel inherits Visual {
     }
 }
 
-object  ca {
+class ArbustoN2 inherits Visual {
+    const property position
+
+    method image() {
+        return "arbusto-03.png"
+    }
+
+    override method atravesable() { 
+        return false
+    }
+}
+
+object an { //Arbustos 
     method construir(posicion) {
-        game.addVisual(new Parque(position=posicion))
+        game.addVisual(new Parque(position=posicion, image= "pasto.png"))
+        game.addVisual(new ArbustoN2(position=posicion))
+    }
+    method construirEncima(posicion) {}
+}
+
+object ai { //Arbustos 
+    method construir(posicion) {
+        game.addVisual(new Parque(position=posicion, image= "pastoCIz.png"))
+        game.addVisual(new ArbustoN2(position=posicion))
+    }
+    method construirEncima(posicion) {}
+}
+
+object ad { //Arbustos 
+    method construir(posicion) {
+        game.addVisual(new Parque(position=posicion, image= "pastoCDe.png"))
+        game.addVisual(new ArbustoN2(position=posicion))
+    }
+    method construirEncima(posicion) {}
+}
+
+
+object  cz { // Cartel con cordon Izquierdo
+    method construir(posicion) {
+        game.addVisual(new Parque(position=posicion, image= "pastoCIz.png"))
+        game.addVisual(new Cartel(position=posicion))
+    }
+    method construirEncima(posicion) {}
+}
+
+object  cd { // Cartel con cordon Derecho
+    method construir(posicion) {
+        game.addVisual(new Parque(position=posicion, image= "pastoCDe.png"))
+        game.addVisual(new Cartel(position=posicion))
+    }
+    method construirEncima(posicion) {}
+}
+
+object  cn { // Cartel sin Cordon
+    method construir(posicion) {
+        game.addVisual(new Parque(position=posicion, image= "pasto.png"))
         game.addVisual(new Cartel(position=posicion))
     }
     method construirEncima(posicion) {}
@@ -384,7 +485,21 @@ object un {
 
 object pa { // Parque
     method construir(posicion) {
-        game.addVisual(new Parque(position=posicion))
+        game.addVisual(new Parque(position=posicion, image= "pasto.png"))
+    }
+    method construirEncima(posicion) {}
+}
+
+object pd { // Parque
+    method construir(posicion) {
+        game.addVisual(new Parque(position=posicion, image= "pastoCDe.png"))
+    }
+    method construirEncima(posicion) {}
+}
+
+object pz { // Parque
+    method construir(posicion) {
+        game.addVisual(new Parque(position=posicion, image= "pastoCIz.png"))
     }
     method construirEncima(posicion) {}
 }
@@ -393,7 +508,7 @@ object calleFacu inherits Visual {  // Fondo Gris
     var property position = game.at(1,1) 
     
     method image() {
-        return "calle-facu.jpg"
+        return "pisoo.png"
     }
 }
    
@@ -405,9 +520,18 @@ object cf { // Calle principal
     method construirEncima(posicion) {}
 } 
 
-object fa { // Calle principal 
+object fi { // Calle principal 
     method construir(posicion) {
-        game.addVisual(new Parque(position=posicion))
+        game.addVisual(new Parque(position=posicion , image= "pastoCIz.png"))
+    }
+    method construirEncima(posicion) {
+        game.addVisual(new Farola(position=posicion))
+    }
+}
+
+object fd { // Calle principal 
+    method construir(posicion) {
+        game.addVisual(new Parque(position=posicion , image= "pastoCDe.png"))
     }
     method construirEncima(posicion) {
         game.addVisual(new Farola(position=posicion))
@@ -416,7 +540,7 @@ object fa { // Calle principal
 
 object a1 { 
     method construir(posicion) {
-        game.addVisual(new Parque(position=posicion))
+        game.addVisual(new Parque(position=posicion, image= "pastoCIz.png"))
     }
     method construirEncima(posicion) {
         game.addVisual(new Arbol(position=posicion, image="arbolll.png"))
@@ -425,24 +549,33 @@ object a1 {
 
 object a2 { 
     method construir(posicion) {
-       game.addVisual(new Parque(position=posicion))
+       game.addVisual(new Parque(position=posicion, image= "pastoCDe.png"))
     }
 
     method construirEncima(posicion) {
-        game.addVisual(new Arbol(position=posicion, image="arbolll.png"))
+        game.addVisual(new Arbol(position=posicion, image="arbol01.png"))
     }
 
 } 
 object a3 { 
     method construir(posicion) {
-        game.addVisual(new Parque(position=posicion))
+        game.addVisual(new Parque(position=posicion, image= "pasto.png"))
     }
 
     method construirEncima(posicion) {
-        game.addVisual(new Arbol(position=posicion, image="arbolll.png"))
+        game.addVisual(new Arbol(position=posicion, image="arbol-005.png"))
+    }
+}
+
+object a4 { 
+    method construir(posicion) {
+        game.addVisual(new Parque(position=posicion, image= "pasto.png"))
     }
 
-} 
+    method construirEncima(posicion) {
+        game.addVisual(new Arbol(position=posicion, image="pino01.png"))
+    }
+}
 
 object pm {
 
@@ -544,20 +677,20 @@ object pi {
 object nivel1 inherits Nivel {
 
     override method mapa() = [
-        [ac,ag,ac,ve,ve,ve,ve,ve,ve,ve,ve,ve,ac,ag,ac],
-        [pI,pI,pI,vi,vi,vi,vi,vi,vi,vi,vi,vi,pI,pI,pI],
+        [po,po,po,ve,ve,ve,ve,ve,ve,ve,ve,ve,pe,po,pe],
+        [pI,pI,pI,oi,vi,vi,vi,vi,vi,vi,oi,vi,pI,pI,pI],
         [cs,cs,cs,cs,cs,cs,cs,cs,cs,cs,cs,cs,cs,cs,cs],   //(0,15) (14,15)
         [ci,ci,ci,ci,ci,ci,ci,ci,ci,ci,ci,ci,ci,ci,ci],   //(0,14) (14,14)
-        [vs,vs,vs,vs,vs,vs,vs,vs,vs,vs,vs,vs,vs,vs,vs],
-        [vi,vi,vi,vi,vi,vi,vi,vi,vi,vi,vi,vi,vi,vi,vi],
+        [vs,vs,vs,vs,vs,os,vs,vs,vs,vs,vs,os,vs,vs,vs],
+        [vi,vi,vi,oi,vi,vi,vi,vi,vi,vi,vi,vi,vi,vi,vi],
         [cs,cs,cs,cs,cs,cs,cs,cs,cs,cs,cs,cs,cs,cs,cs],   //(0,11) (14,11)
         [ci,ci,ci,ci,ci,ci,ci,ci,ci,ci,ci,ci,ci,ci,ci],   //(0,10) (14,10)
-        [vs,vs,vs,vs,vs,vs,vs,vs,vs,vs,vs,vs,vs,vs,vs],
-        [vi,vi,vi,vi,vi,vi,vi,vi,vi,vi,vi,vi,vi,vi,vi],
+        [vs,vs,vs,vs,os,vs,vs,vs,vs,vs,vs,vs,os,vs,vs],
+        [vi,vi,oi,vi,vi,vi,vi,oi,oi,vi,vi,vi,vi,vi,vi],
         [cs,cs,cs,cs,cs,cs,cs,cs,cs,cs,cs,cs,cs,cs,cs],   //(0,7) (14,7)
         [ci,ci,ci,ci,ci,ci,ci,ci,ci,ci,ci,ci,ci,ci,ci],   //(0,6) (14,6)    
-        [vs,vs,vs,vs,vs,vs,vs,vs,vs,vs,vs,vs,pc,pc,pc],
-        [ve,ve,ve,ve,ve,ve,ve,ve,ve,ve,ve,ve,po,po,po],
+        [vs,vs,vs,os,vs,vs,vs,vs,vs,vs,vs,vs,pc,pc,pc],
+        [ve,ve,ve,ve,ve,ve,ve,ve,ve,ve,ve,ve,po,po,pe],
         [__,__,__,__,__,__,__,__,__,__,__,__,__,__,__],
         [__,__,__,__,__,__,__,__,__,__,__,__,__,__,__],
         [__,__,__,__,__,__,__,__,__,__,__,__,__,__,__],
@@ -580,29 +713,35 @@ object nivel1 inherits Nivel {
         game.onTick(1000, "cuenta regresiva", { reloj.empezarACorrer()
                                                 self.teQuedasteSinTiempo()})
     }
+
+    method quitarFlechasLuminosasPasandoNivel(){
+        if(self.esPosicionDeMeta(alumno.position())){
+            game.removeTickEvent("animacionFlechasGlobal")
+        }
+    }
 }
 
 object nivel2 inherits Nivel {
 
     override method mapa() = [
-        [fc,fc,fc,fc,fc,fc,__,__,__,fc,fc,fc,fc,fc,fc], // Salida
+        [fc,fc,fc,fc,fc,fc,__,__,__,fc,un,__,fc,fc,fc], // Salida
         [fc,fc,fc,fc,fc,fc,pu,__,__,fc,fc,fc,fc,fc,fc],
         [pa,a1,__,pm,__,pm,__,pm,__,__,__,__,__,a2,pa],
-        [pa,pa,__,__,__,pm,pm,pm,__,pm,pm,pm,__,pa,pa],
-        [pa,pa,pm,pm,__,pm,__,__,pm,__,__,__,__,pa,pa],
-        [pa,pa,__,pm,__,__,__,pm,__,__,__,pm,pm,pa,pa],
-        [pa,pa,__,__,__,pm,pm,__,__,pm,__,pm,pm,pa,pa],
-        [pa,pa,__,pm,pm,pm,__,pm,__,pm,__,__,__,pa,ca],
-        [pa,pa,__,__,__,__,__,__,pm,pm,pm,pm,__,pa,pa],
-        [pa,pa,__,pm,pm,__,pm,__,pm,__,__,__,__,pa,pa],
-        [pa,pa,pm,pm,__,__,pm,__,__,__,pm,pm,pm,pa,pa],
-        [pa,ca,__,__,__,pm,pm,__,__,pm,__,__,__,pa,pa],
-        [pa,pa,__,pm,pm,pm,pm,pm,__,__,__,pm,__,pa,pa],
-        [pa,pa,__,__,__,pm,__,__,__,__,pm,pm,__,pa,pa],
-        [pa,pa,__,pm,__,__,__,pm,pm,__,pm,pm,__,pa,pa],
-        [pa,pa,pm,pm,pm,__,pm,pm,__,__,__,__,__,pa,pa],
-        [pa,pa,__,pm,__,__,__,__,pm,pm,pm,__,pm,pa,pa],
-        [a3,fa,cf,__,__,__,__,__,__,__,__,__,__,fa,a2]   // Entrada 
+        [pa,pz,__,__,__,pm,pm,pm,__,pm,pm,pm,__,pd,pa],
+        [pa,pz,pm,pm,__,pm,__,__,pm,__,__,__,__,pd,pa],
+        [pa,pz,__,pm,__,__,__,pm,__,__,__,pm,pm,pd,pa],
+        [pa,pz,__,__,__,pm,pm,__,__,pm,__,pm,pm,pd,pa],
+        [a4,pz,__,pm,pm,pm,__,pm,__,pm,__,__,__,pd,cn],
+        [pa,pz,__,__,__,__,__,__,pm,pm,pm,pm,__,pd,pa],
+        [pa,pz,__,pm,pm,__,pm,__,pm,__,__,__,__,pd,pa],
+        [pa,pz,pm,pm,__,__,pm,__,__,__,pm,pm,pm,pd,pa],
+        [pa,cz,__,__,__,pm,pm,__,__,pm,__,__,__,pd,a3],
+        [pa,pz,__,pm,pm,pm,pm,pm,__,__,__,pm,__,pd,pa],
+        [pa,pz,__,__,__,pm,__,__,__,__,pm,pm,__,pd,pa],
+        [a3,pz,__,pm,__,__,__,pm,pm,__,pm,pm,__,cd,pa],
+        [pa,pz,pm,pm,pm,__,pm,pm,__,__,__,__,__,pd,pa],
+        [pa,pz,__,pm,__,__,__,__,pm,pm,pm,__,pm,pd,pa],
+        [an,ai,cf,__,__,__,__,__,__,__,__,__,__,ad,an]   // Entrada 
     ]
 
     override method imagenDeTransicion() = "transicion-2nueva.png"
@@ -693,7 +832,6 @@ object nivelManager {
   }
 
   method limpiarNivelActual() {
-    //niveles.get(indiceNivelActual).configurar()
     game.allVisuals().forEach({visual => game.removeVisual(visual)})
     self.nivelActual().configurar()
   } 
