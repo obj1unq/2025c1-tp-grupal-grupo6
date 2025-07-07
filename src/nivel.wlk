@@ -667,8 +667,6 @@ object nivel3 inherits Nivel {
         self.agregarProfesoresYEstudiantes()
     }
 
-    
-
     method agregarProfesoresYEstudiantes() {
 
         const personajes = [leo, debi, isa, maxi, yami, maria]

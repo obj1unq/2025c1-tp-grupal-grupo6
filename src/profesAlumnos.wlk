@@ -61,7 +61,7 @@ class Profesor inherits Visual {
   var property text = ""
 
   const preguntasYRespuestasCorrectas = [ self.nuevaPreguntaYSuRespuestaCorrecta("Dentro de un metodo, cuando no podemos usar self (ya que entrariamos en un loop), que debemos usar?", ["1-inherits", "2-super", "3-override"], 1, "preguntaLeo1.png"),
-                                          self.nuevaPreguntaYSuRespuestaCorrecta("Cual es el equipo que más veces ganó la Copa Libertadores?", ["1-Boca", "2-Racing", "3-Independiente"], 2, "preguntaLeo-2.png"),
+                                          self.nuevaPreguntaYSuRespuestaCorrecta("Cual es el equipo que más veces ganó la Copa Libertadores?", ["1-Boca", "2-Racing", "3-Independiente"], 2, "preguntaLeo2.png"),
                                           self.nuevaPreguntaYSuRespuestaCorrecta("Decimos que dos objetos que comparten ciertos mensajes en común, son _ para ese observador", ["1-iguales", "2-polimórficos", "3-equivalentes"], 1 , "preguntaLeo3.png"),
                                           self.nuevaPreguntaYSuRespuestaCorrecta("El conjunto de referencias que tiene un objeto representa su _", ["1-Coleccion", "2-Estado", "3-Interfaz"], 1, "preguntaIsa1.png"),
                                           self.nuevaPreguntaYSuRespuestaCorrecta("A qué se conoce en la industria como “Code Smells?", ["1-cometarios dentro del código que utilizan lenguaje informal.", "2-errores de compilación, que impiden que el código se ejecute correctamente", "3-indicios de problemas profundos en el diseño, aunque no impiden que el programa funcione."], 2, "preguntaIsa2.png"),
@@ -76,19 +76,50 @@ class Profesor inherits Visual {
   }
 
   method mensaje(){
-    var preguntas = preguntasYRespuestasCorrectas
-    const pregunta = self.preguntaAleatoria(preguntas)
+    var contadorRespuestas = 0
+    const preguntas = preguntasYRespuestasCorrectas
+    self.selectorRespuesta()
     game.onTick(10000,"preguntados",{
+      contadorRespuestas += 1
+      const pregunta = self.preguntaAleatoria(preguntas)
       seleccion.seleccionar(pregunta)
-      preguntas = preguntas.remove(pregunta)
-      if(preguntas.isEmpty()){
-        game.removeTickEvent("preguntados")
+      preguntas.remove(pregunta)
+      if(contadorRespuestas >= 9){
+        self.validarAprobado()
       }
     })
   }
 
+  method selectorRespuesta(){
+    keyboard.num1().onPressDo({seleccion.respuesta(0)})
+    keyboard.num2().onPressDo({seleccion.respuesta(1)})
+    keyboard.num3().onPressDo({seleccion.respuesta(2)})
+  }
+
   method preguntaAleatoria(coleccion){
-    return coleccion.anyOne()
+    if(coleccion.isEmpty()){
+        game.removeTickEvent("preguntados")
+      }else{
+        return coleccion.anyOne()
+      }
+  }
+
+  method validarAprobado(){
+    if(nota.contador() >= 6){
+      game.schedule(6000, {
+        self.escena(ganoJuego)
+      })
+    }else{
+      game.schedule(6000, {
+        self.escena(noAproboParcial)
+      })
+    }
+    self.escena(fin)
+  }
+
+  method escena(escena){
+    historiaActual.actual(escena)
+    historiaActual.continuar()
   }
 }
 
@@ -110,13 +141,6 @@ class PreguntaYRespuesta {
   
   method preguntar() {
     game.addVisual(self)
-    self.selectorRespuesta()
-  }
-
-  method selectorRespuesta(){
-    keyboard.num1().onPressDo({seleccion.respuesta(0)})
-    keyboard.num2().onPressDo({seleccion.respuesta(1)})
-    keyboard.num3().onPressDo({seleccion.respuesta(2)})
   }
 
   method image(){
@@ -127,24 +151,6 @@ class PreguntaYRespuesta {
     if (correcta == opcion){
       nota.contador().incrementar()
     }
-  }
-
-  method validarAprobado(){
-    if(nota.contador() >= 6){
-      game.schedule(6000, {
-        self.escena(ganoJuego)
-      })
-    }else{
-      game.schedule(6000, {
-        self.escena(noAproboParcial)
-      })
-    }
-    self.escena(fin)
-  }
-
-  method escena(escena){
-    historiaActual.actual(escena)
-    historiaActual.continuar()
   }
 }
 
