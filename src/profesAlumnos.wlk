@@ -52,6 +52,7 @@ class Profesor inherits Visual {
   var property position
   var property image
   var property text = ""
+  var property puntos = nota
 
   const preguntasYRespuestasCorrectas = [ self.nuevaPreguntaYSuRespuestaCorrecta("Dentro de un metodo, cuando no podemos usar self (ya que entrariamos en un loop), que debemos usar?", ["1-inherits", "2-super", "3-override"], 1, "preguntaLeo1.png"),
                                           self.nuevaPreguntaYSuRespuestaCorrecta("Cual es el equipo que más veces ganó la Copa Libertadores?", ["1-Boca", "2-Racing", "3-Independiente"], 2, "preguntaLeo2-.png"),
@@ -74,10 +75,10 @@ class Profesor inherits Visual {
     self.selectorRespuesta()
     self.escena(indicacionesParcial) 
     game.onTick(10000,"preguntados",{
-      contadorRespuestas += 1
       const pregunta = self.preguntaAleatoria(preguntas)
       seleccion.seleccionar(pregunta)
       preguntas.remove(pregunta)
+      contadorRespuestas += 1
       if(contadorRespuestas >= 9){
         self.validarAprobado()
       }
@@ -99,10 +100,9 @@ class Profesor inherits Visual {
   }
 
   method validarAprobado(){
-    if(nota.contador() >= 6){
+    if(puntos.contador() >= 6){
         self.escena(ganoJuego)
     }else{
-
         self.escena(noAproboParcial)
     }
   }
@@ -126,6 +126,7 @@ class PreguntaYRespuesta {
   const property correcta
   const property profesor
   const property imagen
+  const property puntos = nota
 
   method position() = game.at(0, 0) 
   
@@ -138,17 +139,17 @@ class PreguntaYRespuesta {
   }
 
   method responder(opcion) {
-    if (correcta == opcion){
-      nota.incrementar()
+    if (correcta != opcion){
+      puntos.decrementar()
     }
   }
 }
 
 object nota {
-  var property contador = 0
+  var property contador = 8
 
-  method incrementar(){
-    contador += 1
+  method decrementar(){
+    contador -= 1
   }
 }
 
