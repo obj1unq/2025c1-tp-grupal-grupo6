@@ -149,16 +149,16 @@ class PreguntaYRespuesta {
 
   method responder(opcion) {
     if (correcta == opcion){
-      nota.contador().incrementar()
+      nota.incrementar()
     }
   }
 }
 
 object nota {
-  var property contador = 0
+  var property contador = 10
 
   method incrementar(){
-    contador += 1
+    contador -= 1
   }
 }
 
