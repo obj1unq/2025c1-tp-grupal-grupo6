@@ -128,19 +128,8 @@ object musicaNivel{
     method reanudar(){
         musica.resume()
     }
-
-//     wollok.lang.EvaluationError  // Transicion
-
-//         at src.nivel.musicaNivel.parar() [src/nivel.wlk:124]
-//         at If [src/nivel.wlk:88]
-//         at src.nivel.Nivel.teQuedasteSinTiempo() [src/nivel.wlk:86]
-// wollok.lang.EvaluationError
-//         at src.nivel.musicaNivel.parar() [src/nivel.wlk:124]
-//         at If [src/nivel.wlk:88]
-//         at src.nivel.Nivel.teQuedasteSinTiempo() [src/nivel.wlk:86]
-// wollok.lang.EvaluationError
-
 }
+
 //---------------------------- 
 
 class Visual {
@@ -389,18 +378,6 @@ class Parque inherits Visual {
     }
 }
 
-class Farola inherits Visual {
-    const property position
-
-    method image() {
-        return "farola0111.png"
-    }
-
-    override method atravesable() { 
-        return false
-    }
-}
-
 class Cartel inherits Visual {
     const property position
 
@@ -504,21 +481,21 @@ object un {
     method construirEncima(posicion) {}
 }
 
-object pa { // Parque
+object pa { // Parque Normal
     method construir(posicion) {
         game.addVisual(new Parque(position=posicion, image= "pasto.png"))
     }
     method construirEncima(posicion) {}
 }
 
-object pd { // Parque
+object pd { // Parque Cordon Derecho
     method construir(posicion) {
         game.addVisual(new Parque(position=posicion, image= "pastoCDe.png"))
     }
     method construirEncima(posicion) {}
 }
 
-object pz { // Parque
+object pz { // Parque Cordon Izquierdo
     method construir(posicion) {
         game.addVisual(new Parque(position=posicion, image= "pastoCIz.png"))
     }
@@ -541,25 +518,7 @@ object cf { // Calle principal
     method construirEncima(posicion) {}
 } 
 
-object fi { // Calle principal 
-    method construir(posicion) {
-        game.addVisual(new Parque(position=posicion , image= "pastoCIz.png"))
-    }
-    method construirEncima(posicion) {
-        game.addVisual(new Farola(position=posicion))
-    }
-}
-
-object fd { // Calle principal 
-    method construir(posicion) {
-        game.addVisual(new Parque(position=posicion , image= "pastoCDe.png"))
-    }
-    method construirEncima(posicion) {
-        game.addVisual(new Farola(position=posicion))
-    }
-}
-
-object a1 { 
+object a1 {  // Arbol Cordon Izquierdo
     method construir(posicion) {
         game.addVisual(new Parque(position=posicion, image= "pastoCIz.png"))
     }
@@ -568,7 +527,7 @@ object a1 {
     }
 }
 
-object a2 { 
+object a2 { // Arbol Cordon Derecho
     method construir(posicion) {
        game.addVisual(new Parque(position=posicion, image= "pastoCDe.png"))
     }
@@ -578,7 +537,7 @@ object a2 {
     }
 
 } 
-object a3 { 
+object a3 { // Arbol Normal
     method construir(posicion) {
         game.addVisual(new Parque(position=posicion, image= "pasto.png"))
     }
@@ -726,10 +685,6 @@ object nivel1 inherits Nivel {
 
     override method configurar(){
         super()
-
-        // game.addVisual(flecha)
-        // Inicia la animación de pulsación
-        // flecha.iniciarAnimacion()
 
         game.onTick(1900, "generacionDerecha", {autoFactory.generarAutos(derechaAuto)})
         game.onTick(1900, "generacionIzquierda", {autoFactory.generarAutos(izquierdaAuto)})

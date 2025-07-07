@@ -18,12 +18,10 @@ class Historia {
   }
 }
 
-//--------------------------------------
-// object indicacionesParcial inherits Historia {
-//   override method image() = "esperando-parcial.png"
-// }
+object indicacionesParcial inherits Historia {
+  override method image() = "esperando-parcial.png"
+}
 
-// -----------------------------------------
 object historiaActual {
   var property actual = inicio
 
