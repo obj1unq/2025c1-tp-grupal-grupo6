@@ -21,7 +21,5 @@ program juego{
     game.onCollideDo(alumno, {algo => algo.aplicarEfecto(alumno)})
 
     game.start()
-    //historiaActual.iniciar()
-
-
+    // historiaActual.iniciar()
 }

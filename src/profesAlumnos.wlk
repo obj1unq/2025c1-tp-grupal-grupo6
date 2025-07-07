@@ -22,10 +22,6 @@ class Estudiante inherits Visual {
   var property position 
   var property image
 
-  override method atravesable() { 
-        return false
-  }
-
   method mensaje(){
     game.say(self,self.texto())
   }
@@ -34,21 +30,18 @@ class Estudiante inherits Visual {
 }
 
 object maxi inherits Estudiante (position = game.at(1, 4), image = "maxi.png") {
-  override method atravesable() = true
   override method texto(){
     return "suerte!!"
   }
 }
 
 object yami inherits Estudiante (position = game.at(12, 9), image = "yamii.png" ) {
-  override method atravesable() = true
   override method texto(){
     return "exitos!!"
   }
 }
 
 object maria inherits Estudiante (position = game.at(10, 3), image = "maria.png" ) {
-  override method atravesable() = true
   override method texto(){
     return "dale!!"
   }
