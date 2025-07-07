@@ -102,7 +102,7 @@ object ganoJuego inherits Historia {
 
 //pantalla final, luego de haber ganado
 object fin inherits Historia {
-  override method image() = "final.png"
+  override method image() = "final.jpg"
   override method ejecutar() {
     super()
     game.stop() //termina el juego

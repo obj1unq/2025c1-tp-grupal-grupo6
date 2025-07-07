@@ -2,6 +2,7 @@ import nivel.*
 import wollok.game.*
 import posiciones.*
 import timer.*
+import historiaJuego.*
 
 object seleccion {
   var property pregunta = null
@@ -24,14 +25,34 @@ class Estudiante inherits Visual {
   override method atravesable() { 
         return false
   }
-    
+
+  method mensaje(){
+    game.say(self,self.texto())
+  }
+
+  method texto()
 }
 
-object maxi inherits Estudiante (position = game.at(1, 4), image = "maxi.png") {}
+object maxi inherits Estudiante (position = game.at(1, 4), image = "maxi.png") {
+  override method atravesable() = true
+  override method texto(){
+    return "suerte!!"
+  }
+}
 
-object yami inherits Estudiante (position = game.at(12, 9), image = "yamii.png" ) {}
+object yami inherits Estudiante (position = game.at(12, 9), image = "yamii.png" ) {
+  override method atravesable() = true
+  override method texto(){
+    return "exitos!!"
+  }
+}
 
-object maria inherits Estudiante (position = game.at(10, 2), image = "maria.png" ){}
+object maria inherits Estudiante (position = game.at(10, 3), image = "maria.png" ) {
+  override method atravesable() = true
+  override method texto(){
+    return "dale!!"
+  }
+}
 
 
 class Profesor inherits Visual {
@@ -39,24 +60,66 @@ class Profesor inherits Visual {
   var property image
   var property text = ""
 
-  const preguntasYRespuestasCorrectas = [self.nuevaPreguntaYSuRespuestaCorrecta("Decimos que dos objetos que comparten ciertos mensajes en común, son _ para ese observador", ["1-iguales", "2-polimórficos", "3-equivalentes"], 1 ),
-                                         self.nuevaPreguntaYSuRespuestaCorrecta("Cual es el equipo que más veces ganó la Copa Libertadores?", ["1-Boca", "2-Racing", "3-Independiente"], 2),
-                                         self.nuevaPreguntaYSuRespuestaCorrecta("En qué año se estrenó la película Matrix?", ["1-1999", "2-2000", "3-2002"], 0),
-                                         self.nuevaPreguntaYSuRespuestaCorrecta("Si tenemos dos referencias _, están apuntando al mismo objeto", ["1-gemelas", "2-idénticas", "3-iguales"], 1),
-                                         self.nuevaPreguntaYSuRespuestaCorrecta("El conjunto de referencias que tiene un objeto representa su _", ["1-Coleccion", "2-Estado", "3-Interfaz"], 1),
-                                         self.nuevaPreguntaYSuRespuestaCorrecta("Para aplicar una accion a todos los elementos de una coleccion, se debe utilizar", ["1-foreach(closure)", "2-all(predicate)", "3-foreEach(closure)"], 2),
-                                         self.nuevaPreguntaYSuRespuestaCorrecta("Cual es el nombre de la considerada, primera programadora informatica?", ["1-Joan Clarke", "2-Kathleen Booth", "3-Ada Lovelace"], 2),
-                                         self.nuevaPreguntaYSuRespuestaCorrecta("Dentro de un metodo, cuando no podemos usar self (ya que entrariamos en un loop), que debemos usar?", ["1-inherits", "2-super", "3-override"], 1),
-                                         self.nuevaPreguntaYSuRespuestaCorrecta("A qué se conoce en la industria como “Code Smells?", ["1-cometarios dentro del código que utilizan lenguaje informal.", "2-errores de compilación, que impiden que el código se ejecute correctamente", "3-indicios de problemas profundos en el diseño, aunque no impiden que el programa funcione."], 2)]
+  const preguntasYRespuestasCorrectas = [ self.nuevaPreguntaYSuRespuestaCorrecta("Dentro de un metodo, cuando no podemos usar self (ya que entrariamos en un loop), que debemos usar?", ["1-inherits", "2-super", "3-override"], 1, "preguntaLeo1.png"),
+                                          self.nuevaPreguntaYSuRespuestaCorrecta("Cual es el equipo que más veces ganó la Copa Libertadores?", ["1-Boca", "2-Racing", "3-Independiente"], 2, "preguntaLeo2-.png"),
+                                          self.nuevaPreguntaYSuRespuestaCorrecta("Decimos que dos objetos que comparten ciertos mensajes en común, son _ para ese observador", ["1-iguales", "2-polimórficos", "3-equivalentes"], 1 , "preguntaLeo3.png"),
+                                          self.nuevaPreguntaYSuRespuestaCorrecta("El conjunto de referencias que tiene un objeto representa su _", ["1-Coleccion", "2-Estado", "3-Interfaz"], 1, "preguntaIsa1.png"),
+                                          self.nuevaPreguntaYSuRespuestaCorrecta("A qué se conoce en la industria como “Code Smells?", ["1-cometarios dentro del código que utilizan lenguaje informal.", "2-errores de compilación, que impiden que el código se ejecute correctamente", "3-indicios de problemas profundos en el diseño, aunque no impiden que el programa funcione."], 2, "preguntaIsa2.png"),
+                                          self.nuevaPreguntaYSuRespuestaCorrecta("En qué año se estrenó la película Matrix?", ["1-1999", "2-2000", "3-2002"], 0, "preguntaIsa3.png"),
+                                          self.nuevaPreguntaYSuRespuestaCorrecta("Para aplicar una accion a todos los elementos de una coleccion, se debe utilizar", ["1-foreach(closure)", "2-all(predicate)", "3-foreEach(closure)"], 2, "preguntaDebi1.png"),
+                                          self.nuevaPreguntaYSuRespuestaCorrecta("Cual es el nombre de la considerada, primera programadora informatica?", ["1-Joan Clarke", "2-Kathleen Booth", "3-Ada Lovelace"], 2, "preguntaDebi2.png"),
+                                          self.nuevaPreguntaYSuRespuestaCorrecta("Si tenemos dos referencias _, están apuntando al mismo objeto", ["1-gemelas", "2-idénticas", "3-iguales"], 1, "preguntaDebi3.png")]
                                          
     
-  method nuevaPreguntaYSuRespuestaCorrecta(pregunta, respuestas, correcta){
-    return new PreguntaYRespuesta(pregunta = pregunta, respuestas = respuestas, correcta=correcta, profesor=self)
+  method nuevaPreguntaYSuRespuestaCorrecta(pregunta, respuestas, correcta, imagen){
+    return new PreguntaYRespuesta(pregunta = pregunta, respuestas = respuestas, correcta=correcta, profesor=self, imagen = imagen)
   }
 
-  override method aplicarEfecto(alumno){
+  method mensaje(){
+    var contadorRespuestas = 0
+    const preguntas = preguntasYRespuestasCorrectas
+    self.selectorRespuesta()
+    game.onTick(10000,"preguntados",{
+      contadorRespuestas += 1
+      const pregunta = self.preguntaAleatoria(preguntas)
+      seleccion.seleccionar(pregunta)
+      preguntas.remove(pregunta)
+      if(contadorRespuestas >= 9){
+        self.validarAprobado()
+      }
+    })
+  }
 
-    seleccion.seleccionar(preguntasYRespuestasCorrectas.anyOne())
+  method selectorRespuesta(){
+    keyboard.num1().onPressDo({seleccion.respuesta(0)})
+    keyboard.num2().onPressDo({seleccion.respuesta(1)})
+    keyboard.num3().onPressDo({seleccion.respuesta(2)})
+  }
+
+  method preguntaAleatoria(coleccion){
+    if(coleccion.isEmpty()){
+        game.removeTickEvent("preguntados")
+      }else{
+        return coleccion.anyOne()
+      }
+  }
+
+  method validarAprobado(){
+    if(nota.contador() >= 6){
+      game.schedule(6000, {
+        self.escena(ganoJuego)
+      })
+    }else{
+      game.schedule(6000, {
+        self.escena(noAproboParcial)
+      })
+    }
+    self.escena(fin)
+  }
+
+  method escena(escena){
+    historiaActual.actual(escena)
+    historiaActual.continuar()
   }
 }
 
@@ -72,21 +135,30 @@ class PreguntaYRespuesta {
   const property respuestas
   const property correcta
   const property profesor
+  const property imagen
+
+  method position() = game.at(0, 0) 
   
   method preguntar() {
-    var texto = " 1: " + respuestas.get(0)
-    texto = (texto + " 2: ") + respuestas.get(1)
-    texto = (texto + " 3: ") + respuestas.get(2)
-    
-    
-    texto = pregunta + texto
-    game.say(profesor, texto)
-    profesor.text(texto)
+    game.addVisual(self)
   }
-  
+
+  method image(){
+    return imagen
+  }
+
   method responder(opcion) {
-    if (correcta == opcion) game.say(profesor, "Muy bien!")
-    else game.say(profesor, "reprobado!")
+    if (correcta == opcion){
+      nota.incrementar()
+    }
+  }
+}
+
+object nota {
+  var property contador = 10
+
+  method incrementar(){
+    contador -= 1
   }
 }
 
