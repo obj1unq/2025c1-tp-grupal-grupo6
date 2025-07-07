@@ -87,18 +87,18 @@ object noAproboParcial inherits Historia {
   override method image() = "desaprobo.png"
   override method ejecutar() {
     super()
-    keyboard.c().onPressDo({ fin.ejecutar() })
+    game.schedule(4000, {fin.ejecutar()})
   }
 } 
 
 // aprobo el parcial
 object ganoJuego inherits Historia {
   override method image() = "aprobo.png"
-  override method ejecutar() {
+  override method ejecutar(){
     super()
-    keyboard.c().onPressDo({ fin.ejecutar() })
-  }
-} 
+    game.schedule(4000, {fin.ejecutar()})
+  } 
+}
 
 //pantalla final, luego de haber ganado
 object fin inherits Historia {
