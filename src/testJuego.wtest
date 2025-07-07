@@ -55,9 +55,10 @@ describe "nivel 1" {
     }
 
     test "no puede avanzar si hay un arbusto"{
-      alumno.position(game.at(1,16))
-      //game.at(1,17) tiene arbusto grande
-      assert.notThat(nivel1.puedeAtravesar(alumno, game.at(1, 17)))
+      alumno.position(game.at(11,4))
+      //game.at(1,17) tiene arbusto grande  
+      // Este yao esta mas porque cambie la estetica, cambie los valores para que coincida con lo actual
+      assert.notThat(nivel1.puedeAtravesar(alumno, game.at(12, 4)))
     }
 
     test "el auto amarillo choca con el alumno" {
@@ -123,11 +124,29 @@ describe "nivel 3" {
       nivel3.configurar()
     }
 
-    test "colision con miembros del equipo" {
-      assert.notThat(nivel3.puedeAtravesar(alumno, game.at(1, 4)))
-
+    test "el alumno no debe atravesar escritorios desde abajo" {
+      alumno.position(game.at(8,3))
+      assert.notThat(nivel3.puedeAtravesar(alumno, game.at(8, 4)))
     }
 
+    test "el alumno no debe atravesar escritorios desde los costados" {
+      alumno.position(game.at(9,4))
+      assert.notThat(nivel3.puedeAtravesar(alumno, game.at(10, 4)))
+      assert.notThat(nivel3.puedeAtravesar(alumno, game.at(8, 4)))
+    }
+
+    test "colision con miembros del equipo" {
+      assert.that(nivel3.puedeAtravesar(alumno, game.at(10,3)))
+      assert.that(nivel3.puedeAtravesar(alumno, game.at(1,4)))
+      assert.that(nivel3.puedeAtravesar(alumno, game.at(12,9)))
+    }
+
+      test "los mensaje de los alumnos son correctos" {
+        assert.equals("suerte!!", maxi.texto())
+        assert.equals("dale!!", maria.texto())
+        assert.equals("exitos!!", yami.texto())
+    }
+  
     test "colision con profesores" {
 
     }

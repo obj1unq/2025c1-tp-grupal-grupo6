@@ -146,6 +146,42 @@ object __ {
 
 // ------------------------ NIVEL 1 ------------------------------
 
+class FlechaAnimada inherits Visual {
+    var property position
+    var frame = 0
+
+    const frames = ["flecha001.png", "flecha002.png", "flecha003.png", "flecha004.png"] 
+
+    method image() {
+        return frames.get(frame)
+    }
+
+    method siguienteFrame() {  // Avanza al siguiente cuadro de la animación
+        frame = (frame + 1) % frames.size()
+    }
+
+    method iniciarAnimacion() {  // Inicia la animación
+        game.onTick(400, "animacionFlecha", { self.siguienteFrame() })
+    }
+
+    method pararAnimacion() {     // Para la animacion
+        game.removeTickEvent("animacionFlecha")
+    }
+}
+
+object fl {
+    method construir(posicion) {
+        
+        game.addVisual(new Pasto(position = posicion, image = "vereda.png")) 
+        
+        const pulsador = new FlechaAnimada(position = posicion)
+        game.addVisual(pulsador)
+        pulsador.iniciarAnimacion() 
+    }
+
+    method construirEncima(posicion) {}
+}
+
 class Vereda inherits Visual {
     const property position
     const property image
@@ -285,7 +321,7 @@ object pE { // Pasto Cordon Inferior
         game.addVisual(new Pasto(position=posicion, image= "pastoCI.png"))
     }
     method construirEncima(posicion) {
-        game.addVisual(new Arbol(position=posicion, image="arbusto-color01.png"))
+        game.addVisual(new Arbusto(position=posicion, image="arbusto-color01.png"))
     }
 }
 
@@ -295,24 +331,9 @@ object pe { // Pasto Cordon Inferior
         game.addVisual(new Pasto(position=posicion, image= "pasto.png"))
     }
     method construirEncima(posicion) {
-        game.addVisual(new Arbol(position=posicion, image="arbusto-color01.png"))
+        game.addVisual(new Arbusto(position=posicion, image="arbusto-color01.png"))
     }
 }
-
-// object ac { // Arbusto Chico
-//     method construir(posicion) {
-//         game.addVisual(new Arbusto(position=posicion, image= "arbusto-chico.png"))
-//     }
-//     method construirEncima(posicion) {}
-// }
-
-// object ag { // Arbusto Grande
-//     method construir(posicion) {
-//         game.addVisual(new Arbusto(position=posicion, image="arbusto-grande.png"))
-//     }
-//     method construirEncima(posicion) {}
-// }
-
 object es {
     method construir(posicion) {
         if (posicion.equals(game.at(0, 0))) {              // "Solo agregá la estación si esta celda es la celda (0, 0)"
@@ -380,38 +401,26 @@ class Cartel inherits Visual {
     }
 }
 
-class ArbustoN2 inherits Visual {
-    const property position
-
-    method image() {
-        return "arbusto-03.png"
-    }
-
-    override method atravesable() { 
-        return false
-    }
-}
-
-object an { //Arbustos 
+object an { //Arbustos Sin Cordon
     method construir(posicion) {
         game.addVisual(new Parque(position=posicion, image= "pasto.png"))
-        game.addVisual(new ArbustoN2(position=posicion))
+        game.addVisual(new Arbusto(position=posicion, image="arbusto-03.png" ))
     }
     method construirEncima(posicion) {}
 }
 
-object ai { //Arbustos 
+object ai { //Arbustos Cordon Izquierdo
     method construir(posicion) {
         game.addVisual(new Parque(position=posicion, image= "pastoCIz.png"))
-        game.addVisual(new ArbustoN2(position=posicion))
+        game.addVisual(new Arbusto(position=posicion, image="arbusto-03.png"))
     }
     method construirEncima(posicion) {}
 }
 
-object ad { //Arbustos 
+object ad { //Arbustos Cordon Derecho
     method construir(posicion) {
         game.addVisual(new Parque(position=posicion, image= "pastoCDe.png"))
-        game.addVisual(new ArbustoN2(position=posicion))
+        game.addVisual(new Arbusto(position=posicion, image="arbusto-03.png"))
     }
     method construirEncima(posicion) {}
 }
@@ -677,7 +686,7 @@ object pi {
 object nivel1 inherits Nivel {
 
     override method mapa() = [
-        [po,po,po,ve,ve,ve,ve,ve,ve,ve,ve,ve,pe,po,pe],
+        [po,po,po,ve,ve,ve,fl,fl,fl,ve,ve,ve,pe,po,pe],
         [pI,pI,pI,oi,vi,vi,vi,vi,vi,vi,oi,vi,pI,pI,pI],
         [cs,cs,cs,cs,cs,cs,cs,cs,cs,cs,cs,cs,cs,cs,cs],   //(0,15) (14,15)
         [ci,ci,ci,ci,ci,ci,ci,ci,ci,ci,ci,ci,ci,ci,ci],   //(0,14) (14,14)
@@ -705,6 +714,11 @@ object nivel1 inherits Nivel {
 
     override method configurar(){
         super()
+
+        // game.addVisual(flecha)
+        // Inicia la animación de pulsación
+        // flecha.iniciarAnimacion()
+
         game.onTick(1900, "generacionDerecha", {autoFactory.generarAutos(derechaAuto)})
         game.onTick(1900, "generacionIzquierda", {autoFactory.generarAutos(izquierdaAuto)})
 
