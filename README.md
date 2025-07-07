@@ -9,8 +9,6 @@
 
 ## Capturas
 
-(agregar)
-
 ## Reglas de Juego / Instrucciones
 
 El juego consiste en 3 mini-juegos. Cada uno con propio desafio, pero siempre con su mismo objetivo: llegar a tiempo al parcial, ¡y aprobar! 
