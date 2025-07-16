@@ -77,7 +77,7 @@ class Profesor inherits Visual {
     game.onTick(10000,"preguntados",{
       const pregunta = self.preguntaAleatoria(preguntas)
       seleccion.seleccionar(pregunta)
-      preguntas.remove(pregunta)
+      preguntas.remove(pregunta) 
       contadorRespuestas += 1
       if(contadorRespuestas >= 9){
         self.validarAprobado()
@@ -138,18 +138,34 @@ class PreguntaYRespuesta {
     return imagen
   }
 
-  method responder(opcion) {
-    if (correcta != opcion){
-      puntos.decrementar()
+  // method responder(opcion) {
+  //   if (correcta != opcion){
+  //     efectoSonidos.playError()
+  //     puntos.decrementar()
+  //   } else {
+  //     efectoSonidos.playAcierto()  
+  //   }
+  // }
+
+    method responder(opcion) {
+    if (correcta == opcion){
+      efectoSonidos.playAcierto()  
+      puntos.incrementar()
+    } else {
+      efectoSonidos.playError()
     }
   }
 }
 
 object nota {
-  var property contador = 8
+  // var property contador = 8
+  // method decrementar(){
+  //   contador -= 1
+  // }
+  var property contador = 0
 
-  method decrementar(){
-    contador -= 1
+  method incrementar() {
+    contador += 1
   }
 }
 
