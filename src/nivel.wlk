@@ -112,7 +112,7 @@ class Nivel {
     }
 }
 
-//-- -------------------------- Musica
+//----------------------------- Musica
 object musicaNivel{
     var property musica = game.sound("musicaJuego.mp3")
 
@@ -128,6 +128,11 @@ object musicaNivel{
     method reanudar(){
         musica.resume()
     }
+}
+//----------------------------- Efecto de sonidos
+object efectoSonidos {
+  method playAcierto() = game.sound("correcto-susana.mp3").play()
+  method playError()   = game.sound("shocked-sound-effect.mp3").play()
 }
 
 //---------------------------- 
